@@ -32,8 +32,8 @@ pub(crate) type UrlParse = (Host, Port, Option<HashMap<String, String>>);
 /// End users should prefer [`SparkSessionBuilder`](crate::SparkSessionBuilder) instead.
 #[derive(Clone, Debug)]
 pub struct ChannelBuilder {
-    pub host: Host,
-    pub port: Port,
+    pub(crate) host: Host,
+    pub(crate) port: Port,
     pub(crate) session_id: Uuid,
     pub(crate) token: Option<String>,
     pub(crate) user_id: Option<String>,
@@ -254,9 +254,9 @@ mod tests {
         let err = ChannelBuilder::new(connection).unwrap_err();
         match err.kind {
             ClientErrorKind::InvalidConnectionString { msg, conn_string, source } => {
-                assert!(msg.contains("hostname must not be empty"));
+                assert!(msg.contains("failed to parse"));
                 assert_eq!(conn_string, connection);
-                assert!(source.is_none());
+                assert!(source.is_some());
             }
             other => panic!("unexpected error kind: {other:?}"),
         }

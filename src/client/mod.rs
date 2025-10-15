@@ -65,8 +65,8 @@ type InterceptedChannel = tonic::service::interceptor::InterceptedService<Channe
 /// - Automatically attaches metadata headers.
 #[derive(Clone, Debug)]
 pub struct SparkClient {
-    stub: Arc<RwLock<SparkConnectServiceClient<InterceptedChannel>>>,
     pub(crate) builder: ChannelBuilder,
+    stub: Arc<RwLock<SparkConnectServiceClient<InterceptedChannel>>>,
     user_context: Option<spark::UserContext>,
     use_reattachable_execute: bool,
     session_id: String,
@@ -81,7 +81,7 @@ impl SparkClient {
     /// Creates a new client from a gRPC stub and a configured [`ChannelBuilder`].
     ///
     /// Typically called internally by [`SparkSessionBuilder`](crate::SparkSessionBuilder).
-    pub fn new(
+    pub(crate) fn new(
         stub: Arc<RwLock<SparkConnectServiceClient<InterceptedChannel>>>,
         builder: ChannelBuilder,
     ) -> Self {
@@ -107,12 +107,12 @@ impl SparkClient {
     }
 
     /// Returns the session ID associated with this client.
-    pub fn session_id(&self) -> String {
+    pub(crate) fn session_id(&self) -> String {
         self.session_id.to_string()
     }
 
     /// Returns the Spark version obtained from the last analyze request.
-    pub fn spark_version(&self) -> Result<String, ClientError> {
+    pub(crate) fn spark_version(&self) -> Result<String, ClientError> {
         self.handler_analyze
             .spark_version
             .to_owned()
@@ -122,12 +122,12 @@ impl SparkClient {
     }
 
     /// Returns the list of operation IDs that were interrupted.
-    pub fn interrupted_ids(&self) -> Vec<String> {
+    pub(crate) fn interrupted_ids(&self) -> Vec<String> {
         self.handler_interrupt.interrupted_ids.to_owned()
     }
 
     /// Returns the last relation received in an [`ExecutePlanResponse`](crate::spark::ExecutePlanResponse).
-    pub fn relation(&self) -> Result<spark::Relation, ClientError> {
+    pub(crate) fn relation(&self) -> Result<spark::Relation, ClientError> {
         self.handler_execute
             .relation
             .to_owned()
@@ -137,7 +137,7 @@ impl SparkClient {
     }
 
     /// Returns all record batches accumulated during the last execution.
-    pub fn batches(&self) -> Vec<RecordBatch> {
+    pub(crate) fn batches(&self) -> Vec<RecordBatch> {
         self.handler_execute.batches.to_owned()
     }
 
@@ -154,7 +154,7 @@ impl SparkClient {
 
     /// Sends an [`AnalyzePlanRequest`](crate::spark::AnalyzePlanRequest)
     /// to the Spark Connect server and updates the internal analysis handler.
-    pub async fn analyze(
+    pub(crate) async fn analyze(
         &mut self,
         analyze: spark::analyze_plan_request::Analyze,
     ) -> Result<&mut Self, ClientError> {
@@ -237,7 +237,7 @@ impl SparkClient {
     /// Sends an [`InterruptRequest`](crate::spark::InterruptRequest) to Spark.
     ///
     /// Used to stop long-running operations or cancel all running executions.
-    pub async fn interrupt(
+    pub(crate) async fn interrupt(
         &mut self,
         interrupt_type: spark::interrupt_request::InterruptType,
         id_or_tag: Option<String>,
@@ -293,7 +293,7 @@ impl SparkClient {
     /// and optional *reattachment* for fault-tolerant execution.
     ///
     /// The resulting record batches can be retrieved with [`batches()`](Self::batches).
-    pub async fn execute_plan(
+    pub(crate) async fn execute_plan(
         &mut self,
         plan: spark::Plan
     ) -> Result<&mut Self, ClientError> {

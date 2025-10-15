@@ -127,7 +127,6 @@ pub mod spark {
     tonic::include_proto!("spark.connect");
 }
 
-pub use client::SparkClient;
 pub use error::SparkError;
 pub use session::{SparkSessionBuilder, SparkSession};
 pub use literal::ToLiteral;

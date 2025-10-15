@@ -32,7 +32,6 @@ use crate::query::SqlQueryBuilder;
 use crate::{SparkError, error::SparkErrorKind};
 
 use arrow::record_batch::RecordBatch;
-use tower::ServiceExt;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::transport::Channel;
@@ -141,7 +140,7 @@ impl SparkSession {
     /// Creates a new session from a [`SparkClient`].
     ///
     /// Usually invoked internally by [`SparkSessionBuilder::build`].
-    pub fn new(client: SparkClient) -> Self {
+    pub(crate) fn new(client: SparkClient) -> Self {
         let session_id = client.session_id().to_string();
         Self { client, session_id }
     }

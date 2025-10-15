@@ -6,11 +6,11 @@ use std::error::Error;
 /// Wraps application errors into a common SparkError enum.
 #[derive(Debug)]
 pub struct SparkError {
-    pub kind: SparkErrorKind,
+    pub(crate) kind: SparkErrorKind,
 }
 
 impl SparkError {
-    pub fn new(kind: SparkErrorKind) -> Self {
+    pub(crate) fn new(kind: SparkErrorKind) -> Self {
         SparkError { kind }
     }
 }
@@ -34,7 +34,7 @@ impl From<ClientError> for SparkError {
 }
 
 #[derive(Debug)]
-pub enum SparkErrorKind {
+pub(crate) enum SparkErrorKind {
     Client(ClientError),
     InvalidConnectionUri { source: http::uri::InvalidUri, uri: String },
     Transport(tonic::transport::Error)
@@ -56,7 +56,6 @@ impl Error for SparkErrorKind {
 			Self::Client(source) => Some(source),
 			Self::InvalidConnectionUri { source, .. } => Some(source),
 			Self::Transport(source) => Some(source),
-            _ => None
 		}
 	}
 }
