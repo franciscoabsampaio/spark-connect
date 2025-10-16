@@ -63,13 +63,8 @@ jobs:
           draft: false
           make_latest: true
 
-      - name: Download release assets
-        uses: robinraju/release-downloader@v1.9
-        with:
-          tag: "v${{ needs.get-version.outputs.version }}"
-          fileName: "${{ env.PROJECT_NAME }}-${{ needs.get-version.outputs.version }}*"
-          out-file-path: "release-assets/"
-
+      # Publish Rust crate to crates.io
+      - uses: actions/checkout@v4
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Publish crate
