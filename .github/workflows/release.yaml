@@ -69,5 +69,8 @@ jobs:
           tag: "v${{ needs.get-version.outputs.version }}"
           fileName: "${{ env.PROJECT_NAME }}-${{ needs.get-version.outputs.version }}*"
           out-file-path: "release-assets/"
-      
-      
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Publish crate
+        run: cargo publish
