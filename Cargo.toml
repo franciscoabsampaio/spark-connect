@@ -1,11 +1,15 @@
 [package]
-authors = ["Francisco A. B. Sampaio <franciscoabsampaio@gmail.com>"]
 edition = "2024"
-license = "Apache-2.0"
-repository = "https://github.com/franciscoabsampaio/spark-connect"
-keywords = ["spark", "connect", "spark-connect", "spark_connect", "sql", "spark-connect-sql", "spark_connect_sql"]
+authors = ["Francisco A. B. Sampaio <franciscoabsampaio@gmail.com>"]
 name = "spark-connect"
 version = "0.1.0"
+description = "Rust client for Apache Spark Connect."
+license = "Apache-2.0"
+readme = "README.md"
+documentation = "https://docs.rs/spark-connect"
+repository = "https://github.com/franciscoabsampaio/spark-connect"
+homepage = "https://github.com/franciscoabsampaio/spark-connect"
+keywords = ["spark", "connect", "spark-connect", "spark_connect", "sql", "spark-connect-sql", "spark_connect_sql"]
 
 [dependencies]
 arrow = "56.2.0"

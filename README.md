@@ -50,7 +50,7 @@ before execution:
 
 ```ignore
 use spark_connect::ToLiteral;
-
+ 
 // This is
  
 let batches = session

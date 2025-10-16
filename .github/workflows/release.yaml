@@ -1,0 +1,73 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.2.3)'
+        required: true
+
+env:
+  PROJECT_NAME: spark-connect
+
+jobs:
+  get-version:
+    if: github.ref == 'refs/heads/release'
+    name: Get Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+    steps:
+      - name: Validate input format
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "❌ Invalid version format: $VERSION. Expected something like 1.2.3"
+            exit 1
+          fi
+
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all history for all branches and tags
+
+      - name: Verify tag exists
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          if git rev-parse "refs/tags/v$VERSION" >/dev/null 2>&1; then
+            echo "✅ Tag v$VERSION exists"
+          else
+            echo "❌ Tag v$VERSION does not exist in the repo"
+            exit 1
+          fi
+
+      - name: Extract version from input
+        id: extract_version
+        run: |
+          VERSION="${{ github.event.inputs.version }}"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+  promote-release:
+    name: Promote Draft Release
+    needs: get-version
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # needed to create releases
+      id-token: write
+    steps:
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "${{ env.PROJECT_NAME }} v${{ needs.get-version.outputs.version }}"
+          tag_name: v${{ needs.get-version.outputs.version }}
+          draft: false
+          make_latest: true
+
+      - name: Download release assets
+        uses: robinraju/release-downloader@v1.9
+        with:
+          tag: "v${{ needs.get-version.outputs.version }}"
+          fileName: "${{ env.PROJECT_NAME }}-${{ needs.get-version.outputs.version }}*"
+          out-file-path: "release-assets/"
+      
+      
