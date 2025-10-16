@@ -91,6 +91,7 @@ jobs:
           files: target/package/*.crate
           overwrite_files: true
 
+  # Creates provenance and adds it to the release
   provenance:
     needs: [tag-version, test-and-package]
     permissions:

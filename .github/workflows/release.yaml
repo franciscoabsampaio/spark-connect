@@ -63,8 +63,10 @@ jobs:
           draft: false
           make_latest: true
 
-      # Publish Rust crate to crates.io
-      - uses: actions/checkout@v4
+      - name: Checkout version
+        uses: actions/checkout@v4
+        with:
+          ref: "v${{ needs.get-version.outputs.version }}"
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Publish crate
