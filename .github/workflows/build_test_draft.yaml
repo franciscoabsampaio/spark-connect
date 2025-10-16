@@ -64,8 +64,8 @@ jobs:
       
       # Package crate (creates target/package/*.crate)
       - name: Package crate
-        run: cargo package --allow-dirty
-
+        run: cargo package
+        
       # 🔑 Compute SHA256 hashes and encode in base64 for SLSA workflow
       - name: Compute hashes
         id: hash
