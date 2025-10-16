@@ -37,6 +37,7 @@ jobs:
           git push -f origin v${{ steps.get_version.outputs.version }}
 
   test-and-package:
+    needs: [tag-version]
     runs-on: ubuntu-latest
     services:
       docker:
