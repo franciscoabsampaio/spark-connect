@@ -91,14 +91,14 @@ jobs:
           overwrite_files: true
 
   provenance:
-    needs: [tag-version, compute-hashes]
+    needs: [tag-version, test-and-package]
     permissions:
       actions: read
       id-token: write
       contents: write
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
     with:
-      base64-subjects: ${{ needs.compute-hashes.outputs.hash_b64 }}
+      base64-subjects: ${{ needs.test-and-package.outputs.hash_b64 }}
       upload-assets: true
       upload-tag-name: v${{ needs.tag-version.outputs.version }}
       draft-release: true
