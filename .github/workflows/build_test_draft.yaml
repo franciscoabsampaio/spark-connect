@@ -52,7 +52,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Spark Connect Server container instance
-        run: docker run -p 15002:15002 ${{ github.repository_owner }}/spark-connect
+        run: docker run -d -p 15002:15002 ${{ github.repository_owner }}/spark-connect
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Test crate
