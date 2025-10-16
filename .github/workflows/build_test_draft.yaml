@@ -57,7 +57,7 @@ jobs:
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Install protoc to compile protobuf
-        runs: sudo apt update && sudo apt install -y protobuf-compiler
+        run: sudo apt update && sudo apt install -y protobuf-compiler
       - name: Test crate
         run: |
           cargo test --locked spark-connect
