@@ -37,6 +37,7 @@ jobs:
           git push -f origin v${{ steps.get_version.outputs.version }}
 
   test-and-package:
+    needs: [tag-version]
     runs-on: ubuntu-latest
     services:
       docker:
@@ -52,17 +53,19 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Spark Connect Server container instance
-        run: docker run -p 15002:15002 ${{ github.repository_owner }}/spark-connect
+        run: docker run -d -p 15002:15002 ${{ github.repository_owner }}/spark-connect
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
+      - name: Install protoc to compile protobuf
+        run: sudo apt update && sudo apt install -y protobuf-compiler
       - name: Test crate
         run: |
           cargo test --locked spark-connect
       
       # Package crate (creates target/package/*.crate)
       - name: Package crate
-        run: cargo package --allow-dirty
-
+        run: cargo package
+        
       # 🔑 Compute SHA256 hashes and encode in base64 for SLSA workflow
       - name: Compute hashes
         id: hash
@@ -90,15 +93,16 @@ jobs:
           files: target/package/*.crate
           overwrite_files: true
 
+  # Creates provenance and adds it to the release
   provenance:
-    needs: [tag-version, compute-hashes]
+    needs: [tag-version, test-and-package]
     permissions:
       actions: read
       id-token: write
       contents: write
     uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
     with:
-      base64-subjects: ${{ needs.compute-hashes.outputs.hash_b64 }}
+      base64-subjects: ${{ needs.test-and-package.outputs.hash_b64 }}
       upload-assets: true
       upload-tag-name: v${{ needs.tag-version.outputs.version }}
       draft-release: true
