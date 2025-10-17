@@ -10,7 +10,7 @@ documentation = "https://docs.rs/spark-connect"
 repository = "https://github.com/franciscoabsampaio/spark-connect"
 homepage = "https://github.com/franciscoabsampaio/spark-connect"
 keywords = ["spark", "connect", "sql", "data", "client"]
-categories = ["database", "api-bindings", "data-processing"]
+categories = ["api-bindings", "database-interfaces"]
 
 [dependencies]
 arrow = "56.2.0"
