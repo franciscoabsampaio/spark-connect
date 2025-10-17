@@ -54,6 +54,8 @@ jobs:
     permissions:
       contents: write  # needed to create releases
       id-token: write
+    environment:
+      name: release
     steps:
       - name: Create draft release
         uses: softprops/action-gh-release@v2
