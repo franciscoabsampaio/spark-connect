@@ -70,6 +70,8 @@ jobs:
           ref: "v${{ needs.get-version.outputs.version }}"
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
+      - name: Install protoc to compile protobuf
+        run: sudo apt update && sudo apt install -y protobuf-compiler
       - name: Publish crate
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
