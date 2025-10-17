@@ -54,8 +54,7 @@ jobs:
     permissions:
       contents: write  # needed to create releases
       id-token: write
-    environment:
-      name: release
+    environment: release
     steps:
       - name: Create draft release
         uses: softprops/action-gh-release@v2
@@ -72,4 +71,6 @@ jobs:
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Publish crate
+        env:
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
         run: cargo publish
