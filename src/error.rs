@@ -43,9 +43,9 @@ pub(crate) enum SparkErrorKind {
 impl fmt::Display for SparkErrorKind {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Client(_) => write!(f, "Client error"),
+            Self::Client(e) => write!(f, "Client error: {}", e),
             Self::InvalidConnectionUri { uri, .. } => write!(f, "Connection URI is invalid: '{uri}'"),
-            Self::Transport(_) => write!(f, "Tonic transport error")
+            Self::Transport(e) => write!(f, "Tonic transport error: {}", e)
         }
     }
 }

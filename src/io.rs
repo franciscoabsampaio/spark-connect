@@ -1,5 +1,5 @@
 use arrow::array::RecordBatch;
-use arrow_ipc::reader::StreamReader;
+use arrow::ipc::reader::StreamReader;
 use std::error::Error;
 use std::fmt;
 
