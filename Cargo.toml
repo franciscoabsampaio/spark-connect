@@ -13,8 +13,7 @@ keywords = ["spark", "connect", "sql", "data", "client"]
 categories = ["api-bindings", "database"]
 
 [dependencies]
-arrow = "56.2.0"
-arrow-ipc = "56.2.0"
+arrow = { version = "56.2.0", default-features = false, features = ["ipc"] }
 chrono = { version = "0.4.42", optional = true }
 futures-util = "0.3.31"
 http = "1.3.1"
