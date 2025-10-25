@@ -94,6 +94,7 @@ jobs:
           overwrite_files: true
 
   # Creates provenance and adds it to the release
+  # TODO: replace slsa with native GitHub assert
   provenance:
     needs: [tag-version, test-and-package]
     permissions:
