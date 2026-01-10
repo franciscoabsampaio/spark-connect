@@ -48,7 +48,7 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
   promote-release:
-    name: Promote Draft Release
+    name: Promote Draft Release and Publish Crate
     needs: get-version
     runs-on: ubuntu-latest
     permissions:

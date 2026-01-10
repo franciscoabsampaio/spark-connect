@@ -1,3 +1,6 @@
+[![Crates.io](https://img.shields.io/crates/v/spark-connect.svg)](https://crates.io/crates/spark-connect)
+[![Docs.rs](https://docs.rs/spark-connect/badge.svg)](https://docs.rs/spark-connect)
+
 # spark-connect
 
 <b>An idiomatic, SQL-first Rust client for Apache Spark Connect.</b>
@@ -67,7 +70,7 @@ let lazy_plan = session.sql(
 ).await?;
 let batches = session.collect(lazy_plan);
 ```
- 
+
 ## 😴 Lazy Execution
 
 The biggest advantage to using the [`sql()`](SparkSession::sql) method
@@ -96,6 +99,23 @@ sc://localhost:15002
 sc://spark-cluster:15002/?user_id=francisco
 sc://10.0.0.5:15002;session_id=abc123;user_agent=my-app
 ```
+
+## 🏗️ Building With Different Versions of Spark Connect
+
+Currently, this crate is built against Spark 3.5.x. If you need to build against a different version of Spark Connect, you can:
+
+1. Clone this repository.
+2. Go to the [official Apache Spark repository](https://github.com/apache/spark/) and find the protobuf definitions for the desired version. Refer to the table below for the exact path.
+3. Download the `protobuf` directory and replace the `protobuf/` directory of this repository with the desired version.
+4. After replacing the files, run `cargo build` to regenerate the gRPC client code.
+5. Use the crate as usual.
+
+| Version | Path to the protobuf directory |
+|--------:|------------------|
+| 4.x     | [`branch-4.x / sql/connect/common/src/main/protobuf`](https://github.com/apache/spark/tree/branch-4.1/sql/connect/common/src/main/protobuf) |
+| 3.4-3.5 | [`branch-3.x / connector/connect/common/src/main/protobuf`](https://github.com/apache/spark/tree/branch-3.5/connector/connect/common/src/main/protobuf) |
+
+⚠️ Note that compatibility is not guaranteed, and you may encounter issues if there are significant changes between versions.
 
 ## 📘 Learn More
 
