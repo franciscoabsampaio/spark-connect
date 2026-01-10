@@ -70,7 +70,7 @@ let lazy_plan = session.sql(
 ).await?;
 let batches = session.collect(lazy_plan);
 ```
- 
+
 ## 😴 Lazy Execution
 
 The biggest advantage to using the [`sql()`](SparkSession::sql) method
