@@ -1,8 +1,7 @@
 [![Crates.io](https://img.shields.io/crates/v/spark-connect.svg)](https://crates.io/crates/spark-connect)
 ![Rust Version](https://img.shields.io/crates/rust-version/spark-connect)
 [![Docs](https://docs.rs/spark-connect/badge.svg)](https://docs.rs/spark-connect)
-[![Release](https://github.com/franciscoabsampaio/spark-connect/actions/workflows/release.yml/badge.svg)](
-https://github.com/franciscoabsampaio/spark-connect/actions/workflows/release.yaml)
+[![Release](https://github.com/franciscoabsampaio/spark-connect/actions/workflows/release.yml/badge.svg)](https://github.com/franciscoabsampaio/spark-connect/actions/workflows/release.yaml)
 
 # spark-connect
 
