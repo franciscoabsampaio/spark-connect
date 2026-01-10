@@ -1398,7 +1398,7 @@ dependencies = [
 
 [[package]]
 name = "spark-connect"
-version = "0.1.2"
+version = "0.2.0"
 dependencies = [
  "arrow",
  "chrono",
