@@ -214,7 +214,7 @@ impl ChannelBuilder {
             .map(|pair| {
                 let mut parts = pair.splitn(2, '=');
                 (
-                    parts.next().unwrap_or("").to_string(),
+                    parts.next().unwrap_or("").to_lowercase(), // Ensure HTTP/2 compliance
                     parts.next().unwrap_or("").to_string(),
                 )
             })
