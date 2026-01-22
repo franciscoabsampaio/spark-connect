@@ -2,7 +2,7 @@
 edition = "2024"
 authors = ["Francisco A. B. Sampaio <franciscoabsampaio@gmail.com>"]
 name = "spark-connect"
-version = "0.2.0"
+version = "0.2.1"
 description = "Rust client for Apache Spark Connect."
 license = "Apache-2.0"
 readme = "README.md"
@@ -34,6 +34,10 @@ tonic-prost-build = "0.14.2"
 [dev-dependencies]
 tokio-test = "0.4.4"
 
+[[example]]
+name = "databricks"
+required-features = ["tokio-macros", "tls"]
+
 [features]
 default = [
   "tonic/default",
@@ -41,8 +45,14 @@ default = [
 chrono = [
     "chrono/default"
 ]
+tokio-macros = [
+  "tokio/macros",
+]
 tls = [
   "tonic/tls-connect-info",
+  "tonic/_tls-any",
+  "tonic/tls-ring",
+  "tonic/tls-native-roots"
 ]
 
 [profile.release]
