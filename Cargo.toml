@@ -34,12 +34,19 @@ tonic-prost-build = "0.14.2"
 [dev-dependencies]
 tokio-test = "0.4.4"
 
+[[example]]
+name = "databricks"
+required-features = ["tokio-macros", "tls"]
+
 [features]
 default = [
   "tonic/default",
 ]
 chrono = [
     "chrono/default"
+]
+tokio-macros = [
+  "tokio/macros",
 ]
 tls = [
   "tonic/tls-connect-info",
