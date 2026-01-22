@@ -34,7 +34,9 @@ use crate::{SparkError, error::SparkErrorKind};
 use arrow::record_batch::RecordBatch;
 use std::sync::Arc;
 use tokio::sync::RwLock;
-use tonic::transport::{Channel, ClientTlsConfig};
+use tonic::transport::Channel;
+#[cfg(feature = "tls")]
+use tonic::transport::ClientTlsConfig;
 use tower::ServiceBuilder;
 
 /// Builder for creating [`SparkSession`] instances.
@@ -90,6 +92,7 @@ impl SparkSessionBuilder {
 
         // Configure TLS if enabled to send
         // the correct Domain Name (SNI) during handshake.
+        #[cfg(feature = "tls")]
         if self.channel_builder.use_ssl {
             let tls_config = ClientTlsConfig::new()
                 .domain_name(&self.channel_builder.host)

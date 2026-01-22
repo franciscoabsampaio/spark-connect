@@ -86,8 +86,12 @@ impl ChannelBuilder {
                 .map(|user_agent| ChannelBuilder::create_user_agent(Some(&user_agent)))
                 .unwrap_or_else(|| ChannelBuilder::create_user_agent(None));
 
-            if let Some(token) = headers.remove("token") {
-                let token = format!("Bearer {token}");
+            if let Some(_token) = headers.remove("token") {
+                #[cfg(not(feature = "tls"))]
+                {
+                    panic!("Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!");
+                };
+                let token = format!("Bearer {_token}");
                 channel_builder.token = Some(token.clone());
                 headers.insert("authorization".to_string(), token);
             }
@@ -296,7 +300,7 @@ mod tests {
 
     #[test]
     #[should_panic(
-        expected = "The 'use_ssl' option requires the 'tls' feature, but it's not enabled!"
+        expected = "Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!"
     )]
     fn test_panic_ssl() {
         let connection = "sc://127.0.0.1:443/;use_ssl=true";
