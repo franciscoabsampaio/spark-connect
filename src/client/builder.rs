@@ -42,7 +42,9 @@ pub struct ChannelBuilder {
     pub(crate) headers: Option<HashMap<String, String>>,
 }
 
-/// By default, connects to port 15002 on localhost.
+/// By default, attempts to get the connection string from the SPARK_REMOTE
+/// environment variable. If not set, defaults to a connection string that
+/// connects to port 15002 on localhost.
 impl Default for ChannelBuilder {
     fn default() -> Self {
         let connection = match env::var("SPARK_REMOTE") {
@@ -72,6 +74,8 @@ impl ChannelBuilder {
         };
 
         if let Some(mut headers) = headers {
+            // Extract known headers and remove them from the map.
+            // The remaining headers will be added as custom headers in a HashMap.
             channel_builder.user_id = headers
                 .remove("user_id")
                 .map(|user_id| ChannelBuilder::create_user_id(Some(&user_id)))
@@ -82,8 +86,12 @@ impl ChannelBuilder {
                 .map(|user_agent| ChannelBuilder::create_user_agent(Some(&user_agent)))
                 .unwrap_or_else(|| ChannelBuilder::create_user_agent(None));
 
-            if let Some(token) = headers.remove("token") {
-                let token = format!("Bearer {token}");
+            if let Some(_token) = headers.remove("token") {
+                #[cfg(not(feature = "tls"))]
+                {
+                    panic!("Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!");
+                };
+                let token = format!("Bearer {_token}");
                 channel_builder.token = Some(token.clone());
                 headers.insert("authorization".to_string(), token);
             }
@@ -98,15 +106,17 @@ impl ChannelBuilder {
             }
 
             if let Some(use_ssl) = headers.remove("use_ssl") {
-                if use_ssl.to_lowercase() == "true" {
+                // Enable SSL if a token is provided OR if 'use_ssl' is set to 'true'.
+                if channel_builder.token.is_some() || use_ssl.to_lowercase() == "true" {
                     #[cfg(not(feature = "tls"))]
                     {
-                        panic!("The 'use_ssl' option requires the 'tls' feature, but it's not enabled!");
+                        panic!("Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!");
                     };
                     channel_builder.use_ssl = true
                 }
             };
 
+            // Add any remaining custom headers.
             if !headers.is_empty() {
                 channel_builder.headers = Some(headers);
             }
@@ -116,12 +126,9 @@ impl ChannelBuilder {
     }
 
     pub(crate) fn endpoint(&self) -> String {
-        let scheme = if cfg!(feature = "tls") {
-            "https"
-        } else {
-            "http"
-        };
-
+        // If usage of SSL is requested, we MUST use https scheme
+        // or tonic will try to speak plaintext to an encrypted port.
+        let scheme = if self.use_ssl { "https" } else { "http" };
         format!("{}://{}:{}", scheme, self.host, self.port)
     }
 
@@ -130,7 +137,10 @@ impl ChannelBuilder {
     }
 
     pub(crate) fn create_user_agent(user_agent: Option<&str>) -> Option<String> {
+        // The leading underscore distinguishes internal/default user agents
+        // from user-defined ones.
         let user_agent = user_agent.unwrap_or("_SPARK_CONNECT_RUST");
+        // env! macro is used here to get the package version at compile time.
         let pkg_version = env!("CARGO_PKG_VERSION");
         let os = env::consts::OS.to_lowercase();
 
@@ -143,6 +153,7 @@ impl ChannelBuilder {
     pub(crate) fn create_user_id(user_id: Option<&str>) -> Option<String> {
         match user_id {
             Some(user_id) => Some(user_id.to_string()),
+            // Fallback to the USER environment variable.
             None => env::var("USER").ok(),
         }
     }
@@ -207,7 +218,7 @@ impl ChannelBuilder {
             .map(|pair| {
                 let mut parts = pair.splitn(2, '=');
                 (
-                    parts.next().unwrap_or("").to_string(),
+                    parts.next().unwrap_or("").to_lowercase(), // Ensure HTTP/2 compliance
                     parts.next().unwrap_or("").to_string(),
                 )
             })
@@ -289,7 +300,7 @@ mod tests {
 
     #[test]
     #[should_panic(
-        expected = "The 'use_ssl' option requires the 'tls' feature, but it's not enabled!"
+        expected = "Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!"
     )]
     fn test_panic_ssl() {
         let connection = "sc://127.0.0.1:443/;use_ssl=true";

@@ -3,6 +3,8 @@
 
 # spark-connect
 
+![spark-connect](./src/docs/banner.jpg)
+
 <b>An idiomatic, SQL-first Rust client for Apache Spark Connect.</b>
 
 This crate provides a fully asynchronous, strongly typed API for interacting
