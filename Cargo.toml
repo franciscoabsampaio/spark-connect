@@ -43,6 +43,9 @@ chrono = [
 ]
 tls = [
   "tonic/tls-connect-info",
+  "tonic/_tls-any",
+  "tonic/tls-ring",
+  "tonic/tls-native-roots"
 ]
 
 [profile.release]

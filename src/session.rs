@@ -34,7 +34,7 @@ use crate::{SparkError, error::SparkErrorKind};
 use arrow::record_batch::RecordBatch;
 use std::sync::Arc;
 use tokio::sync::RwLock;
-use tonic::transport::Channel;
+use tonic::transport::{Channel, ClientTlsConfig};
 use tower::ServiceBuilder;
 
 /// Builder for creating [`SparkSession`] instances.
@@ -80,19 +80,33 @@ impl SparkSessionBuilder {
     /// - Metadata interceptor attachment;
     /// - [`SparkClient`](crate::SparkClient) initialization.
     pub async fn build(&self) -> Result<SparkSession, SparkError> {
-        let channel = Channel::from_shared(self.channel_builder.endpoint())
+        // Create gRPC endpoint
+        let mut endpoint = Channel::from_shared(self.channel_builder.endpoint())
             .map_err(|source| {
                 SparkError::new(SparkErrorKind::InvalidConnectionUri {
                     source, uri: self.channel_builder.endpoint()
                 })
-            })?
-            .connect()
-            .await
-            .map_err(|source| {
-                SparkError::new(SparkErrorKind::Transport(source))
             })?;
 
-        let channel = ServiceBuilder::new().service(channel);
+        // Configure TLS if enabled to send
+        // the correct Domain Name (SNI) during handshake.
+        if self.channel_builder.use_ssl {
+            let tls_config = ClientTlsConfig::new()
+                .domain_name(&self.channel_builder.host)
+                // Use system root certificates.
+                .with_native_roots();
+            
+            endpoint = endpoint.tls_config(tls_config).map_err(|source| {
+                SparkError::new(SparkErrorKind::Transport(source))
+            })?;
+        }
+
+        // Connect to the endpoint and build the channel.
+        let channel = ServiceBuilder::new().service(
+            endpoint.connect().await.map_err(|source| {
+                SparkError::new(SparkErrorKind::Transport(source))
+            })?
+        );
 
         let grpc_client = SparkConnectServiceClient::with_interceptor(
             channel, HeaderInterceptor::new(
