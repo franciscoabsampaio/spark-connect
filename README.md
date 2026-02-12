@@ -22,27 +22,27 @@ all in native Rust.
 - 🧾 **Arrow-native results** returned as `Vec<RecordBatch>`;
 
 ## Getting Started
- 
-```
+
+```rs
 use spark_connect::SparkSessionBuilder;
 
-# #[tokio::main]
-# async fn main() -> Result<(), Box<dyn std::error::Error>> {
-// 1️⃣ Connect to a Spark Connect endpoint
-let session = SparkSessionBuilder::new("sc://localhost:15002")
-    .build()
-    .await?;
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+  // 1️⃣ Connect to a Spark Connect endpoint
+  let session = SparkSessionBuilder::new("sc://localhost:15002")
+      .build()
+      .await?;
 
-// 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatches>
-let batches = session
-    .query("SELECT ? AS rule, ? AS text")
-    .bind(42)
-    .bind("world")
-    .execute()
-    .await?;
+  // 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatches>
+  let batches = session
+      .query("SELECT ? AS rule, ? AS text")
+      .bind(42)
+      .bind("world")
+      .execute()
+      .await?;
 
-# Ok(())
-# }
+  Ok(())
+}
 ```
 
 It's that simple!
@@ -53,7 +53,7 @@ Behind the scenes, the [`SparkSession::query`] method
 uses the [`ToLiteral`] trait to safely bind parameters
 before execution:
 
-```ignore
+```rs
 use spark_connect::ToLiteral;
  
 // This is

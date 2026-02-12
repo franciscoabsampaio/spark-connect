@@ -56,8 +56,6 @@ jobs:
         run: docker run -d -p 15002:15002 ${{ github.repository_owner }}/spark-connect-server:delta
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
-      - name: Install protoc to compile protobuf
-        run: sudo apt update && sudo apt install -y protobuf-compiler
       - name: Test crate
         run: |
           cargo test --locked spark-connect

@@ -11,6 +11,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         file_paths.push(entry.to_str().unwrap().to_string());
     }
 
+    // Get protobuf compiler path and set environment variable
+    let protoc_path = protoc_bin_vendored::protoc_bin_path()?;
+    // SAFE in build.rs because this script runs single-threaded.
+    unsafe {
+        std::env::set_var("PROTOC", protoc_path);
+    }
+
     tonic_prost_build::configure()
         .protoc_arg("--experimental_allow_proto3_optional")
         .build_server(false)
