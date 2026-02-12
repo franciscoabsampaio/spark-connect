@@ -14,6 +14,8 @@ It allows you to build and execute SQL queries, bind parameters safely,
 and collect Arrow `RecordBatch` results - just like any other SQL toolkit -
 all in native Rust.
 
+## [Changelog](https://github.com/franciscoabsampaio/spark-connect/blob/main/Changelog.md)
+
 ## ✨ Features
 
 - ⚙️ **Spark-compatible connection builder** (`sc://host:port` format);
