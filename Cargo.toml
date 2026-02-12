@@ -30,6 +30,7 @@ uuid = { version = "1.18.1", features = ["v4"] }
 
 [build-dependencies]
 tonic-prost-build = "0.14.2"
+protoc-bin-vendored = "3"
 
 [dev-dependencies]
 tokio-test = "0.4.4"

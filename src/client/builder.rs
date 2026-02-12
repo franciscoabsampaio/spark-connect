@@ -289,11 +289,10 @@ mod tests {
 
     #[test]
     fn test_valid_connection_builds() {
-        let connection = "sc://myhost.com:443/;token=ABCDEFG;user_agent=some_agent;user_id=user123";
+        let connection = "sc://myhost.com:443/;user_agent=some_agent;user_id=user123";
         let builder = ChannelBuilder::new(connection).unwrap();
 
         assert_eq!(builder.endpoint(), "http://myhost.com:443");
-        assert_eq!(builder.token.unwrap(), "Bearer ABCDEFG");
         assert_eq!(builder.user_id.unwrap(), "user123");
         assert!(builder.user_agent.unwrap().contains("some_agent"));
     }
@@ -302,7 +301,17 @@ mod tests {
     #[should_panic(
         expected = "Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!"
     )]
-    fn test_panic_ssl() {
+    fn test_panic_token() {
+        let connection = "sc://127.0.0.1:443/;token=12345;";
+
+        ChannelBuilder::new(connection).unwrap();
+    }
+
+    #[test]
+    #[should_panic(
+        expected = "Using the 'token' or 'use_ssl' options require the 'tls' feature, but it's not enabled!"
+    )]
+    fn test_panic_use_ssl() {
         let connection = "sc://127.0.0.1:443/;use_ssl=true";
 
         ChannelBuilder::new(connection).unwrap();
