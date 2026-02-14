@@ -1,7 +1,7 @@
+# spark-connect
+
 [![Crates.io](https://img.shields.io/crates/v/spark-connect.svg)](https://crates.io/crates/spark-connect)
 [![Docs.rs](https://docs.rs/spark-connect/badge.svg)](https://docs.rs/spark-connect)
-
-# spark-connect
 
 ![spark-connect](./src/docs/banner.jpg)
 
