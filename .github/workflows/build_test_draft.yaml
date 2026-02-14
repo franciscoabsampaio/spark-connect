@@ -23,10 +23,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Extract version from VERSION
+      - name: Extract version from Cargo.toml
         id: get_version
         run: |
-          echo "version=$(cat VERSION)" >> "$GITHUB_OUTPUT"
+          VERSION=$(grep -Po '(?<=^version = ")[^"]*' Cargo.toml)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create and push tag
         run: |
