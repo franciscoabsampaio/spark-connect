@@ -64,18 +64,6 @@ jobs:
       - name: Package crate
         run: cargo package
         
-      # 🔑 Compute SHA256 hashes and encode in base64 for SLSA workflow
-      - name: Compute hashes
-        id: hash
-        run: |
-          set -euo pipefail
-          for f in target/package/*.crate; do
-            sha=$(sha256sum "$f" | cut -d ' ' -f1)
-            echo "${sha}  $f" >> hashes.txt
-          done
-          b64=$(base64 -w0 hashes.txt)
-          echo "hash_b64=$b64" >> $GITHUB_OUTPUT
-
       # Create draft release with crate
       - name: Create draft release
         uses: softprops/action-gh-release@v2
@@ -91,17 +79,9 @@ jobs:
           files: target/package/*.crate
           overwrite_files: true
 
-  # Creates provenance and adds it to the release
-  # TODO: replace slsa with native GitHub assert
-  provenance:
-    needs: [tag-version, test-and-package]
-    permissions:
-      actions: read
-      id-token: write
-      contents: write
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_generic_slsa3.yml@v2.0.0
-    with:
-      base64-subjects: ${{ needs.test-and-package.outputs.hash_b64 }}
-      upload-assets: true
-      upload-tag-name: v${{ needs.tag-version.outputs.version }}
-      draft-release: true
+      # Generate attestations for each artifact
+      - name: Attest build artifacts
+        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: target/package/*.crate
+          show-summary: true
