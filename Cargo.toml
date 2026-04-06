@@ -22,7 +22,7 @@ prost = "0.14.1"
 prost-types = "0.14.1"
 regex = "1.11.3"
 tokio = { version = "1.47", features = ["rt-multi-thread", "macros"] }
-tonic = { version = "0.14.2", optional = true }
+tonic = { version = "0.14.2" }
 tonic-prost = "0.14.2"
 tower = "0.5.2"
 url = "2.5.7"
@@ -42,6 +42,7 @@ required-features = ["tokio-macros", "tls"]
 [features]
 default = [
   "tonic/default",
+  "tls"
 ]
 chrono = [
     "chrono/default"
