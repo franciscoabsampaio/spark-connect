@@ -1,4 +1,4 @@
-use crate::client::ClientError;
+use crate::{client::ClientError, conf::SparkConfError};
 
 use core::fmt;
 use std::error::Error;
@@ -33,19 +33,27 @@ impl From<ClientError> for SparkError {
     }
 }
 
+impl From<SparkConfError> for SparkError {
+    fn from(error: SparkConfError) -> Self {
+        SparkError::new(SparkErrorKind::Config(error))
+    }
+}
+
 #[derive(Debug)]
 pub(crate) enum SparkErrorKind {
     Client(ClientError),
-    InvalidConnectionUri { source: http::uri::InvalidUri, uri: String },
-    Transport(tonic::transport::Error)
+    ClientNotFound,
+    Config(SparkConfError),
+    Unimplemented(String)
 }
 
 impl fmt::Display for SparkErrorKind {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::Client(e) => write!(f, "Client error: {}", e),
-            Self::InvalidConnectionUri { uri, .. } => write!(f, "Connection URI is invalid: '{uri}'"),
-            Self::Transport(e) => write!(f, "Tonic transport error: {}", e)
+            Self::ClientNotFound => write!(f, "Client not found. Please configure a remote Spark session."),
+            Self::Config(e) => write!(f, "Spark configuration is invalid: {}", e),
+            Self::Unimplemented(msg) => write!(f, "Unimplemented: {}", msg),
         }
     }
 }
@@ -54,8 +62,8 @@ impl Error for SparkErrorKind {
 	fn source(&self) -> Option<&(dyn Error + 'static)> {
 		match self {
 			Self::Client(source) => Some(source),
-			Self::InvalidConnectionUri { source, .. } => Some(source),
-			Self::Transport(source) => Some(source),
+			Self::Config(source) => Some(source),
+            _ => None
 		}
 	}
 }

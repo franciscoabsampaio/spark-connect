@@ -26,12 +26,13 @@ all in native Rust.
 ## Getting Started
 
 ```rs
-use spark_connect::SparkSessionBuilder;
+use spark_connect::SparkSession;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
   // 1️⃣ Connect to a Spark Connect endpoint
-  let session = SparkSessionBuilder::new("sc://localhost:15002")
+  let session = SparkSession::builder()
+      .remote("sc://localhost:15002")
       .build()
       .await?;
 
@@ -86,7 +87,7 @@ If you're coming from PySpark or Scala, this should be the familiar interface.
 
 - <b>[`SparkSession`](crate::SparkSession)</b> — the main entry point for executing
   SQL queries and managing a session.
-- <b>[`SparkClient`](crate::SparkClient)</b> — low-level gRPC client (used internally).
+- <b>[`SparkConnectClient`](crate::SparkConnectClient)</b> — low-level gRPC client (used internally).
 - <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> — helper for binding parameters
   and executing queries.
 

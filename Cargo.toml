@@ -31,6 +31,7 @@ uuid = { version = "1.18.1", features = ["v4"] }
 [build-dependencies]
 tonic-prost-build = "0.14.2"
 protoc-bin-vendored = "3"
+walkdir = "2.3.2"
 
 [dev-dependencies]
 tokio-test = "0.4.4"
@@ -41,6 +42,7 @@ required-features = ["tokio-macros", "tls"]
 
 [features]
 default = [
+  "spark-3-5",
   "tonic/default",
   "tls"
 ]
@@ -56,6 +58,9 @@ tls = [
   "tonic/tls-ring",
   "tonic/tls-native-roots"
 ]
+# Spark Versions
+spark-3-4 = []
+spark-3-5 = []
 
 [profile.release]
 codegen-units = 1 # Improves optimizations

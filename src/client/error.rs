@@ -3,7 +3,7 @@ use crate::spark;
 
 use std::error::Error;
 use std::fmt;
-use url;
+use http::uri::InvalidUri;
 
 
 #[derive(Debug)]
@@ -37,14 +37,17 @@ pub(crate) enum ClientErrorKind {
     ExecutePlanRequest { status: tonic::Status, request: spark::ExecutePlanRequest },
     InterruptRequest { status: tonic::Status, request: spark::InterruptRequest },
     InvalidSessionID { source: uuid::Error, session_id: String },
-    InvalidConnectionString { source: Option<url::ParseError>, conn_string: String,  msg: String },
+    InvalidConnectionString { source: InvalidUri, conn_string: String,  msg: String },
     Io(IoError),
     ReattachExecuteRequest { status: tonic::Status, request: spark::ReattachExecuteRequest },
     ReleaseExecuteRequest { status: tonic::Status, request: spark::ReleaseExecuteRequest },
     SessionIDMismatch { client_session_id: String, request_session_id: String },
     Stream(tonic::Status),
+    TokenRequiresSSL,
+    Transport(tonic::transport::Error),
     Unimplemented(String),
-    UnspecifiedInterruptRequest
+    UnspecifiedInterruptRequest,
+    UserAgentTooLong { user_agent: String },
 }
 
 impl fmt::Display for ClientErrorKind {
@@ -75,8 +78,11 @@ impl fmt::Display for ClientErrorKind {
                 f, "Request session ID does not match the client: {client_session_id} != {request_session_id}"
             ),
             Self::Stream(status) => write!(f, "Failed to process stream: status {status}"),
+            Self::TokenRequiresSSL => write!(f, "Token can only be provided if 'use_ssl' is set to 'true'"),
+            Self::Transport(e) => write!(f, "Tonic transport error: {}", e),
             Self::Unimplemented(msg) => write!(f, "{msg}"),
             Self::UnspecifiedInterruptRequest => write!(f, "Interrupt Type was not specified."),
+            Self::UserAgentTooLong { user_agent } => write!(f, "user_agent header is too long: {user_agent}"),
         }
     }
 }
@@ -85,11 +91,9 @@ impl Error for ClientErrorKind {
 	fn source(&self) -> Option<&(dyn Error + 'static)> {
 		match self {
 			Self::InvalidSessionID { source, .. } => Some(source),
-			Self::InvalidConnectionString { source, .. } => match source {
-                Some(src) => Some(src),
-                None => None
-            },
+			Self::InvalidConnectionString { source, .. } => Some(source),
 			Self::Io(source) => Some(source),
+            Self::Transport(source) => Some(source),
 			_ => None,
 		}
 	}

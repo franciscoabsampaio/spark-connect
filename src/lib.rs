@@ -82,7 +82,7 @@ If you're coming from PySpark or Scala, this should be the familiar interface.
 
 - <b>[`SparkSession`](crate::SparkSession)</b> — the main entry point for executing
   SQL queries and managing a session.
-- <b>[`SparkClient`](crate::SparkClient)</b> — low-level gRPC client (used internally).
+- <b>[`SparkConnectClient`](crate::SparkConnectClient)</b> — low-level gRPC client (used internally).
 - <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> — helper for binding parameters
   and executing queries.
 
@@ -133,21 +133,37 @@ This project is not affiliated with, endorsed by, or sponsored by the Apache Sof
 “Apache”, “Apache Spark”, and “Spark Connect” are trademarks of the Apache Software Foundation.
 */
 
-mod io;
 pub mod client;
+mod conf;
+mod io;
 mod error;
 mod literal;
 pub mod query;
 mod session;
+
+/// The Spark version this crate was compiled against.
+pub const SPARK_VERSION: &str = env!("SPARK_VERSION");
 
 /// Spark Connect gRPC protobuf translated using [tonic].
 pub mod spark {
     tonic::include_proto!("spark.connect");
 }
 
+pub use conf::{SparkConf, SparkConfKey};
 pub use error::SparkError;
-pub use session::{SparkSessionBuilder, SparkSession};
+pub use session::SparkSession;
 pub use literal::ToLiteral;
 
 #[cfg(test)]
 mod test_utils;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_spark_version_is_set() {
+        assert!(!SPARK_VERSION.is_empty());
+        println!("Test running with Spark: {}", SPARK_VERSION);
+    }
+}

@@ -1,18 +1,18 @@
 //! Internal gRPC client abstraction for the Spark Connect protocol.
 //!
-//! This module defines [`SparkClient`], the low-level asynchronous client that
+//! This module defines [`SparkConnectClient`], the low-level asynchronous client that
 //! manages communication with a Spark Connect server over gRPC.
 //!
 //! <div class="warning">
 //! 
-//! End users are advised <b>not</b> to construct or use `SparkClient` directly — use
+//! End users are advised <b>not</b> to construct or use `SparkConnectClient` directly — use
 //! [`SparkSession`](crate::SparkSession) instead, which provides a high-level API.
 //! 
 //! </div>
 //!
 //! # Overview
 //!
-//! `SparkClient` wraps the generated [`SparkConnectServiceClient`] and provides:
+//! `SparkConnectClient` wraps the generated [`SparkConnectServiceClient`] and provides:
 //!
 //! - Connection setup (via [`ChannelBuilder`]);
 //! - Metadata injection (via [`HeaderInterceptor`]);
@@ -24,32 +24,27 @@
 //!
 //! Each call validates the active Spark session and maps server responses into
 //! safe Rust types or [`SparkError`] values.
-mod builder;
+mod channel_builder;
 mod error;
 mod handlers;
 mod middleware;
 
-pub use self::builder::ChannelBuilder;
-pub(crate) use self::error::{ClientError, ClientErrorKind};
-pub use self::middleware::HeaderInterceptor;
-use self::handlers::{AnalyzeHandler, ExecuteHandler, InterruptHandler};
+pub(crate) use error::{ClientError, ClientErrorKind};
+use handlers::{AnalyzeHandler, ExecuteHandler, InterruptHandler};
+use channel_builder::{ChannelBuilder, SparkGrpcClient};
+use crate::conf::SparkRemoteConf;
 use crate::spark;
-use crate::spark::spark_connect_service_client::SparkConnectServiceClient;
 use crate::spark::execute_plan_response::ResponseType;
 
 use arrow::array::RecordBatch;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::codec::Streaming;
-use tonic::transport::Channel;
 use uuid;
-
-/// Utility type alias for a gRPC channel with an attached interceptor.
-type InterceptedChannel = tonic::service::interceptor::InterceptedService<Channel, HeaderInterceptor>;
 
 /// Asynchronous gRPC client for Spark Connect.
 ///
-/// `SparkClient` manages RPC calls, session validation, and response
+/// `SparkConnectClient` manages RPC calls, session validation, and response
 /// interpretation. It is used internally by [`SparkSession`](crate::SparkSession)
 /// to execute plans and perform analysis or interrupt operations.
 ///
@@ -64,10 +59,10 @@ type InterceptedChannel = tonic::service::interceptor::InterceptedService<Channe
 /// - Maintains session context (e.g. `session_id`, `user_context`);
 /// - Automatically attaches metadata headers.
 #[derive(Clone, Debug)]
-pub struct SparkClient {
-    pub(crate) builder: ChannelBuilder,
-    stub: Arc<RwLock<SparkConnectServiceClient<InterceptedChannel>>>,
+pub struct SparkConnectClient {
+    stub: Arc<RwLock<SparkGrpcClient>>,
     user_context: Option<spark::UserContext>,
+    user_agent: Option<String>,
     use_reattachable_execute: bool,
     session_id: String,
     operation_id: Option<String>,
@@ -77,33 +72,33 @@ pub struct SparkClient {
     handler_interrupt: InterruptHandler,
 }
 
-impl SparkClient {
+impl SparkConnectClient {
     /// Creates a new client from a gRPC stub and a configured [`ChannelBuilder`].
     ///
     /// Typically called internally by [`SparkSessionBuilder`](crate::SparkSessionBuilder).
-    pub(crate) fn new(
-        stub: Arc<RwLock<SparkConnectServiceClient<InterceptedChannel>>>,
-        builder: ChannelBuilder,
-    ) -> Self {
-        let user_ref = builder.user_id.clone().unwrap_or("".to_string());
-        let session_id = builder.session_id.to_string();
+    pub(crate) async fn new(
+        conf: &SparkRemoteConf
+    ) -> Result<Self, ClientError> {
+        let builder = ChannelBuilder::default()
+            .config(conf)?;
+        let grpc_client = builder.to_client().await?;
 
-        Self {
-            stub,
-            builder,
+        Ok(Self {
+            stub: Arc::new(RwLock::new(grpc_client)),
             user_context: Some(spark::UserContext {
-                user_id: user_ref.clone(),
-                user_name: user_ref,
+                user_id: builder.user_id.clone(),
+                user_name: builder.user_id.clone(),
                 extensions: vec![],
             }),
-            session_id,
+            user_agent: builder.user_agent.clone(),
+            session_id: builder.session_id.to_string(),
             operation_id: None,
             response_id: None,
             handler_analyze: AnalyzeHandler::default(),
             handler_execute: ExecuteHandler::default(),
             handler_interrupt: InterruptHandler::default(),
             use_reattachable_execute: true,
-        }
+        })
     }
 
     /// Returns the session ID associated with this client.
@@ -145,7 +140,7 @@ impl SparkClient {
     fn validate_session(&self, session_id: &str) -> Result<(), ClientError> {
         if self.session_id() != session_id {
             return Err(ClientError::new(ClientErrorKind::SessionIDMismatch {
-                client_session_id: self.builder.session_id.to_string(),
+                client_session_id: self.session_id(),
                 request_session_id: session_id.to_string()
             }));
         }
@@ -161,7 +156,7 @@ impl SparkClient {
         let request = spark::AnalyzePlanRequest {
             session_id: self.session_id(),
             user_context: self.user_context.clone(),
-            client_type: self.builder.user_agent.clone(),
+            client_type: self.user_agent.clone(),
             analyze: Some(analyze),
         };
         
@@ -245,7 +240,7 @@ impl SparkClient {
         let mut request = spark::InterruptRequest {
             session_id: self.session_id(),
             user_context: self.user_context.clone(),
-            client_type: self.builder.user_agent.clone(),
+            client_type: self.user_agent.clone(),
             interrupt_type: 0,
             interrupt: None,
         };
@@ -330,7 +325,7 @@ impl SparkClient {
             user_context: self.user_context.clone(),
             operation_id: Some(operation_id),
             plan: None,
-            client_type: self.builder.user_agent.clone(),
+            client_type: self.user_agent.clone(),
             request_options: vec![spark::execute_plan_request::RequestOption {
                 request_option: Some(
                     spark::execute_plan_request::request_option::RequestOption::ReattachOptions(
@@ -391,7 +386,7 @@ impl SparkClient {
             session_id: self.session_id(),
             user_context: self.user_context.clone(),
             operation_id: self.operation_id.clone().unwrap(),
-            client_type: self.builder.user_agent.clone(),
+            client_type: self.user_agent.clone(),
             last_response_id: self.response_id.clone(),
         };
 
@@ -467,7 +462,7 @@ impl SparkClient {
             session_id: self.session_id(),
             user_context: self.user_context.clone(),
             operation_id: self.operation_id.clone().unwrap(),
-            client_type: self.builder.user_agent.clone(),
+            client_type: self.user_agent.clone(),
             release: Some(release),
         };
 
@@ -497,7 +492,7 @@ mod tests {
         let session = setup_session().await.expect("Failed to create Spark session");
 
         // Create a clone of the client and manually corrupt its session ID
-        let mut client_with_bad_session = session.client().clone();
+        let mut client_with_bad_session = session.client()?.clone();
         client_with_bad_session.session_id = "invalid-session-id".to_string();
 
         // Act: Attempt to use the corrupted client. This will cause the real server
@@ -517,7 +512,7 @@ mod tests {
     }
     
     /// Verifies that the client can send an interrupt request without errors.
-    /// This tests the `SparkClient::interrupt_request` method.
+    /// This tests the `SparkConnectClient::interrupt_request` method.
     #[tokio::test]
     async fn test_interrupt_all_request() {
         // Arrange: Start server and create a session
@@ -525,7 +520,7 @@ mod tests {
         
         // Act: Send an "interrupt all" request. The server should accept this
         // command gracefully even if nothing is running.
-        let mut client = session.client();
+        let mut client = session.client()?;
         let result = client
             .interrupt(spark::interrupt_request::InterruptType::All, None)
             .await

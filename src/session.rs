@@ -3,15 +3,15 @@
 //! This module provides [`SparkSession`] — the main entry point for interacting
 //! with a Spark Connect server. It exposes a familiar API surface inspired by
 //! PySpark and Scala's `SparkSession`, while delegating low-level gRPC work to
-//! [`SparkClient`](crate::SparkClient).
+//! [`SparkConnectClient`](crate::SparkConnectClient).
 //!
 //! # Typical usage
 //!
-//! ```
+//! ```no_run
 //! use spark_connect::SparkSessionBuilder;
 //!
 //! # tokio_test::block_on(async {
-//! let session = SparkSessionBuilder::new("sc://localhost:15002")
+//! let session = SparkSessionBuilder::new("sc://my-spark-server:15002")
 //!     .build()
 //!     .await
 //!     .expect("failed to connect");
@@ -19,25 +19,75 @@
 //! println!("Connected to Spark session: {}", session.session_id());
 //! # });
 //! ```
+//! 
+//! # Using a Custom Server CA Certificate
+//! 
+//! Use this when your Spark server uses a self-signed certificate or an 
+//! internal company Certificate Authority, but you do not need client authentication.
+//!
+//! ```no_run
+//! # use spark_connect::SparkSessionBuilder;
+//! # tokio_test::block_on(async {
+//! let ca_cert = std::fs::read("path/to/ca.pem").unwrap();
+//!
+//! let session = SparkSessionBuilder::new("sc://my-spark-server:15002;use_ssl=true")
+//!     .with_ca_certificate(ca_cert)
+//!     .build()
+//!     .await
+//!     .unwrap();
+//! # });
+//! ```
+//! 
+//! # Mutual TLS (mTLS) with System Roots
+//! 
+//! Use this when your Spark server has a publicly trusted certificate (e.g., AWS, Let's Encrypt), 
+//! but requires the client to authenticate itself.
+//! 
+//! ```no_run
+//! # use spark_connect::SparkSessionBuilder;
+//! # tokio_test::block_on(async {
+//! let client_cert = std::fs::read("path/to/client.pem").unwrap();
+//! let client_key = std::fs::read("path/to/client.key").unwrap();
+//! 
+//! let session = SparkSessionBuilder::new("sc://my-spark-server:15002;use_ssl=true")
+//!     .with_client_identity(client_cert, client_key)
+//!     .build()
+//!     .await
+//!     .unwrap();
+//! # });
+//! ```
+//!
+//! # Mutual TLS (mTLS) with a Custom CA
+//! 
+//! Use this for fully internal infrastructure where both the server's certificate 
+//! needs custom verification AND the client needs to authenticate.
+//! 
+//! ```no_run
+//! # use spark_connect::SparkSessionBuilder;
+//! # tokio_test::block_on(async {
+//! let ca_cert = std::fs::read("path/to/ca.pem").unwrap();
+//! let client_cert = std::fs::read("path/to/client.pem").unwrap();
+//! let client_key = std::fs::read("path/to/client.key").unwrap();
+//! 
+//! let session = SparkSessionBuilder::new("sc://internal-spark-server:15002;use_ssl=true")
+//!     .with_ca_certificate(ca_cert)
+//!     .with_client_identity(client_cert, client_key)
+//!     .build()
+//!     .await
+//!     .unwrap();
+//! # });
+//! ```
 //!
 //! The `SparkSession` provides an ergonomic API for executing SQL, analyzing
 //! plans, and inspecting results — without exposing internal client plumbing.
-use crate::client::ChannelBuilder;
-use crate::client::HeaderInterceptor;
-use crate::client::SparkClient;
+use crate::client::SparkConnectClient;
+use crate::conf::{SparkConf, SparkConfKey, ResolvedSparkConf};
 use crate::spark;
-use crate::spark::spark_connect_service_client::SparkConnectServiceClient;
 use crate::spark::expression::Literal;
 use crate::query::SqlQueryBuilder;
 use crate::{SparkError, error::SparkErrorKind};
 
 use arrow::record_batch::RecordBatch;
-use std::sync::Arc;
-use tokio::sync::RwLock;
-use tonic::transport::Channel;
-#[cfg(feature = "tls")]
-use tonic::transport::ClientTlsConfig;
-use tower::ServiceBuilder;
 
 /// Builder for creating [`SparkSession`] instances.
 ///
@@ -59,69 +109,79 @@ use tower::ServiceBuilder;
 /// println!("Session ID: {}", session.session_id());
 /// # });
 /// ```
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct SparkSessionBuilder {
-    channel_builder: ChannelBuilder,
+    conf: SparkConf,
 }
 
 impl SparkSessionBuilder {
-    /// Creates a new builder from a Spark Connect connection string.
+    /// Creates a new builder with default connection string
+    fn new() -> Self {
+        Self {
+            conf: SparkConf::new()
+        }
+    }
+
+    /// Sets a configuration option for the [`SparkSession`].
+    /// Then validates the configuration.
+    pub fn config(mut self, key: SparkConfKey, value: impl Into<String>) -> Result<Self, SparkError> {
+        self.conf.set(key, value.into())?;
+        Ok(self)
+    }
+
+    /// Sets the channel builder connection string.
     ///
     /// The connection string must follow the format:
     /// `sc://<host>:<port>/;key1=value1;key2=value2;...`
-    pub fn new(connection: &str) -> Self {
-        let channel_builder =
-            ChannelBuilder::new(connection).expect("Invalid Spark connection string");
-        Self { channel_builder }
+    pub fn remote(self, url: &str) -> Result<Self, SparkError> {
+        self.config(SparkConfKey::Remote, url)
     }
 
-    /// Establishes a connection and returns a ready-to-use [`SparkSession`].
+    /// Sets the Spark master URL to connect to,
+    /// such as "local" to run locally, "local[4]"
+    /// to run locally with 4 cores, or "spark://master:7077"
+    /// to run on a Spark standalone cluster.
+    pub fn master(self, url: &str) -> Result<Self, SparkError> {
+        self.config(SparkConfKey::Master, url)
+    }
+
+    /// Sets a name for the application, which will be shown in the Spark web UI.
+    /// If no application name is set, a randomly generated name will be used.
+    pub fn app_name(self, url: &str) -> Result<Self, SparkError> {
+        self.config(SparkConfKey::AppName, url)
+    }
+
+    /// Enables Hive support, including connectivity to a persistent Hive metastore,
+    /// support for Hive SerDes, and Hive user-defined functions.
+    pub fn enable_hive_support(self) -> Result<Self, SparkError> {
+        self.config(SparkConfKey::CatalogImplementation, "hive")
+    }
+
+    /// Returns a ready-to-use [`SparkSession`].
     ///
-    /// This method performs:
-    /// - gRPC channel setup;
-    /// - Metadata interceptor attachment;
-    /// - [`SparkClient`](crate::SparkClient) initialization.
-    pub async fn build(&self) -> Result<SparkSession, SparkError> {
-        // Create gRPC endpoint
-        let mut endpoint = Channel::from_shared(self.channel_builder.endpoint())
-            .map_err(|source| {
-                SparkError::new(SparkErrorKind::InvalidConnectionUri {
-                    source, uri: self.channel_builder.endpoint()
-                })
-            })?;
+    /// Starts by resolving the SparkConf,
+    /// ensuring no conflicting configurations are present,
+    /// and getting values from environment variables if needed.
+    pub async fn create(&mut self) -> Result<SparkSession, SparkError> {
+        let spark_conf = self.conf.resolve()?;
 
-        // Configure TLS if enabled to send
-        // the correct Domain Name (SNI) during handshake.
-        #[cfg(feature = "tls")]
-        if self.channel_builder.use_ssl {
-            let tls_config = ClientTlsConfig::new()
-                .domain_name(&self.channel_builder.host)
-                // Use system root certificates.
-                .with_native_roots();
-            
-            endpoint = endpoint.tls_config(tls_config).map_err(|source| {
-                SparkError::new(SparkErrorKind::Transport(source))
-            })?;
+        match spark_conf {
+            // Spark Connect mode
+            ResolvedSparkConf::Remote(remote) => {
+                // os.environ["SPARK_CONNECT_MODE_ENABLED"] = "1"
+                let connect_client = SparkConnectClient::new(&remote).await?;
+                Ok(SparkSession::new(
+                    Some(connect_client.clone()),
+                    connect_client.session_id().to_string()
+                ))
+            },
+            // Classic mode
+            ResolvedSparkConf::Master(master) => {
+                Err(SparkError::new(SparkErrorKind::Unimplemented(
+                    format!("Master is not yet supported: {master:?}"),
+                )))
+            },
         }
-
-        // Connect to the endpoint and build the channel.
-        let channel = ServiceBuilder::new().service(
-            endpoint.connect().await.map_err(|source| {
-                SparkError::new(SparkErrorKind::Transport(source))
-            })?
-        );
-
-        let grpc_client = SparkConnectServiceClient::with_interceptor(
-            channel, HeaderInterceptor::new(
-                self.channel_builder.headers().unwrap_or_default()
-            )
-        );
-        let spark_client = SparkClient::new(
-            Arc::new(RwLock::new(grpc_client)),
-            self.channel_builder.clone(),
-        );
-
-        Ok(SparkSession::new(spark_client))
     }
 }
 
@@ -130,7 +190,7 @@ impl SparkSessionBuilder {
 /// `SparkSession` is the main entry point for executing commands, analyzing
 /// queries, and retrieving results from Spark Connect.
 ///
-/// It wraps an internal [`SparkClient`](crate::SparkClient) and tracks session
+/// It wraps an internal [`SparkConnectClient`](crate::SparkConnectClient) and tracks session
 /// state (such as the `session_id`).
 ///
 /// # Examples
@@ -149,17 +209,24 @@ impl SparkSessionBuilder {
 /// ```
 #[derive(Clone, Debug)]
 pub struct SparkSession {
-    client: SparkClient,
+    connect_client: Option<SparkConnectClient>,
     session_id: String,
 }
 
 impl SparkSession {
-    /// Creates a new session from a [`SparkClient`].
+    /// Creates a new builder object
+    pub fn builder() -> SparkSessionBuilder {
+        SparkSessionBuilder::new()
+    }
+
+    /// Creates a new session from a [`SparkConnectClient`].
     ///
     /// Usually invoked internally by [`SparkSessionBuilder::build`].
-    pub(crate) fn new(client: SparkClient) -> Self {
-        let session_id = client.session_id().to_string();
-        Self { client, session_id }
+    pub(crate) fn new(
+        connect_client: Option<SparkConnectClient>,
+        session_id: String,
+    ) -> Self {
+        Self { connect_client, session_id }
     }
 
      /// Returns the unique session identifier for this connection.
@@ -167,13 +234,17 @@ impl SparkSession {
         self.session_id.to_string()
     }
 
-    /// Returns a mutable reference to the underlying [`SparkClient`].
+    /// Returns a mutable reference to the underlying [`SparkConnectClient`].
     ///
     /// While exposed for advanced use cases, typical consumers are advised to rely on
     /// higher-level abstractions in `SparkSession` instead of manipulating the
     /// client directly.
-    pub(crate) fn client(&self) -> SparkClient {
-        self.client.clone()
+    pub(crate) fn client(&self) -> Result<SparkConnectClient, SparkError> {
+        if let Some(client) = &self.connect_client {
+            Ok(client.clone())
+        } else {
+            Err(SparkError::new(SparkErrorKind::ClientNotFound))
+        }
     }
 
     /// Execute a SQL query and return a lazy [`plan`](crate::spark::Plan).
@@ -196,7 +267,7 @@ impl SparkSession {
                 command_type: Some(sql_cmd),
             })),
         };
-        let mut client = self.client();
+        let mut client = self.client()?;
         let result = client.execute_plan(plan).await?;
 
         Ok(spark::Plan {
@@ -215,7 +286,7 @@ impl SparkSession {
 
     /// Collect the results from a lazy [`plan`](crate::spark::Plan).
     pub async fn collect(&self, plan: spark::Plan) -> Result<Vec<RecordBatch>, SparkError> {
-        let mut client = self.client();
+        let mut client = self.client()?;
 
         Ok(client.execute_plan(plan).await?.batches())
     }
@@ -223,7 +294,7 @@ impl SparkSession {
     /// Interrupt all running operations.
     pub async fn interrupt_all(&self) -> Result<Vec<String>, SparkError> {
         Ok(
-            self.client().interrupt(
+            self.client()?.interrupt(
                 spark::interrupt_request::InterruptType::All,
                 None
             ).await?.interrupted_ids()
@@ -233,7 +304,7 @@ impl SparkSession {
     /// Interrupt a specific operation by ID.
     pub async fn interrupt_operation(&self, op_id: &str) -> Result<Vec<String>, SparkError> {
         Ok(
-            self.client().interrupt(
+            self.client()?.interrupt(
                 spark::interrupt_request::InterruptType::OperationId,
                 Some(op_id.to_string()),
             ).await?.interrupted_ids()
@@ -246,7 +317,7 @@ impl SparkSession {
             spark::analyze_plan_request::SparkVersion {},
         );
 
-        let mut client = self.client.clone();
+        let mut client = self.client()?.clone();
         
         Ok(client.analyze(version).await?.spark_version()?)
     }
@@ -268,14 +339,14 @@ mod tests {
 
     /// Verifies that the client can connect, establish a session, and perform
     /// a basic analysis operation (fetching the Spark version).
-    /// This tests `SparkClient::new` and `SparkClient::analyze`.
+    /// This tests `SparkConnectClient::new` and `SparkConnectClient::analyze`.
     #[tokio::test]
     async fn test_session_version() -> Result<(), SparkError> {
         // Arrange: Start server and create a session
         let spark = setup_session().await?;
         
         // Act: The version() method on SparkSession will trigger the
-        // underlying SparkClient::analyze call.
+        // underlying SparkConnectClient::analyze call.
         let version = spark.version().await?;
 
         // Assert: Check for a valid version string
@@ -286,7 +357,7 @@ mod tests {
 
     /// Verifies that the client can execute a SQL query
     /// and correctly retrieve the resulting Arrow RecordBatches.
-    /// This tests `SparkClient::execute_command_and_fetch`.
+    /// This tests `SparkConnectClient::execute_command_and_fetch`.
     #[tokio::test]
     async fn test_sql() {
         // Arrange: Start server and create a session
