@@ -5,10 +5,10 @@
 
 ## Summary
 
-- Classes in Python inventory: **246**
-- Classes declared by Rust: **4** (1.6%)
-- Members in Python inventory: **1703**
-- Members covered by Rust: **23** (1.4%)
+- Classes in Python inventory: **155**
+- Classes declared by Rust: **4** (2.6%)
+- Members in Python inventory: **999**
+- Members covered by Rust: **23** (2.3%)
   - implemented: 17
   - partial: 5
   - unimplemented: 1
@@ -22,9 +22,6 @@
 | `pyspark.sql.session.SparkSession.Builder` | implemented | 7 | 7 | 100% |
 | `pyspark.sql.session.SparkSession` | implemented | 29 | 6 | 21% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 1 | 3% |
-| `pyspark.sql.catalog.Catalog` | — | 27 | 0 | 0% |
-| `pyspark.sql.column.Column` | — | 32 | 0 | 0% |
-| `pyspark.sql.conf.RuntimeConfig` | — | 4 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionLike` | — | 2 | 0 | 0% |
 | `pyspark.sql.connect.catalog.Catalog` | — | 27 | 0 | 0% |
@@ -175,95 +172,7 @@
 | `pyspark.sql.connect.window.Window` | — | 4 | 0 | 0% |
 | `pyspark.sql.connect.window.WindowFrame` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect.window.WindowSpec` | — | 4 | 0 | 0% |
-| `pyspark.sql.context.HiveContext` | — | 24 | 0 | 0% |
-| `pyspark.sql.context.SQLContext` | — | 23 | 0 | 0% |
-| `pyspark.sql.dataframe.DataFrame` | — | 106 | 0 | 0% |
-| `pyspark.sql.dataframe.DataFrameNaFunctions` | — | 3 | 0 | 0% |
-| `pyspark.sql.dataframe.DataFrameStatFunctions` | — | 6 | 0 | 0% |
-| `pyspark.sql.group.GroupedData` | — | 12 | 0 | 0% |
-| `pyspark.sql.observation.Observation` | — | 1 | 0 | 0% |
-| `pyspark.sql.pandas.conversion.PandasConversionMixin` | — | 1 | 0 | 0% |
-| `pyspark.sql.pandas.conversion.SparkConversionMixin` | — | 1 | 0 | 0% |
-| `pyspark.sql.pandas.functions.PandasUDFType` | — | 0 | 0 | 0% |
-| `pyspark.sql.pandas.group_ops.PandasCogroupedOps` | — | 1 | 0 | 0% |
-| `pyspark.sql.pandas.group_ops.PandasGroupedOpsMixin` | — | 4 | 0 | 0% |
-| `pyspark.sql.pandas.map_ops.PandasMapOpsMixin` | — | 2 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ApplyInPandasWithStateSerializer` | — | 4 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ArrowCollectSerializer` | — | 3 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ArrowStreamPandasSerializer` | — | 4 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ArrowStreamPandasUDFSerializer` | — | 4 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ArrowStreamPandasUDTFSerializer` | — | 4 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ArrowStreamSerializer` | — | 3 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.ArrowStreamUDFSerializer` | — | 3 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.CogroupUDFSerializer` | — | 4 | 0 | 0% |
-| `pyspark.sql.pandas.serializers.SpecialLengths` | — | 0 | 0 | 0% |
-| `pyspark.sql.readwriter.DataFrameReader` | — | 12 | 0 | 0% |
-| `pyspark.sql.readwriter.DataFrameWriter` | — | 16 | 0 | 0% |
-| `pyspark.sql.readwriter.DataFrameWriterV2` | — | 11 | 0 | 0% |
-| `pyspark.sql.readwriter.OptionUtils` | — | 0 | 0 | 0% |
 | `pyspark.sql.session.classproperty` | — | 3 | 0 | 0% |
-| `pyspark.sql.sql_formatter.SQLStringFormatter` | — | 9 | 0 | 0% |
-| `pyspark.sql.streaming.listener.JStreamingQueryListener` | — | 4 | 0 | 0% |
-| `pyspark.sql.streaming.listener.JStreamingQueryListener.Java` | — | 0 | 0 | 0% |
-| `pyspark.sql.streaming.listener.QueryIdleEvent` | — | 5 | 0 | 0% |
-| `pyspark.sql.streaming.listener.QueryProgressEvent` | — | 3 | 0 | 0% |
-| `pyspark.sql.streaming.listener.QueryStartedEvent` | — | 6 | 0 | 0% |
-| `pyspark.sql.streaming.listener.QueryTerminatedEvent` | — | 6 | 0 | 0% |
-| `pyspark.sql.streaming.listener.SinkProgress` | — | 7 | 0 | 0% |
-| `pyspark.sql.streaming.listener.SourceProgress` | — | 12 | 0 | 0% |
-| `pyspark.sql.streaming.listener.StateOperatorProgress` | — | 16 | 0 | 0% |
-| `pyspark.sql.streaming.listener.StreamingQueryListener` | — | 5 | 0 | 0% |
-| `pyspark.sql.streaming.listener.StreamingQueryProgress` | — | 19 | 0 | 0% |
-| `pyspark.sql.streaming.query.StreamingQuery` | — | 12 | 0 | 0% |
-| `pyspark.sql.streaming.query.StreamingQueryManager` | — | 6 | 0 | 0% |
-| `pyspark.sql.streaming.readwriter.DataStreamReader` | — | 11 | 0 | 0% |
-| `pyspark.sql.streaming.readwriter.DataStreamWriter` | — | 11 | 0 | 0% |
-| `pyspark.sql.streaming.state.GroupState` | — | 12 | 0 | 0% |
-| `pyspark.sql.streaming.state.GroupStateTimeout` | — | 0 | 0 | 0% |
-| `pyspark.sql.types.AnsiIntervalType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.ArrayType` | — | 8 | 0 | 0% |
-| `pyspark.sql.types.AtomicType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.BinaryType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.BooleanType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.ByteType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.CharType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.DataType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.DataTypeSingleton` | — | 1 | 0 | 0% |
-| `pyspark.sql.types.DateConverter` | — | 2 | 0 | 0% |
-| `pyspark.sql.types.DateType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.DatetimeConverter` | — | 2 | 0 | 0% |
-| `pyspark.sql.types.DatetimeNTZConverter` | — | 2 | 0 | 0% |
-| `pyspark.sql.types.DayTimeIntervalType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.DayTimeIntervalTypeConverter` | — | 2 | 0 | 0% |
-| `pyspark.sql.types.DecimalType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.DoubleType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.FloatType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.FractionalType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.IntegerType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.IntegralType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.LongType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.MapType` | — | 8 | 0 | 0% |
-| `pyspark.sql.types.NullType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.NumericType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.NumpyArrayConverter` | — | 2 | 0 | 0% |
-| `pyspark.sql.types.NumpyScalarConverter` | — | 2 | 0 | 0% |
-| `pyspark.sql.types.ShortType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.StringType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.StructField` | — | 8 | 0 | 0% |
-| `pyspark.sql.types.StructType` | — | 10 | 0 | 0% |
-| `pyspark.sql.types.TimestampNTZType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.TimestampType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.UserDefinedType` | — | 13 | 0 | 0% |
-| `pyspark.sql.types.VarcharType` | — | 7 | 0 | 0% |
-| `pyspark.sql.types.YearMonthIntervalType` | — | 7 | 0 | 0% |
-| `pyspark.sql.udf.UDFRegistration` | — | 3 | 0 | 0% |
-| `pyspark.sql.udf.UserDefinedFunction` | — | 2 | 0 | 0% |
-| `pyspark.sql.udtf.UDTFRegistration` | — | 1 | 0 | 0% |
-| `pyspark.sql.udtf.UserDefinedTableFunction` | — | 2 | 0 | 0% |
-| `pyspark.sql.utils.ForeachBatchFunction` | — | 1 | 0 | 0% |
-| `pyspark.sql.utils.ForeachBatchFunction.Java` | — | 0 | 0 | 0% |
-| `pyspark.sql.window.Window` | — | 4 | 0 | 0% |
-| `pyspark.sql.window.WindowSpec` | — | 4 | 0 | 0% |
 
 ## Detail
 

@@ -27,7 +27,8 @@ pyspark-inventory:
 	@venv/bin/pip install -q -r $(PYSPARK_REQUIREMENTS)
 	@mkdir -p $(dir $(PYSPARK_INVENTORY_OUT))
 	venv/bin/python tools/pyspark_inventory.py \
-		--package pyspark.sql \
+		--package pyspark.sql.connect \
+		--package pyspark.sql.session \
 		--version-from pyspark \
 		-o $(PYSPARK_INVENTORY_OUT)
 	@echo "Wrote $(PYSPARK_INVENTORY_OUT)"
