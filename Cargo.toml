@@ -1,3 +1,6 @@
+[workspace]
+members = ["crates/api-parity-core", "crates/api-parity-macros"]
+
 [package]
 edition = "2024"
 authors = ["Francisco A. B. Sampaio <franciscoabsampaio@gmail.com>"]
@@ -13,6 +16,7 @@ keywords = ["spark", "connect", "sql", "data", "client"]
 categories = ["api-bindings", "database"]
 
 [dependencies]
+api-parity-core = { path = "crates/api-parity-core" }
 arrow = { version = "56.2.0", default-features = false, features = ["ipc"] }
 chrono = { version = "0.4.42", optional = true }
 futures-util = "0.3.31"
@@ -66,4 +70,4 @@ spark-3-5 = []
 codegen-units = 1 # Improves optimizations
 lto = true
 opt-level = "z"   # "z" for size, "3" for maximum performance
-panic = "abort"   # Abort on panic instead of unwinding — smaller binaries and slightly faster
+panic = "abort"   # Abort on panic instead of unwinding - smaller binaries and slightly faster

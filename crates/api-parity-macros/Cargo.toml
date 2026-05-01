@@ -1,9 +1,9 @@
 [package]
-name = "parity-macros"
+name = "api-parity-macros"
 version = "0.1.0"
 edition = "2024"
 license = "Apache-2.0"
-description = "Attribute macros for the parity tracker."
+description = "Attribute macros for the api-parity tracker."
 
 [lib]
 proc-macro = true

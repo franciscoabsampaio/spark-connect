@@ -1,27 +1,22 @@
 //! End-to-end tests: annotate some dummy items, then iterate the inventory
 //! and assert the expected entries are registered with correct metadata.
 
-// The macros emit `cfg(feature = "spark-3-X")` checks intended for the main
-// spark-connect crate, which declares them. In these tests the features are
-// absent, which is fine — we just need to silence the lint.
-#![allow(unexpected_cfgs)]
-
-use parity_core::{inventory, parity, parity_impl, ParityEntry, Status};
+use api_parity_core::{inventory, api_parity, api_parity_impl, ParityEntry, Status};
 
 struct Dummy;
 
-#[parity_impl]
+#[api_parity_impl]
 impl Dummy {
-    #[parity(
-        pyspark = "Dummy.foo",
+    #[api_parity(
+        reference = "Dummy.foo",
         status = Implemented,
         since = "3.4",
     )]
     #[allow(dead_code)]
     fn foo(&self) {}
 
-    #[parity(
-        pyspark = "Dummy.bar",
+    #[api_parity(
+        reference = "Dummy.bar",
         status = Partial,
         comment = "only handles the happy path",
         issue = 7,
@@ -30,21 +25,21 @@ impl Dummy {
     fn bar(&self) {}
 }
 
-#[parity(
-    pyspark = "module.free_fn",
+#[api_parity(
+    reference = "module.free_fn",
     status = Implemented,
 )]
 #[allow(dead_code)]
 fn free_fn() {}
 
-fn find(pyspark: &str) -> Option<&'static ParityEntry> {
-    inventory::iter::<ParityEntry>.into_iter().find(|e| e.pyspark == pyspark)
+fn find(reference: &str) -> Option<&'static ParityEntry> {
+    inventory::iter::<ParityEntry>.into_iter().find(|e| e.reference == reference)
 }
 
 #[test]
 fn impl_method_is_registered_with_type_prefix() {
     let entry = find("Dummy.foo").expect("Dummy.foo not registered");
-    assert_eq!(entry.rust, "Dummy::foo");
+    assert_eq!(entry.implementation, "Dummy::foo");
     assert_eq!(entry.status, Status::Implemented);
     assert_eq!(entry.since, Some("3.4"));
     assert_eq!(entry.comment, None);
@@ -62,8 +57,8 @@ fn partial_entry_carries_comment_and_issue() {
 fn free_fn_uses_module_path() {
     let entry = find("module.free_fn").expect("module.free_fn not registered");
     assert!(
-        entry.rust.ends_with("::free_fn"),
-        "expected rust path to end with ::free_fn, got {}",
-        entry.rust,
+        entry.implementation.ends_with("::free_fn"),
+        "expected implementation path to end with ::free_fn, got {}",
+        entry.implementation,
     );
 }

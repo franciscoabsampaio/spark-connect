@@ -1,5 +1,5 @@
 [package]
-name = "parity-core"
+name = "api-parity-core"
 version = "0.1.0"
 edition = "2024"
 license = "Apache-2.0"
@@ -7,4 +7,4 @@ description = "Parity tracking primitives for spark-connect."
 
 [dependencies]
 inventory = "0.3"
-parity-macros = { path = "../parity-macros" }
+api-parity-macros = { path = "../api-parity-macros" }
