@@ -4,8 +4,8 @@ use std::collections::HashMap;
 use std::env::consts;
 use std::str::FromStr;
 use api_parity_core::api_parity_impl;
-use uuid::Uuid;
 use tonic::transport::{Channel, ClientTlsConfig}; 
+use uuid::Uuid;
 
 use crate::SPARK_VERSION;
 use crate::conf::SparkRemoteConf;
@@ -53,7 +53,7 @@ impl Default for ChannelBuilder {
     fn default() -> ChannelBuilder {
         ChannelBuilder {
             host: "localhost".into(),
-            port: 15002,
+            port: ChannelBuilder::default_port(),
             session_id: None,
             token: None,
             use_ssl: false,
@@ -68,6 +68,14 @@ impl Default for ChannelBuilder {
     status = Implemented,
 )]
 impl ChannelBuilder {
+    #[api_parity(
+        reference = ".default_port",
+        status = Implemented,
+    )]
+    pub fn default_port() -> u16 {
+        15002
+    }
+
     pub(crate) fn config(mut self, conf: &SparkRemoteConf) -> Result<Self, ClientError> {
         self.host = conf.uri.host.clone();
         self.port = conf.uri.port;
@@ -115,11 +123,11 @@ impl ChannelBuilder {
     }
 
     #[api_parity(
-        reference = ".secure",
+        reference = ".get",
         status = Implemented,
     )]
-    pub fn secure(&self) -> bool {
-        self.use_ssl
+    pub fn get(&self, key: &str) -> Option<String> {
+        self.metadata.get(key).cloned()
     }
 
     #[api_parity(
@@ -143,6 +151,14 @@ impl ChannelBuilder {
     )]
     pub fn metadata(&self) -> HashMap<String, String> {
         self.metadata.clone()
+    }
+
+    #[api_parity(
+        reference = ".secure",
+        status = Implemented,
+    )]
+    pub fn secure(&self) -> bool {
+        self.use_ssl
     }
 
     #[api_parity(

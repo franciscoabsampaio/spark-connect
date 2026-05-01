@@ -8,7 +8,7 @@ use http::uri::InvalidUri;
 
 #[derive(Debug)]
 #[non_exhaustive]
-pub(crate) struct ClientError {
+pub struct ClientError {
     pub(crate) kind: ClientErrorKind
 }
 

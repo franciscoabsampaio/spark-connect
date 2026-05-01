@@ -8,8 +8,8 @@
 - Classes in Python inventory: **246**
 - Classes declared by Rust: **4** (1.6%)
 - Members in Python inventory: **1703**
-- Members covered by Rust: **19** (1.1%)
-  - implemented: 14
+- Members covered by Rust: **22** (1.3%)
+  - implemented: 17
   - partial: 5
   - unimplemented: 0
 - Stale Rust references (no match in Python): **0**
@@ -18,8 +18,8 @@
 
 | Class | Class status | Python members | Covered | % |
 |---|---|---:|---:|---:|
+| `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
 | `pyspark.sql.session.SparkSession.Builder` | implemented | 7 | 6 | 86% |
-| `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 6 | 67% |
 | `pyspark.sql.session.SparkSession` | implemented | 29 | 6 | 21% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 1 | 3% |
 | `pyspark.sql.catalog.Catalog` | — | 27 | 0 | 0% |
@@ -267,6 +267,22 @@
 
 ## Detail
 
+### `pyspark.sql.connect.client.core.ChannelBuilder`
+
+- Class status: **implemented** (impl `ChannelBuilder`)
+
+| Member | Status | Implementation | Comment |
+|---|---|---|---|
+| `default_port` | implemented | `ChannelBuilder::default_port` |  |
+| `endpoint` | implemented | `ChannelBuilder::endpoint` |  |
+| `get` | implemented | `ChannelBuilder::get` |  |
+| `metadata` | partial | `ChannelBuilder::metadata` | This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel. |
+| `secure` | implemented | `ChannelBuilder::secure` |  |
+| `session_id` | implemented | `ChannelBuilder::session_id` |  |
+| `toChannel` | partial | `ChannelBuilder::to_client` | Creates a gRPC client from the channel builder, instead of a channel. |
+| `userAgent` | implemented | `ChannelBuilder::user_agent` |  |
+| `userId` | implemented | `ChannelBuilder::user_id` |  |
+
 ### `pyspark.sql.session.SparkSession.Builder`
 
 - Class status: **implemented** (impl `SparkSessionBuilder`)
@@ -280,22 +296,6 @@
 | `getOrCreate` | — | — |  |
 | `master` | partial | `SparkSessionBuilder::master` | value is stored but classic-mode (non-sc://) resolution is not wired up |
 | `remote` | implemented | `SparkSessionBuilder::remote` |  |
-
-### `pyspark.sql.connect.client.core.ChannelBuilder`
-
-- Class status: **implemented** (impl `ChannelBuilder`)
-
-| Member | Status | Implementation | Comment |
-|---|---|---|---|
-| `default_port` | — | — |  |
-| `endpoint` | implemented | `ChannelBuilder::endpoint` |  |
-| `get` | — | — |  |
-| `metadata` | partial | `ChannelBuilder::metadata` | This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel. |
-| `secure` | implemented | `ChannelBuilder::secure` |  |
-| `session_id` | — | — |  |
-| `toChannel` | partial | `ChannelBuilder::to_client` | Creates a gRPC client from the channel builder, instead of a channel. |
-| `userAgent` | implemented | `ChannelBuilder::user_agent` |  |
-| `userId` | implemented | `ChannelBuilder::user_id` |  |
 
 ### `pyspark.sql.session.SparkSession`
 

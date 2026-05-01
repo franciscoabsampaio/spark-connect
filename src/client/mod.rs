@@ -30,9 +30,11 @@ mod handlers;
 mod middleware;
 
 use api_parity_core::api_parity_impl;
-pub(crate) use error::{ClientError, ClientErrorKind};
+pub use error::ClientError;
+use error::ClientErrorKind;
 use handlers::{AnalyzeHandler, ExecuteHandler, InterruptHandler};
-use channel_builder::{ChannelBuilder, SparkGrpcClient};
+pub use channel_builder::ChannelBuilder;
+use channel_builder::SparkGrpcClient;
 use crate::conf::SparkRemoteConf;
 use crate::spark;
 use crate::spark::execute_plan_response::ResponseType;
