@@ -183,6 +183,17 @@ impl SparkSessionBuilder {
         self.config(SparkConfKey::CatalogImplementation, "hive")
     }
 
+    #[api_parity(
+        reference = ".getOrCreate",
+        status = Unimplemented,
+        comment = "Session reuse is not yet implemented due to underlying complexity."
+    )]
+    pub fn get_or_create(&self) -> Result<SparkSession, SparkError> {
+        Err(SparkError::new(SparkErrorKind::Unimplemented(
+            "Session reuse is not yet implemented due to underlying complexity.".into(),
+        )))
+    }
+
     /// Returns a ready-to-use [`SparkSession`].
     ///
     /// Starts by resolving the SparkConf,
