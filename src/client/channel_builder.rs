@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use std::env::consts;
 use std::str::FromStr;
+use api_parity_core::api_parity_impl;
 use uuid::Uuid;
 use tonic::transport::{Channel, ClientTlsConfig}; 
 
@@ -27,21 +28,21 @@ pub(crate) type SparkGrpcClient = SparkConnectServiceClient<InterceptedChannel>;
 /// `sc://<host>:<port>/;key1=value1;key2=value2;...`
 ///
 /// Supported keys include:
-/// - token — authentication token (converted to Bearer header);
-/// - user_id — custom user identifier (defaults to $USER);
-/// - user_agent — overrides the default Rust client identifier;
-/// - session_id — UUID for reusing a session;
+/// - token - authentication token (converted to Bearer header);
+/// - user_id - custom user identifier (defaults to $USER);
+/// - user_agent - overrides the default Rust client identifier;
+/// - session_id - UUID for reusing a session;
 ///
 /// End users should prefer [`SparkSessionBuilder`](crate::SparkSessionBuilder) instead.
 #[derive(Clone, Debug)]
-pub(crate) struct ChannelBuilder {
+pub struct ChannelBuilder {
     host: String,
     port: u16,
-    pub(crate) session_id: Uuid,
+    session_id: Option<Uuid>,
     token: Option<String>,
     use_ssl: bool,
-    pub(crate) user_id: String,
-    pub(crate) user_agent: Option<String>,
+    user_id: String,
+    user_agent: Option<String>,
     metadata: HashMap<String, String>,
 }
 
@@ -53,7 +54,7 @@ impl Default for ChannelBuilder {
         ChannelBuilder {
             host: "localhost".into(),
             port: 15002,
-            session_id: Uuid::new_v4(),
+            session_id: None,
             token: None,
             use_ssl: false,
             user_id: String::new(),
@@ -62,7 +63,10 @@ impl Default for ChannelBuilder {
         }
     }
 }
-
+#[api_parity_impl(
+    reference = "pyspark.sql.connect.client.core.ChannelBuilder",
+    status = Implemented,
+)]
 impl ChannelBuilder {
     pub(crate) fn config(mut self, conf: &SparkRemoteConf) -> Result<Self, ClientError> {
         self.host = conf.uri.host.clone();
@@ -79,12 +83,12 @@ impl ChannelBuilder {
             self.token = headers.remove("token");
 
             if let Some(session_id) = headers.remove("session_id") {
-                self.session_id = Uuid::from_str(&session_id)
+                self.session_id = Some(Uuid::from_str(&session_id)
                     .map_err(|source|
                         ClientError::new(ClientErrorKind::InvalidSessionID {
                             source, session_id
                         })
-                    )?
+                    )?)
             }
 
             if let Some(use_ssl) = headers.remove("use_ssl") {
@@ -105,16 +109,24 @@ impl ChannelBuilder {
         // Set missing metadata fields
         self.metadata.insert("authorization".into(), self.token());
         self.metadata.insert("user_agent".into(), self.user_agent()?);
-        self.metadata.insert("x-spark-connect-user-id".into(), self.user_id.clone());
+        self.metadata.insert("x-spark-connect-user-id".into(), self.user_id());
 
         Ok(self)
     }
 
-    fn secure(&self) -> bool {
+    #[api_parity(
+        reference = ".secure",
+        status = Implemented,
+    )]
+    pub fn secure(&self) -> bool {
         self.use_ssl
     }
 
-    fn endpoint(&self) -> String {
+    #[api_parity(
+        reference = ".endpoint",
+        status = Implemented,
+    )]
+    pub fn endpoint(&self) -> String {
         let scheme = if self.secure() { "https" } else { "http" };
         format!("{}://{}:{}", scheme, self.host, self.port)
     }
@@ -124,7 +136,32 @@ impl ChannelBuilder {
         format!("Bearer {}", token)
     }
 
-    fn user_agent(&self) -> Result<String, ClientError> {
+    #[api_parity(
+        reference = ".metadata",
+        status = Partial,
+        comment = "This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel."
+    )]
+    pub fn metadata(&self) -> HashMap<String, String> {
+        self.metadata.clone()
+    }
+
+    #[api_parity(
+        reference = ".session_id",
+        status = Implemented,
+    )]
+    pub fn session_id(&self) -> Uuid {
+        if let Some(session_id) = self.session_id {
+            session_id
+        } else {
+            Uuid::new_v4()
+        }
+    }
+
+    #[api_parity(
+        reference = ".userAgent",
+        status = Implemented,
+    )]
+    pub fn user_agent(&self) -> Result<String, ClientError> {
         // The leading underscore distinguishes internal/default user agents
         // from user-defined ones.
         let user_agent = self.user_agent.clone().unwrap_or("_SPARK_CONNECT_RUST".into());
@@ -143,12 +180,25 @@ impl ChannelBuilder {
         ))
     }
 
+    #[api_parity(
+        reference = ".userId",
+        status = Implemented,
+    )]
+    pub fn user_id(&self) -> String {
+        self.user_id.clone()
+    }
+
     /// Create gRPC channel.
     /// 
     /// Applies the parameters of the connection string and creates a new
     /// gRPC channel according to the configuration.
     /// Passes optional channel options to construct the channel.
-    pub(crate) async fn to_client(&self) -> Result<SparkGrpcClient, ClientError> {
+    #[api_parity(
+        reference = ".toChannel",
+        status = Partial,
+        comment = "Creates a gRPC client from the channel builder, instead of a channel."
+    )]
+    pub async fn to_client(&self) -> Result<SparkGrpcClient, ClientError> {
         let mut endpoint = Channel::from_shared(self.endpoint())
             .map_err(|source| ClientError::new(
                 ClientErrorKind::InvalidConnectionString {
@@ -194,7 +244,7 @@ impl ChannelBuilder {
         })?;
         
         // 4. Wrap the channel with the interceptor
-        let interceptor = HeaderInterceptor::new(self.metadata.clone());
+        let interceptor = HeaderInterceptor::new(self.metadata());
         let grpc_client = SparkConnectServiceClient::with_interceptor(channel, interceptor);
 
         // 5. Return the gRPC client
