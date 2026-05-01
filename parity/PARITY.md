@@ -8,10 +8,10 @@
 - Classes in Python inventory: **246**
 - Classes declared by Rust: **4** (1.6%)
 - Members in Python inventory: **1703**
-- Members covered by Rust: **22** (1.3%)
+- Members covered by Rust: **23** (1.4%)
   - implemented: 17
   - partial: 5
-  - unimplemented: 0
+  - unimplemented: 1
 - Stale Rust references (no match in Python): **0**
 
 ## Per-class coverage
@@ -19,7 +19,7 @@
 | Class | Class status | Python members | Covered | % |
 |---|---|---:|---:|---:|
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
-| `pyspark.sql.session.SparkSession.Builder` | implemented | 7 | 6 | 86% |
+| `pyspark.sql.session.SparkSession.Builder` | implemented | 7 | 7 | 100% |
 | `pyspark.sql.session.SparkSession` | implemented | 29 | 6 | 21% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 1 | 3% |
 | `pyspark.sql.catalog.Catalog` | — | 27 | 0 | 0% |
@@ -293,7 +293,7 @@
 | `config` | implemented | `SparkSessionBuilder::config` |  |
 | `create` | partial | `SparkSessionBuilder::create` | Only remote (sc://) mode works; classic master URLs return Unimplemented |
 | `enableHiveSupport` | implemented | `SparkSessionBuilder::enable_hive_support` |  |
-| `getOrCreate` | — | — |  |
+| `getOrCreate` | unimplemented | `SparkSessionBuilder::get_or_create` | Session reuse is not yet implemented due to underlying complexity. |
 | `master` | partial | `SparkSessionBuilder::master` | value is stored but classic-mode (non-sc://) resolution is not wired up |
 | `remote` | implemented | `SparkSessionBuilder::remote` |  |
 

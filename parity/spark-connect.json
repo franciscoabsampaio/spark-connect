@@ -19,6 +19,7 @@
     {"reference":"pyspark.sql.session.SparkSession.Builder.config","implementation":"SparkSessionBuilder::config","status":"implemented","since":null,"comment":null,"issue":null},
     {"reference":"pyspark.sql.session.SparkSession.Builder.create","implementation":"SparkSessionBuilder::create","status":"partial","since":null,"comment":"Only remote (sc://) mode works; classic master URLs return Unimplemented","issue":null},
     {"reference":"pyspark.sql.session.SparkSession.Builder.enableHiveSupport","implementation":"SparkSessionBuilder::enable_hive_support","status":"implemented","since":null,"comment":null,"issue":null},
+    {"reference":"pyspark.sql.session.SparkSession.Builder.getOrCreate","implementation":"SparkSessionBuilder::get_or_create","status":"unimplemented","since":null,"comment":"Session reuse is not yet implemented due to underlying complexity.","issue":null},
     {"reference":"pyspark.sql.session.SparkSession.Builder.master","implementation":"SparkSessionBuilder::master","status":"partial","since":null,"comment":"value is stored but classic-mode (non-sc://) resolution is not wired up","issue":null},
     {"reference":"pyspark.sql.session.SparkSession.Builder.remote","implementation":"SparkSessionBuilder::remote","status":"implemented","since":null,"comment":null,"issue":null},
     {"reference":"pyspark.sql.session.SparkSession.builder","implementation":"SparkSession::builder","status":"implemented","since":null,"comment":null,"issue":null},
