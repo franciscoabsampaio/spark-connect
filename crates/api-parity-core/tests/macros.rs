@@ -32,6 +32,34 @@ impl Dummy {
 #[allow(dead_code)]
 fn free_fn() {}
 
+struct WithRef;
+
+#[api_parity_impl(
+    reference = "ext.WithRef",
+    status = Implemented,
+)]
+impl WithRef {
+    #[api_parity(
+        reference = ".relative",
+        status = Implemented,
+    )]
+    #[allow(dead_code)]
+    fn relative(&self) {}
+
+    // Stub for an API we haven't built yet. The body never runs; the entry
+    // exists purely so the parity report can surface it.
+    #[api_parity(
+        reference = ".missing",
+        status = Unimplemented,
+        comment = "not yet wired up to the gRPC client",
+        issue = 42,
+    )]
+    #[allow(dead_code)]
+    fn missing(&self) {
+        unimplemented!()
+    }
+}
+
 fn find(reference: &str) -> Option<&'static ParityEntry> {
     inventory::iter::<ParityEntry>.into_iter().find(|e| e.reference == reference)
 }
@@ -61,4 +89,29 @@ fn free_fn_uses_module_path() {
         "expected implementation path to end with ::free_fn, got {}",
         entry.implementation,
     );
+}
+
+#[test]
+fn impl_block_registers_class_level_entry() {
+    let entry = find("ext.WithRef").expect("ext.WithRef not registered");
+    assert_eq!(entry.implementation, "WithRef");
+    assert_eq!(entry.status, Status::Implemented);
+}
+
+#[test]
+fn relative_reference_is_prefixed_with_parent() {
+    let entry = find("ext.WithRef.relative").expect("ext.WithRef.relative not registered");
+    assert_eq!(entry.implementation, "WithRef::relative");
+    assert_eq!(entry.status, Status::Implemented);
+}
+
+#[test]
+fn unimplemented_stub_is_registered_without_being_called() {
+    // The stub fn `WithRef::missing` is never invoked — but the entry still
+    // exists in the inventory, with the mandatory comment and the issue.
+    let entry = find("ext.WithRef.missing").expect("ext.WithRef.missing not registered");
+    assert_eq!(entry.status, Status::Unimplemented);
+    assert_eq!(entry.implementation, "WithRef::missing");
+    assert_eq!(entry.comment, Some("not yet wired up to the gRPC client"));
+    assert_eq!(entry.issue, Some(42));
 }
