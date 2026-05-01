@@ -41,8 +41,8 @@
 //!   [`RecordBatch`]es into memory.
 //!
 //! # See also
-//! - [`ToLiteral`] — converts native Rust types into Spark literals.
-//! - [`SparkSession::sql`] — executes parameterized SQL queries directly.
+//! - [`ToLiteral`] - converts native Rust types into Spark literals.
+//! - [`SparkSession::sql`] - executes parameterized SQL queries directly.
 //!
 //! # Errors
 //!

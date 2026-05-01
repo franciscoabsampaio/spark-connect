@@ -80,10 +80,10 @@ If you're coming from PySpark or Scala, this should be the familiar interface.
 
 ## 🧠 Concepts
 
-- <b>[`SparkSession`](crate::SparkSession)</b> — the main entry point for executing
+- <b>[`SparkSession`](crate::SparkSession)</b> - the main entry point for executing
   SQL queries and managing a session.
-- <b>[`SparkConnectClient`](crate::SparkConnectClient)</b> — low-level gRPC client (used internally).
-- <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> — helper for binding parameters
+- <b>[`SparkConnectClient`](crate::SparkConnectClient)</b> - low-level gRPC client (used internally).
+- <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> - helper for binding parameters
   and executing queries.
 
 ## ⚙️ Requirements

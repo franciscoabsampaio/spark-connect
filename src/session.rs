@@ -1,6 +1,6 @@
 //! High-level user-facing interface for Spark Connect.
 //!
-//! This module provides [`SparkSession`] — the main entry point for interacting
+//! This module provides [`SparkSession`] - the main entry point for interacting
 //! with a Spark Connect server. It exposes a familiar API surface inspired by
 //! PySpark and Scala's `SparkSession`, while delegating low-level gRPC work to
 //! [`SparkConnectClient`](crate::SparkConnectClient).
@@ -79,7 +79,7 @@
 //! ```
 //!
 //! The `SparkSession` provides an ergonomic API for executing SQL, analyzing
-//! plans, and inspecting results — without exposing internal client plumbing.
+//! plans, and inspecting results - without exposing internal client plumbing.
 use crate::client::SparkConnectClient;
 use crate::conf::{SparkConf, SparkConfKey, ResolvedSparkConf};
 use crate::spark;
@@ -88,6 +88,7 @@ use crate::query::SqlQueryBuilder;
 use crate::{SparkError, error::SparkErrorKind};
 
 use arrow::record_batch::RecordBatch;
+use api_parity_core::api_parity_impl;
 
 /// Builder for creating [`SparkSession`] instances.
 ///
@@ -114,6 +115,10 @@ pub struct SparkSessionBuilder {
     conf: SparkConf,
 }
 
+#[api_parity_impl(
+    reference = "pyspark.sql.session.SparkSession.Builder",
+    status = Implemented,
+)]
 impl SparkSessionBuilder {
     /// Creates a new builder with default connection string
     fn new() -> Self {
@@ -124,6 +129,10 @@ impl SparkSessionBuilder {
 
     /// Sets a configuration option for the [`SparkSession`].
     /// Then validates the configuration.
+    #[api_parity(
+        reference = ".config",
+        status = Implemented,
+    )]
     pub fn config(mut self, key: SparkConfKey, value: impl Into<String>) -> Result<Self, SparkError> {
         self.conf.set(key, value.into())?;
         Ok(self)
@@ -133,6 +142,10 @@ impl SparkSessionBuilder {
     ///
     /// The connection string must follow the format:
     /// `sc://<host>:<port>/;key1=value1;key2=value2;...`
+    #[api_parity(
+        reference = ".remote",
+        status = Implemented,
+    )]
     pub fn remote(self, url: &str) -> Result<Self, SparkError> {
         self.config(SparkConfKey::Remote, url)
     }
@@ -141,18 +154,31 @@ impl SparkSessionBuilder {
     /// such as "local" to run locally, "local[4]"
     /// to run locally with 4 cores, or "spark://master:7077"
     /// to run on a Spark standalone cluster.
+    #[api_parity(
+        reference = ".master",
+        status = Partial,
+        comment = "value is stored but classic-mode (non-sc://) resolution is not wired up",
+    )]
     pub fn master(self, url: &str) -> Result<Self, SparkError> {
         self.config(SparkConfKey::Master, url)
     }
 
     /// Sets a name for the application, which will be shown in the Spark web UI.
     /// If no application name is set, a randomly generated name will be used.
+    #[api_parity(
+        reference = ".appName",
+        status = Implemented,
+    )]
     pub fn app_name(self, url: &str) -> Result<Self, SparkError> {
         self.config(SparkConfKey::AppName, url)
     }
 
     /// Enables Hive support, including connectivity to a persistent Hive metastore,
     /// support for Hive SerDes, and Hive user-defined functions.
+    #[api_parity(
+        reference = ".enableHiveSupport",
+        status = Implemented,
+    )]
     pub fn enable_hive_support(self) -> Result<Self, SparkError> {
         self.config(SparkConfKey::CatalogImplementation, "hive")
     }
@@ -162,6 +188,11 @@ impl SparkSessionBuilder {
     /// Starts by resolving the SparkConf,
     /// ensuring no conflicting configurations are present,
     /// and getting values from environment variables if needed.
+    #[api_parity(
+        reference = ".create",
+        status = Partial,
+        comment = "Only remote (sc://) mode works; classic master URLs return Unimplemented",
+    )]
     pub async fn create(&mut self) -> Result<SparkSession, SparkError> {
         let spark_conf = self.conf.resolve()?;
 
@@ -213,8 +244,16 @@ pub struct SparkSession {
     session_id: String,
 }
 
+#[api_parity_impl(
+    reference = "pyspark.sql.session.SparkSession",
+    status = Implemented,
+)]
 impl SparkSession {
     /// Creates a new builder object
+    #[api_parity(
+        reference = ".builder",
+        status = Implemented,
+    )]
     pub fn builder() -> SparkSessionBuilder {
         SparkSessionBuilder::new()
     }
@@ -239,6 +278,10 @@ impl SparkSession {
     /// While exposed for advanced use cases, typical consumers are advised to rely on
     /// higher-level abstractions in `SparkSession` instead of manipulating the
     /// client directly.
+    #[api_parity(
+        reference = ".client",
+        status = Implemented,
+    )]
     pub(crate) fn client(&self) -> Result<SparkConnectClient, SparkError> {
         if let Some(client) = &self.connect_client {
             Ok(client.clone())
@@ -248,6 +291,10 @@ impl SparkSession {
     }
 
     /// Execute a SQL query and return a lazy [`plan`](crate::spark::Plan).
+    #[api_parity(
+        reference = ".sql",
+        status = Partial,
+    )]
     pub async fn sql(
         &self,
         query: &str,
@@ -292,6 +339,10 @@ impl SparkSession {
     }
 
     /// Interrupt all running operations.
+    #[api_parity(
+        reference = ".interruptAll",
+        status = Implemented,
+    )]
     pub async fn interrupt_all(&self) -> Result<Vec<String>, SparkError> {
         Ok(
             self.client()?.interrupt(
@@ -302,6 +353,10 @@ impl SparkSession {
     }
 
     /// Interrupt a specific operation by ID.
+    #[api_parity(
+        reference = ".interruptOperation",
+        status = Implemented,
+    )]
     pub async fn interrupt_operation(&self, op_id: &str) -> Result<Vec<String>, SparkError> {
         Ok(
             self.client()?.interrupt(
@@ -312,6 +367,10 @@ impl SparkSession {
     }
 
     /// Request the version of the Spark Connect server.
+    #[api_parity(
+        reference = ".version",
+        status = Implemented,
+    )]
     pub async fn version(&self) -> Result<String, SparkError> {
         let version = spark::analyze_plan_request::Analyze::SparkVersion(
             spark::analyze_plan_request::SparkVersion {},

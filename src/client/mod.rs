@@ -5,7 +5,7 @@
 //!
 //! <div class="warning">
 //! 
-//! End users are advised <b>not</b> to construct or use `SparkConnectClient` directly — use
+//! End users are advised <b>not</b> to construct or use `SparkConnectClient` directly - use
 //! [`SparkSession`](crate::SparkSession) instead, which provides a high-level API.
 //! 
 //! </div>
@@ -29,6 +29,7 @@ mod error;
 mod handlers;
 mod middleware;
 
+use api_parity_core::api_parity_impl;
 pub(crate) use error::{ClientError, ClientErrorKind};
 use handlers::{AnalyzeHandler, ExecuteHandler, InterruptHandler};
 use channel_builder::{ChannelBuilder, SparkGrpcClient};
@@ -40,7 +41,7 @@ use arrow::array::RecordBatch;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::codec::Streaming;
-use uuid;
+use uuid::{self, Uuid};
 
 /// Asynchronous gRPC client for Spark Connect.
 ///
@@ -64,7 +65,7 @@ pub struct SparkConnectClient {
     user_context: Option<spark::UserContext>,
     user_agent: Option<String>,
     use_reattachable_execute: bool,
-    session_id: String,
+    session_id: Uuid,
     operation_id: Option<String>,
     response_id: Option<String>,
     handler_analyze: AnalyzeHandler,
@@ -72,6 +73,10 @@ pub struct SparkConnectClient {
     handler_interrupt: InterruptHandler,
 }
 
+#[api_parity_impl(
+    reference = "pyspark.sql.connect.client.core.SparkConnectClient",
+    status = Implemented,
+)]
 impl SparkConnectClient {
     /// Creates a new client from a gRPC stub and a configured [`ChannelBuilder`].
     ///
@@ -86,12 +91,12 @@ impl SparkConnectClient {
         Ok(Self {
             stub: Arc::new(RwLock::new(grpc_client)),
             user_context: Some(spark::UserContext {
-                user_id: builder.user_id.clone(),
-                user_name: builder.user_id.clone(),
+                user_id: builder.user_id(),
+                user_name: builder.user_id(),
                 extensions: vec![],
             }),
-            user_agent: builder.user_agent.clone(),
-            session_id: builder.session_id.to_string(),
+            user_agent: Some(builder.user_agent()?),
+            session_id: builder.session_id(),
             operation_id: None,
             response_id: None,
             handler_analyze: AnalyzeHandler::default(),
@@ -102,6 +107,10 @@ impl SparkConnectClient {
     }
 
     /// Returns the session ID associated with this client.
+    #[api_parity(
+        reference = "pyspark.sql.connect.session.SparkSession.session_id",
+        status = Implemented,
+    )]
     pub(crate) fn session_id(&self) -> String {
         self.session_id.to_string()
     }
