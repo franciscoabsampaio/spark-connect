@@ -1,59 +1,44 @@
-//! Iterates every `ParityEntry` registered across the crate and emits them as JSON,
-//! stamped with the Spark version this binary was compiled against.
+//! Iterate every `ParityEntry` registered across the crate and emit them as JSON,
+//! stamped with the crate version.
 //!
 //! Run with:
 //! ```bash
-//! cargo run --bin api_parity-dump > target/api_parity.json
+//! cargo run --features api-parity --bin api_parity_dump > parity/spark-connect.json
 //! ```
-//!
-//! For multi-version coverage, build once per Spark feature and merge the outputs
-//! downstream. The JSON envelope looks like:
-//!
-//! ```json
-//! {
-//!   "spark_version": "3.5.7",
-//!   "entries": [ ... ]
-//! }
-//! ```
-//!
-//! The resulting JSON is consumed by a separate tool (future work) that joins it
-//! against a canonical PySpark API inventory and produces a human-readable matrix.
 
 use api_parity_core::{inventory, ParityEntry};
+use serde::Serialize;
 
 // Touch the lib crate so its api_parity annotations are linked in.
 #[allow(unused_imports)]
 use spark_connect as _;
 
-fn json_str(s: &str) -> String {
-    let mut out = String::with_capacity(s.len() + 2);
-    out.push('"');
-    for c in s.chars() {
-        match c {
-            '"' => out.push_str("\\\""),
-            '\\' => out.push_str("\\\\"),
-            '\n' => out.push_str("\\n"),
-            '\r' => out.push_str("\\r"),
-            '\t' => out.push_str("\\t"),
-            c if (c as u32) < 0x20 => out.push_str(&format!("\\u{:04x}", c as u32)),
-            c => out.push(c),
+#[derive(Serialize)]
+struct EntryDto<'a> {
+    reference: &'a str,
+    implementation: &'a str,
+    status: &'a str,
+    since: Option<&'a str>,
+    comment: Option<&'a str>,
+    issue: Option<u32>,
+}
+
+#[derive(Serialize)]
+struct Output<'a> {
+    version: &'a str,
+    entries: Vec<EntryDto<'a>>,
+}
+
+impl<'a> From<&'a ParityEntry> for EntryDto<'a> {
+    fn from(e: &'a ParityEntry) -> Self {
+        Self {
+            reference: e.reference,
+            implementation: e.implementation,
+            status: e.status.as_str(),
+            since: e.since,
+            comment: e.comment,
+            issue: e.issue,
         }
-    }
-    out.push('"');
-    out
-}
-
-fn opt_str(v: Option<&str>) -> String {
-    match v {
-        Some(s) => json_str(s),
-        None => "null".into(),
-    }
-}
-
-fn opt_u32(v: Option<u32>) -> String {
-    match v {
-        Some(n) => n.to_string(),
-        None => "null".into(),
     }
 }
 
@@ -61,25 +46,10 @@ fn main() {
     let mut entries: Vec<&ParityEntry> = inventory::iter::<ParityEntry>.into_iter().collect();
     entries.sort_by_key(|e| e.reference);
 
-    println!("{{");
-    println!("  \"spark_version\": {},", json_str(spark_connect::SPARK_VERSION));
-    println!("  \"entries\": [");
-    for (i, e) in entries.iter().enumerate() {
-        print!(
-            "    {{\"reference\":{},\"implementation\":{},\"status\":{},\"since\":{},\"comment\":{},\"issue\":{}}}",
-            json_str(e.reference),
-            json_str(e.implementation),
-            json_str(e.status.as_str()),
-            opt_str(e.since),
-            opt_str(e.comment),
-            opt_u32(e.issue),
-        );
-        if i + 1 < entries.len() {
-            println!(",");
-        } else {
-            println!();
-        }
-    }
-    println!("  ]");
-    println!("}}");
+    let out = Output {
+        version: env!("CARGO_PKG_VERSION"),
+        entries: entries.iter().copied().map(EntryDto::from).collect(),
+    };
+
+    println!("{}", serde_json::to_string_pretty(&out).expect("serialize"));
 }
