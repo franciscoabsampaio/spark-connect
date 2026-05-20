@@ -1,26 +1,22 @@
 # API parity report
 
-- Python: `parity/pyspark-3.5.json` (version `3.5.4`)
-- Rust:   `parity/spark-connect.json` (version `3.5.7`)
+- Reference: python `pyspark.sql.connect` (version `3.5.4`)
+- Port:      rust `spark-connect` (version `0.2.3`)
 
 ## Summary
 
-- Classes in Python inventory: **155**
-- Classes declared by Rust: **4** (2.6%)
-- Members in Python inventory: **999**
-- Members covered by Rust: **23** (2.3%)
-  - implemented: 17
-  - partial: 5
-  - unimplemented: 1
-- Stale Rust references (no match in Python): **0**
+- Reference paths: **1551**
+- Covered: **12** (0.8%)
+  - implemented: 10
+  - partial: 2
+  - unimplemented: 0
+- Stale port paths (no match in reference): **15**
 
 ## Per-class coverage
 
-| Class | Class status | Python members | Covered | % |
+| Class | Class status | Members | Covered | % |
 |---|---|---:|---:|---:|
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
-| `pyspark.sql.session.SparkSession.Builder` | implemented | 7 | 7 | 100% |
-| `pyspark.sql.session.SparkSession` | implemented | 29 | 6 | 21% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 1 | 3% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionLike` | — | 2 | 0 | 0% |
@@ -172,7 +168,6 @@
 | `pyspark.sql.connect.window.Window` | — | 4 | 0 | 0% |
 | `pyspark.sql.connect.window.WindowFrame` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect.window.WindowSpec` | — | 4 | 0 | 0% |
-| `pyspark.sql.session.classproperty` | — | 3 | 0 | 0% |
 
 ## Detail
 
@@ -180,137 +175,110 @@
 
 - Class status: **implemented** (impl `ChannelBuilder`)
 
-| Member | Status | Implementation | Comment |
-|---|---|---|---|
-| `default_port` | implemented | `ChannelBuilder::default_port` |  |
-| `endpoint` | implemented | `ChannelBuilder::endpoint` |  |
-| `get` | implemented | `ChannelBuilder::get` |  |
-| `metadata` | partial | `ChannelBuilder::metadata` | This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel. |
-| `secure` | implemented | `ChannelBuilder::secure` |  |
-| `session_id` | implemented | `ChannelBuilder::session_id` |  |
-| `toChannel` | partial | `ChannelBuilder::to_client` | Creates a gRPC client from the channel builder, instead of a channel. |
-| `userAgent` | implemented | `ChannelBuilder::user_agent` |  |
-| `userId` | implemented | `ChannelBuilder::user_id` |  |
-
-### `pyspark.sql.session.SparkSession.Builder`
-
-- Class status: **implemented** (impl `SparkSessionBuilder`)
-
-| Member | Status | Implementation | Comment |
-|---|---|---|---|
-| `appName` | implemented | `SparkSessionBuilder::app_name` |  |
-| `config` | implemented | `SparkSessionBuilder::config` |  |
-| `create` | partial | `SparkSessionBuilder::create` | Only remote (sc://) mode works; classic master URLs return Unimplemented |
-| `enableHiveSupport` | implemented | `SparkSessionBuilder::enable_hive_support` |  |
-| `getOrCreate` | unimplemented | `SparkSessionBuilder::get_or_create` | Session reuse is not yet implemented due to underlying complexity. |
-| `master` | partial | `SparkSessionBuilder::master` | value is stored but classic-mode (non-sc://) resolution is not wired up |
-| `remote` | implemented | `SparkSessionBuilder::remote` |  |
-
-### `pyspark.sql.session.SparkSession`
-
-- Class status: **implemented** (impl `SparkSession`)
-
-| Member | Status | Implementation | Comment |
-|---|---|---|---|
-| `active` | — | — |  |
-| `addArtifact` | — | — |  |
-| `addArtifacts` | — | — |  |
-| `addTag` | — | — |  |
-| `builder` | implemented | `SparkSession::builder` |  |
-| `catalog` | — | — |  |
-| `clearTags` | — | — |  |
-| `client` | implemented | `SparkSession::client` |  |
-| `conf` | — | — |  |
-| `copyFromLocalToFs` | — | — |  |
-| `createDataFrame` | — | — |  |
-| `getActiveSession` | — | — |  |
-| `getTags` | — | — |  |
-| `interruptAll` | implemented | `SparkSession::interrupt_all` |  |
-| `interruptOperation` | implemented | `SparkSession::interrupt_operation` |  |
-| `interruptTag` | — | — |  |
-| `newSession` | — | — |  |
-| `range` | — | — |  |
-| `read` | — | — |  |
-| `readStream` | — | — |  |
-| `removeTag` | — | — |  |
-| `sparkContext` | — | — |  |
-| `sql` | partial | `SparkSession::sql` |  |
-| `stop` | — | — |  |
-| `streams` | — | — |  |
-| `table` | — | — |  |
-| `udf` | — | — |  |
-| `udtf` | — | — |  |
-| `version` | implemented | `SparkSession::version` |  |
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `default_port` | method | implemented | `ChannelBuilder::default_port` |  |
+| `endpoint` | property | implemented | `ChannelBuilder::endpoint` |  |
+| `get` | method | implemented | `ChannelBuilder::get` |  |
+| `metadata` | method | partial | `ChannelBuilder::metadata` | This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel. |
+| `secure` | property | implemented | `ChannelBuilder::secure` |  |
+| `session_id` | property | implemented | `ChannelBuilder::session_id` |  |
+| `toChannel` | method | partial | `ChannelBuilder::to_client` | Creates a gRPC client from the channel builder, instead of a channel. |
+| `userAgent` | property | implemented | `ChannelBuilder::user_agent` |  |
+| `userId` | property | implemented | `ChannelBuilder::user_id` |  |
 
 ### `pyspark.sql.connect.session.SparkSession`
 
-| Member | Status | Implementation | Comment |
-|---|---|---|---|
-| `active` | — | — |  |
-| `addArtifact` | — | — |  |
-| `addArtifacts` | — | — |  |
-| `addTag` | — | — |  |
-| `builder` | — | — |  |
-| `catalog` | — | — |  |
-| `clearTags` | — | — |  |
-| `client` | — | — |  |
-| `conf` | — | — |  |
-| `copyFromLocalToFs` | — | — |  |
-| `createDataFrame` | — | — |  |
-| `getActiveSession` | — | — |  |
-| `getTags` | — | — |  |
-| `interruptAll` | — | — |  |
-| `interruptOperation` | — | — |  |
-| `interruptTag` | — | — |  |
-| `is_stopped` | — | — |  |
-| `range` | — | — |  |
-| `read` | — | — |  |
-| `readStream` | — | — |  |
-| `removeTag` | — | — |  |
-| `session_id` | implemented | `SparkConnectClient::session_id` |  |
-| `sql` | — | — |  |
-| `stop` | — | — |  |
-| `streams` | — | — |  |
-| `table` | — | — |  |
-| `udf` | — | — |  |
-| `udtf` | — | — |  |
-| `version` | — | — |  |
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `active` | method | — | — |  |
+| `addArtifact` | method | — | — |  |
+| `addArtifacts` | method | — | — |  |
+| `addTag` | method | — | — |  |
+| `builder` | property | — | — |  |
+| `catalog` | property | — | — |  |
+| `clearTags` | method | — | — |  |
+| `client` | property | — | — |  |
+| `conf` | property | — | — |  |
+| `copyFromLocalToFs` | method | — | — |  |
+| `createDataFrame` | method | — | — |  |
+| `getActiveSession` | method | — | — |  |
+| `getTags` | method | — | — |  |
+| `interruptAll` | method | — | — |  |
+| `interruptOperation` | method | — | — |  |
+| `interruptTag` | method | — | — |  |
+| `is_stopped` | property | — | — |  |
+| `range` | method | — | — |  |
+| `read` | property | — | — |  |
+| `readStream` | property | — | — |  |
+| `removeTag` | method | — | — |  |
+| `session_id` | property | implemented | `SparkConnectClient::session_id` |  |
+| `sql` | method | — | — |  |
+| `stop` | method | — | — |  |
+| `streams` | property | — | — |  |
+| `table` | method | — | — |  |
+| `udf` | property | — | — |  |
+| `udtf` | property | — | — |  |
+| `version` | property | — | — |  |
 
 ### `pyspark.sql.connect.client.core.SparkConnectClient`
 
 - Class status: **implemented** (impl `SparkConnectClient`)
 
-| Member | Status | Implementation | Comment |
-|---|---|---|---|
-| `add_artifacts` | — | — |  |
-| `add_tag` | — | — |  |
-| `cache_artifact` | — | — |  |
-| `clear_tags` | — | — |  |
-| `close` | — | — |  |
-| `config` | — | — |  |
-| `copy_from_local_to_fs` | — | — |  |
-| `disable_reattachable_execute` | — | — |  |
-| `enable_reattachable_execute` | — | — |  |
-| `execute_command` | — | — |  |
-| `explain_string` | — | — |  |
-| `get_config_with_defaults` | — | — |  |
-| `get_configs` | — | — |  |
-| `get_tags` | — | — |  |
-| `host` | — | — |  |
-| `interrupt_all` | — | — |  |
-| `interrupt_operation` | — | — |  |
-| `interrupt_tag` | — | — |  |
-| `is_closed` | — | — |  |
-| `register_java` | — | — |  |
-| `register_udf` | — | — |  |
-| `register_udtf` | — | — |  |
-| `remove_tag` | — | — |  |
-| `retry_exception` | — | — |  |
-| `same_semantics` | — | — |  |
-| `schema` | — | — |  |
-| `semantic_hash` | — | — |  |
-| `to_pandas` | — | — |  |
-| `to_table` | — | — |  |
-| `to_table_as_iterator` | — | — |  |
-| `token` | — | — |  |
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `add_artifacts` | method | — | — |  |
+| `add_tag` | method | — | — |  |
+| `cache_artifact` | method | — | — |  |
+| `clear_tags` | method | — | — |  |
+| `close` | method | — | — |  |
+| `config` | method | — | — |  |
+| `copy_from_local_to_fs` | method | — | — |  |
+| `disable_reattachable_execute` | method | — | — |  |
+| `enable_reattachable_execute` | method | — | — |  |
+| `execute_command` | method | — | — |  |
+| `explain_string` | method | — | — |  |
+| `get_config_with_defaults` | method | — | — |  |
+| `get_configs` | method | — | — |  |
+| `get_tags` | method | — | — |  |
+| `host` | property | — | — |  |
+| `interrupt_all` | method | — | — |  |
+| `interrupt_operation` | method | — | — |  |
+| `interrupt_tag` | method | — | — |  |
+| `is_closed` | property | — | — |  |
+| `register_java` | method | — | — |  |
+| `register_udf` | method | — | — |  |
+| `register_udtf` | method | — | — |  |
+| `remove_tag` | method | — | — |  |
+| `retry_exception` | method | — | — |  |
+| `same_semantics` | method | — | — |  |
+| `schema` | method | — | — |  |
+| `semantic_hash` | method | — | — |  |
+| `to_pandas` | method | — | — |  |
+| `to_table` | method | — | — |  |
+| `to_table_as_iterator` | method | — | — |  |
+| `token` | property | — | — |  |
+
+## Stale port references
+
+Port entries whose `path` did not resolve in the reference.
+Likely a typo, a removed reference API, or a path-convention drift.
+
+| Path | Implementation | Comment |
+|---|---|---|
+| `pyspark.sql.session.SparkSession` | `SparkSession` |  |
+| `pyspark.sql.session.SparkSession.Builder` | `SparkSessionBuilder` |  |
+| `pyspark.sql.session.SparkSession.Builder.appName` | `SparkSessionBuilder::app_name` |  |
+| `pyspark.sql.session.SparkSession.Builder.config` | `SparkSessionBuilder::config` |  |
+| `pyspark.sql.session.SparkSession.Builder.create` | `SparkSessionBuilder::create` | Only remote (sc://) mode works; classic master URLs return Unimplemented |
+| `pyspark.sql.session.SparkSession.Builder.enableHiveSupport` | `SparkSessionBuilder::enable_hive_support` |  |
+| `pyspark.sql.session.SparkSession.Builder.getOrCreate` | `SparkSessionBuilder::get_or_create` | Session reuse is not yet implemented due to underlying complexity. |
+| `pyspark.sql.session.SparkSession.Builder.master` | `SparkSessionBuilder::master` | value is stored but classic-mode (non-sc://) resolution is not wired up |
+| `pyspark.sql.session.SparkSession.Builder.remote` | `SparkSessionBuilder::remote` |  |
+| `pyspark.sql.session.SparkSession.builder` | `SparkSession::builder` |  |
+| `pyspark.sql.session.SparkSession.client` | `SparkSession::client` |  |
+| `pyspark.sql.session.SparkSession.interruptAll` | `SparkSession::interrupt_all` |  |
+| `pyspark.sql.session.SparkSession.interruptOperation` | `SparkSession::interrupt_operation` |  |
+| `pyspark.sql.session.SparkSession.sql` | `SparkSession::sql` |  |
+| `pyspark.sql.session.SparkSession.version` | `SparkSession::version` |  |
 

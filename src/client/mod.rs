@@ -29,7 +29,7 @@ mod error;
 mod handlers;
 mod middleware;
 
-use api_parity_core::api_parity_impl;
+use api_parity_rs::{parity, parity_impl};
 pub use error::ClientError;
 use error::ClientErrorKind;
 use handlers::{AnalyzeHandler, ExecuteHandler, InterruptHandler};
@@ -75,8 +75,8 @@ pub struct SparkConnectClient {
     handler_interrupt: InterruptHandler,
 }
 
-#[api_parity_impl(
-    reference = "pyspark.sql.connect.client.core.SparkConnectClient",
+#[parity_impl(
+    path = "pyspark.sql.connect.client.core.SparkConnectClient",
     status = Implemented,
 )]
 impl SparkConnectClient {
@@ -109,8 +109,8 @@ impl SparkConnectClient {
     }
 
     /// Returns the session ID associated with this client.
-    #[api_parity(
-        reference = "pyspark.sql.connect.session.SparkSession.session_id",
+    #[parity(
+        path = "pyspark.sql.connect.session.SparkSession.session_id",
         status = Implemented,
     )]
     pub(crate) fn session_id(&self) -> String {

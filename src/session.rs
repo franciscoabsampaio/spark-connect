@@ -88,7 +88,7 @@ use crate::query::SqlQueryBuilder;
 use crate::{SparkError, error::SparkErrorKind};
 
 use arrow::record_batch::RecordBatch;
-use api_parity_core::api_parity_impl;
+use api_parity_rs::{parity, parity_impl};
 
 /// Builder for creating [`SparkSession`] instances.
 ///
@@ -115,8 +115,8 @@ pub struct SparkSessionBuilder {
     conf: SparkConf,
 }
 
-#[api_parity_impl(
-    reference = "pyspark.sql.session.SparkSession.Builder",
+#[parity_impl(
+    path = "pyspark.sql.session.SparkSession.Builder",
     status = Implemented,
 )]
 impl SparkSessionBuilder {
@@ -129,8 +129,8 @@ impl SparkSessionBuilder {
 
     /// Sets a configuration option for the [`SparkSession`].
     /// Then validates the configuration.
-    #[api_parity(
-        reference = ".config",
+    #[parity(
+        path = ".config",
         status = Implemented,
     )]
     pub fn config(mut self, key: SparkConfKey, value: impl Into<String>) -> Result<Self, SparkError> {
@@ -142,8 +142,8 @@ impl SparkSessionBuilder {
     ///
     /// The connection string must follow the format:
     /// `sc://<host>:<port>/;key1=value1;key2=value2;...`
-    #[api_parity(
-        reference = ".remote",
+    #[parity(
+        path = ".remote",
         status = Implemented,
     )]
     pub fn remote(self, url: &str) -> Result<Self, SparkError> {
@@ -154,8 +154,8 @@ impl SparkSessionBuilder {
     /// such as "local" to run locally, "local[4]"
     /// to run locally with 4 cores, or "spark://master:7077"
     /// to run on a Spark standalone cluster.
-    #[api_parity(
-        reference = ".master",
+    #[parity(
+        path = ".master",
         status = Partial,
         comment = "value is stored but classic-mode (non-sc://) resolution is not wired up",
     )]
@@ -165,8 +165,8 @@ impl SparkSessionBuilder {
 
     /// Sets a name for the application, which will be shown in the Spark web UI.
     /// If no application name is set, a randomly generated name will be used.
-    #[api_parity(
-        reference = ".appName",
+    #[parity(
+        path = ".appName",
         status = Implemented,
     )]
     pub fn app_name(self, url: &str) -> Result<Self, SparkError> {
@@ -175,16 +175,16 @@ impl SparkSessionBuilder {
 
     /// Enables Hive support, including connectivity to a persistent Hive metastore,
     /// support for Hive SerDes, and Hive user-defined functions.
-    #[api_parity(
-        reference = ".enableHiveSupport",
+    #[parity(
+        path = ".enableHiveSupport",
         status = Implemented,
     )]
     pub fn enable_hive_support(self) -> Result<Self, SparkError> {
         self.config(SparkConfKey::CatalogImplementation, "hive")
     }
 
-    #[api_parity(
-        reference = ".getOrCreate",
+    #[parity(
+        path = ".getOrCreate",
         status = Unimplemented,
         comment = "Session reuse is not yet implemented due to underlying complexity."
     )]
@@ -199,8 +199,8 @@ impl SparkSessionBuilder {
     /// Starts by resolving the SparkConf,
     /// ensuring no conflicting configurations are present,
     /// and getting values from environment variables if needed.
-    #[api_parity(
-        reference = ".create",
+    #[parity(
+        path = ".create",
         status = Partial,
         comment = "Only remote (sc://) mode works; classic master URLs return Unimplemented",
     )]
@@ -255,14 +255,14 @@ pub struct SparkSession {
     session_id: String,
 }
 
-#[api_parity_impl(
-    reference = "pyspark.sql.session.SparkSession",
+#[parity_impl(
+    path = "pyspark.sql.session.SparkSession",
     status = Implemented,
 )]
 impl SparkSession {
     /// Creates a new builder object
-    #[api_parity(
-        reference = ".builder",
+    #[parity(
+        path = ".builder",
         status = Implemented,
     )]
     pub fn builder() -> SparkSessionBuilder {
@@ -289,8 +289,8 @@ impl SparkSession {
     /// While exposed for advanced use cases, typical consumers are advised to rely on
     /// higher-level abstractions in `SparkSession` instead of manipulating the
     /// client directly.
-    #[api_parity(
-        reference = ".client",
+    #[parity(
+        path = ".client",
         status = Implemented,
     )]
     pub(crate) fn client(&self) -> Result<SparkConnectClient, SparkError> {
@@ -302,8 +302,8 @@ impl SparkSession {
     }
 
     /// Execute a SQL query and return a lazy [`plan`](crate::spark::Plan).
-    #[api_parity(
-        reference = ".sql",
+    #[parity(
+        path = ".sql",
         status = Partial,
     )]
     pub async fn sql(
@@ -350,8 +350,8 @@ impl SparkSession {
     }
 
     /// Interrupt all running operations.
-    #[api_parity(
-        reference = ".interruptAll",
+    #[parity(
+        path = ".interruptAll",
         status = Implemented,
     )]
     pub async fn interrupt_all(&self) -> Result<Vec<String>, SparkError> {
@@ -364,8 +364,8 @@ impl SparkSession {
     }
 
     /// Interrupt a specific operation by ID.
-    #[api_parity(
-        reference = ".interruptOperation",
+    #[parity(
+        path = ".interruptOperation",
         status = Implemented,
     )]
     pub async fn interrupt_operation(&self, op_id: &str) -> Result<Vec<String>, SparkError> {
@@ -378,8 +378,8 @@ impl SparkSession {
     }
 
     /// Request the version of the Spark Connect server.
-    #[api_parity(
-        reference = ".version",
+    #[parity(
+        path = ".version",
         status = Implemented,
     )]
     pub async fn version(&self) -> Result<String, SparkError> {

@@ -3,7 +3,7 @@
 use std::collections::HashMap;
 use std::env::consts;
 use std::str::FromStr;
-use api_parity_core::api_parity_impl;
+use api_parity_rs::{parity, parity_impl};
 use tonic::transport::{Channel, ClientTlsConfig}; 
 use uuid::Uuid;
 
@@ -63,13 +63,13 @@ impl Default for ChannelBuilder {
         }
     }
 }
-#[api_parity_impl(
-    reference = "pyspark.sql.connect.client.core.ChannelBuilder",
+#[parity_impl(
+    path = "pyspark.sql.connect.client.core.ChannelBuilder",
     status = Implemented,
 )]
 impl ChannelBuilder {
-    #[api_parity(
-        reference = ".default_port",
+    #[parity(
+        path = ".default_port",
         status = Implemented,
     )]
     pub fn default_port() -> u16 {
@@ -122,16 +122,16 @@ impl ChannelBuilder {
         Ok(self)
     }
 
-    #[api_parity(
-        reference = ".get",
+    #[parity(
+        path = ".get",
         status = Implemented,
     )]
     pub fn get(&self, key: &str) -> Option<String> {
         self.metadata.get(key).cloned()
     }
 
-    #[api_parity(
-        reference = ".endpoint",
+    #[parity(
+        path = ".endpoint",
         status = Implemented,
     )]
     pub fn endpoint(&self) -> String {
@@ -144,8 +144,8 @@ impl ChannelBuilder {
         format!("Bearer {}", token)
     }
 
-    #[api_parity(
-        reference = ".metadata",
+    #[parity(
+        path = ".metadata",
         status = Partial,
         comment = "This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel."
     )]
@@ -153,16 +153,16 @@ impl ChannelBuilder {
         self.metadata.clone()
     }
 
-    #[api_parity(
-        reference = ".secure",
+    #[parity(
+        path = ".secure",
         status = Implemented,
     )]
     pub fn secure(&self) -> bool {
         self.use_ssl
     }
 
-    #[api_parity(
-        reference = ".session_id",
+    #[parity(
+        path = ".session_id",
         status = Implemented,
     )]
     pub fn session_id(&self) -> Uuid {
@@ -173,8 +173,8 @@ impl ChannelBuilder {
         }
     }
 
-    #[api_parity(
-        reference = ".userAgent",
+    #[parity(
+        path = ".userAgent",
         status = Implemented,
     )]
     pub fn user_agent(&self) -> Result<String, ClientError> {
@@ -196,8 +196,8 @@ impl ChannelBuilder {
         ))
     }
 
-    #[api_parity(
-        reference = ".userId",
+    #[parity(
+        path = ".userId",
         status = Implemented,
     )]
     pub fn user_id(&self) -> String {
@@ -209,8 +209,8 @@ impl ChannelBuilder {
     /// Applies the parameters of the connection string and creates a new
     /// gRPC channel according to the configuration.
     /// Passes optional channel options to construct the channel.
-    #[api_parity(
-        reference = ".toChannel",
+    #[parity(
+        path = ".toChannel",
         status = Partial,
         comment = "Creates a gRPC client from the channel builder, instead of a channel."
     )]

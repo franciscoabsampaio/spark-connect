@@ -1,6 +1,3 @@
-[workspace]
-members = ["crates/api-parity-core", "crates/api-parity-macros"]
-
 [package]
 edition = "2024"
 authors = ["Francisco A. B. Sampaio <franciscoabsampaio@gmail.com>"]
@@ -16,7 +13,7 @@ keywords = ["spark", "connect", "sql", "data", "client"]
 categories = ["api-bindings", "database"]
 
 [dependencies]
-api-parity-core = { path = "crates/api-parity-core" }
+api-parity-rs = { version = "0.0.2", optional = true, features = ["serde"] }
 arrow = { version = "56.2.0", default-features = false, features = ["ipc"] }
 chrono = { version = "0.4.42", optional = true }
 futures-util = "0.3.31"
@@ -25,6 +22,8 @@ http-body = "1.0.1"
 prost = "0.14.1"
 prost-types = "0.14.1"
 regex = "1.11.3"
+serde = { version = "1", features = ["derive"], optional = true }
+serde_json = { version = "1", optional = true }
 tokio = { version = "1.47", features = ["rt-multi-thread", "macros"] }
 tonic = { version = "0.14.2" }
 tonic-prost = "0.14.2"
@@ -44,8 +43,13 @@ tokio-test = "0.4.4"
 name = "databricks"
 required-features = ["tokio-macros", "tls"]
 
+[[bin]]
+name = "api-parity-dump"
+required-features = ["parity"]
+
 [features]
 default = [
+  "parity",
   "spark-3-5",
   "tonic/default",
   "tls"
@@ -63,6 +67,9 @@ tls = [
   "tonic/tls-native-roots"
 ]
 # Spark Versions
+parity = [
+  "api-parity-rs"
+]
 spark-3-4 = []
 spark-3-5 = []
 
