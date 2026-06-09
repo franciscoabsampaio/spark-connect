@@ -94,8 +94,40 @@
       "comment": null
     },
     {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.execute_command",
+      "implementation": "SparkConnectClient::execute_command",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Unlike the original, this method is lazy, returning the client instead of a materialized result."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.get_tags",
+      "implementation": "SparkConnectClient::get_tags",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_table",
+      "implementation": "SparkConnectClient::to_batches",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust)."
+    },
+    {
       "path": "pyspark.sql.connect.session.SparkSession.session_id",
       "implementation": "SparkConnectClient::session_id",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.version",
+      "implementation": "SparkConnectClient::version",
       "status": "implemented",
       "since": null,
       "issue": null,
@@ -216,6 +248,54 @@
     {
       "path": "pyspark.sql.session.SparkSession.version",
       "implementation": "SparkSession::version",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.DataType",
+      "implementation": "spark_connect::types::DataType",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField",
+      "implementation": "StructField",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField.fromJson",
+      "implementation": "StructField::from_json",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField.jsonValue",
+      "implementation": "StructField::json_value",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField.simpleString",
+      "implementation": "StructField::simple_string",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructType",
+      "implementation": "StructType",
       "status": "implemented",
       "since": null,
       "issue": null,

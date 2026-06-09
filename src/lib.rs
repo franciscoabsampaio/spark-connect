@@ -135,11 +135,12 @@ This project is not affiliated with, endorsed by, or sponsored by the Apache Sof
 
 pub mod client;
 mod conf;
-mod io;
 mod error;
+mod io;
 mod literal;
 pub mod query;
 mod session;
+mod types;
 
 /// The Spark version this crate was compiled against.
 pub const SPARK_VERSION: &str = env!("SPARK_VERSION");

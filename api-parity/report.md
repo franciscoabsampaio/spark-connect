@@ -6,18 +6,19 @@
 ## Summary
 
 - Reference paths: **1551**
-- Covered: **12** (0.8%)
-  - implemented: 10
-  - partial: 2
+- Covered: **16** (1.0%)
+  - implemented: 12
+  - partial: 4
   - unimplemented: 0
-- Stale port paths (no match in reference): **15**
+- Stale port paths (no match in reference): **21**
 
 ## Per-class coverage
 
 | Class | Class status | Members | Covered | % |
 |---|---|---:|---:|---:|
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
-| `pyspark.sql.connect.session.SparkSession` | — | 29 | 1 | 3% |
+| `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 3 | 10% |
+| `pyspark.sql.connect.session.SparkSession` | — | 29 | 2 | 7% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionLike` | — | 2 | 0 | 0% |
 | `pyspark.sql.connect.catalog.Catalog` | — | 27 | 0 | 0% |
@@ -34,7 +35,6 @@
 | `pyspark.sql.connect.client.core.PlanObservedMetrics` | — | 2 | 0 | 0% |
 | `pyspark.sql.connect.client.core.RetryState` | — | 5 | 0 | 0% |
 | `pyspark.sql.connect.client.core.Retrying` | — | 0 | 0 | 0% |
-| `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 0 | 0% |
 | `pyspark.sql.connect.client.reattach.ExecutePlanResponseReattachableIterator` | — | 4 | 0 | 0% |
 | `pyspark.sql.connect.column.Column` | — | 33 | 0 | 0% |
 | `pyspark.sql.connect.conf.RuntimeConf` | — | 4 | 0 | 0% |
@@ -187,6 +187,44 @@
 | `userAgent` | property | implemented | `ChannelBuilder::user_agent` |  |
 | `userId` | property | implemented | `ChannelBuilder::user_id` |  |
 
+### `pyspark.sql.connect.client.core.SparkConnectClient`
+
+- Class status: **implemented** (impl `SparkConnectClient`)
+
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `add_artifacts` | method | — | — |  |
+| `add_tag` | method | — | — |  |
+| `cache_artifact` | method | — | — |  |
+| `clear_tags` | method | — | — |  |
+| `close` | method | — | — |  |
+| `config` | method | — | — |  |
+| `copy_from_local_to_fs` | method | — | — |  |
+| `disable_reattachable_execute` | method | — | — |  |
+| `enable_reattachable_execute` | method | — | — |  |
+| `execute_command` | method | partial | `SparkConnectClient::execute_command` | Unlike the original, this method is lazy, returning the client instead of a materialized result. |
+| `explain_string` | method | — | — |  |
+| `get_config_with_defaults` | method | — | — |  |
+| `get_configs` | method | — | — |  |
+| `get_tags` | method | implemented | `SparkConnectClient::get_tags` |  |
+| `host` | property | — | — |  |
+| `interrupt_all` | method | — | — |  |
+| `interrupt_operation` | method | — | — |  |
+| `interrupt_tag` | method | — | — |  |
+| `is_closed` | property | — | — |  |
+| `register_java` | method | — | — |  |
+| `register_udf` | method | — | — |  |
+| `register_udtf` | method | — | — |  |
+| `remove_tag` | method | — | — |  |
+| `retry_exception` | method | — | — |  |
+| `same_semantics` | method | — | — |  |
+| `schema` | method | — | — |  |
+| `semantic_hash` | method | — | — |  |
+| `to_pandas` | method | — | — |  |
+| `to_table` | method | partial | `SparkConnectClient::to_batches` | Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust). |
+| `to_table_as_iterator` | method | — | — |  |
+| `token` | property | — | — |  |
+
 ### `pyspark.sql.connect.session.SparkSession`
 
 | Member | Kind | Status | Implementation | Comment |
@@ -219,45 +257,7 @@
 | `table` | method | — | — |  |
 | `udf` | property | — | — |  |
 | `udtf` | property | — | — |  |
-| `version` | property | — | — |  |
-
-### `pyspark.sql.connect.client.core.SparkConnectClient`
-
-- Class status: **implemented** (impl `SparkConnectClient`)
-
-| Member | Kind | Status | Implementation | Comment |
-|---|---|---|---|---|
-| `add_artifacts` | method | — | — |  |
-| `add_tag` | method | — | — |  |
-| `cache_artifact` | method | — | — |  |
-| `clear_tags` | method | — | — |  |
-| `close` | method | — | — |  |
-| `config` | method | — | — |  |
-| `copy_from_local_to_fs` | method | — | — |  |
-| `disable_reattachable_execute` | method | — | — |  |
-| `enable_reattachable_execute` | method | — | — |  |
-| `execute_command` | method | — | — |  |
-| `explain_string` | method | — | — |  |
-| `get_config_with_defaults` | method | — | — |  |
-| `get_configs` | method | — | — |  |
-| `get_tags` | method | — | — |  |
-| `host` | property | — | — |  |
-| `interrupt_all` | method | — | — |  |
-| `interrupt_operation` | method | — | — |  |
-| `interrupt_tag` | method | — | — |  |
-| `is_closed` | property | — | — |  |
-| `register_java` | method | — | — |  |
-| `register_udf` | method | — | — |  |
-| `register_udtf` | method | — | — |  |
-| `remove_tag` | method | — | — |  |
-| `retry_exception` | method | — | — |  |
-| `same_semantics` | method | — | — |  |
-| `schema` | method | — | — |  |
-| `semantic_hash` | method | — | — |  |
-| `to_pandas` | method | — | — |  |
-| `to_table` | method | — | — |  |
-| `to_table_as_iterator` | method | — | — |  |
-| `token` | property | — | — |  |
+| `version` | property | implemented | `SparkConnectClient::version` |  |
 
 ## Stale port references
 
@@ -281,4 +281,10 @@ Likely a typo, a removed reference API, or a path-convention drift.
 | `pyspark.sql.session.SparkSession.interruptOperation` | `SparkSession::interrupt_operation` |  |
 | `pyspark.sql.session.SparkSession.sql` | `SparkSession::sql` |  |
 | `pyspark.sql.session.SparkSession.version` | `SparkSession::version` |  |
+| `pyspark.sql.types.DataType` | `spark_connect::types::DataType` |  |
+| `pyspark.sql.types.StructField` | `StructField` |  |
+| `pyspark.sql.types.StructField.fromJson` | `StructField::from_json` |  |
+| `pyspark.sql.types.StructField.jsonValue` | `StructField::json_value` |  |
+| `pyspark.sql.types.StructField.simpleString` | `StructField::simple_string` |  |
+| `pyspark.sql.types.StructType` | `StructType` |  |
 

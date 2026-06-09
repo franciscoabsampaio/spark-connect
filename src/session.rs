@@ -319,14 +319,9 @@ impl SparkSession {
             },
         );
 
-        // Execute plan
-        let plan = spark::Plan {
-            op_type: Some(spark::plan::OpType::Command(spark::Command {
-                command_type: Some(sql_cmd),
-            })),
-        };
+        // Execute command
         let mut client = self.client()?;
-        let result = client.execute_plan(plan).await?;
+        let result = client.execute_command(sql_cmd).await?;
 
         Ok(spark::Plan {
             op_type: Some(spark::plan::OpType::Root(result.relation()?)),
@@ -346,7 +341,7 @@ impl SparkSession {
     pub async fn collect(&self, plan: spark::Plan) -> Result<Vec<RecordBatch>, SparkError> {
         let mut client = self.client()?;
 
-        Ok(client.execute_plan(plan).await?.batches())
+        Ok(client.to_batches(plan).await?)
     }
 
     /// Interrupt all running operations.
@@ -389,7 +384,7 @@ impl SparkSession {
 
         let mut client = self.client()?.clone();
         
-        Ok(client.analyze(version).await?.spark_version()?)
+        Ok(client.analyze(version).await?.version()?)
     }
 }
 

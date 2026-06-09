@@ -43,6 +43,7 @@ use arrow::array::RecordBatch;
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::codec::Streaming;
+use tracing;
 use uuid::{self, Uuid};
 
 /// Asynchronous gRPC client for Spark Connect.
@@ -66,6 +67,7 @@ pub struct SparkConnectClient {
     stub: Arc<RwLock<SparkGrpcClient>>,
     user_context: Option<spark::UserContext>,
     user_agent: Option<String>,
+    tags: Vec<String>,
     use_reattachable_execute: bool,
     session_id: Uuid,
     operation_id: Option<String>,
@@ -98,6 +100,7 @@ impl SparkConnectClient {
                 extensions: vec![],
             }),
             user_agent: Some(builder.user_agent()?),
+            tags: vec![],
             session_id: builder.session_id(),
             operation_id: None,
             response_id: None,
@@ -108,23 +111,106 @@ impl SparkConnectClient {
         })
     }
 
+    #[parity(
+        path = ".get_tags",
+        status = Implemented,
+    )]
+    pub fn get_tags(&self) -> Vec<String> {
+        self.tags.clone()
+    }
+
     /// Returns the session ID associated with this client.
     #[parity(
         path = "pyspark.sql.connect.session.SparkSession.session_id",
         status = Implemented,
     )]
-    pub(crate) fn session_id(&self) -> String {
+    pub fn session_id(&self) -> String {
         self.session_id.to_string()
     }
 
     /// Returns the Spark version obtained from the last analyze request.
-    pub(crate) fn spark_version(&self) -> Result<String, ClientError> {
+    #[parity(
+        path = "pyspark.sql.connect.session.SparkSession.version",
+        status = Implemented,
+    )]
+    pub fn version(&self) -> Result<String, ClientError> {
         self.handler_analyze
             .spark_version
             .to_owned()
             .ok_or_else(|| ClientError::new(ClientErrorKind::AnalyzeResponseNotFound(
                 "Spark version response is empty".to_string()
             )))
+    }
+
+    /// Executes a command and returns ???.
+    #[parity(
+        path = ".execute_command",
+        status = Partial,
+        comment = "Unlike the original, this method is lazy, returning the client instead of a materialized result."
+    )]
+    pub async fn execute_command(
+        &mut self,
+        command: spark::command::CommandType
+    ) -> Result<&mut Self, ClientError> {
+        tracing::debug!("Executing command '{:?}'", command);
+
+        let mut request = self.execute_plan_request_with_metadata();
+        
+        request.plan = Some(spark::Plan {
+            op_type: Some(spark::plan::OpType::Command(spark::Command {
+                command_type: Some(command),
+            })),
+        });
+
+        self.execute_request(request).await
+    }
+
+    #[parity(
+        path = ".to_table",
+        status = Partial,
+        comment = "Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust)."
+    )]
+    /// Return given plan as a vector of RecordBatch.
+    pub async fn to_batches(
+        &mut self, plan: spark::Plan
+    ) -> Result<Vec<RecordBatch>, ClientError> {
+        tracing::debug!("Executing plan '{:?}'", plan);
+
+        let mut request = self.execute_plan_request_with_metadata();
+        
+        request.plan = Some(plan);
+        
+        self.execute_request(request).await?;
+
+        Ok(self.handler_execute.batches.to_owned())
+    }
+
+    /// This method handles deserialization, streaming,
+    /// and optional *reattachment* for fault-tolerant execution.
+    /// 
+    /// The resulting record batches can be retrieved with [`batches()`](Self::batches).
+    async fn execute_request(
+        &mut self,
+        request: spark::ExecutePlanRequest
+    ) -> Result<&mut Self, ClientError> {
+        let mut client = self.stub.write().await;
+        let mut stream = client
+            .execute_plan(request.clone())
+            .await
+            .map_err(|status| {
+                ClientError::new(ClientErrorKind::ExecutePlanRequest { status, request })
+            })?
+            .into_inner();
+        drop(client);
+
+        self.handler_execute = ExecuteHandler::default();
+        self.process_stream(&mut stream).await?;
+        
+        if self.use_reattachable_execute && self.handler_execute.result_complete {
+            self.release_all().await?;
+        }
+        
+        Ok(self)
     }
 
     /// Returns the list of operation IDs that were interrupted.
@@ -140,11 +226,6 @@ impl SparkConnectClient {
             .ok_or_else(||  ClientError::new(ClientErrorKind::AnalyzeResponseNotFound(
                 "relation response is empty".to_string()
             )))
-    }
-
-    /// Returns all record batches accumulated during the last execution.
-    pub(crate) fn batches(&self) -> Vec<RecordBatch> {
-        self.handler_execute.batches.to_owned()
     }
 
     /// Compares a session_id to the current session's id.
@@ -291,45 +372,9 @@ impl SparkConnectClient {
         
         Ok(self)
     }
-    
 
-    /// Executes a query plan and streams results from Spark.
-    ///
-    /// This method handles deserialization, streaming,
-    /// and optional *reattachment* for fault-tolerant execution.
-    ///
-    /// The resulting record batches can be retrieved with [`batches()`](Self::batches).
-    pub(crate) async fn execute_plan(
-        &mut self,
-        plan: spark::Plan
-    ) -> Result<&mut Self, ClientError> {
-        let mut request = self.new_execute_plan_request();
-        request.plan = Some(plan);
-
-        let mut client = self.stub.write().await;
-        let mut stream = client
-            .execute_plan(request.clone())
-            .await
-            .map_err(|status| {
-                ClientError::new(ClientErrorKind::ExecutePlanRequest { status, request })
-            })?
-            .into_inner();
-        drop(client);
-
-        self.handler_execute = ExecuteHandler::default();
-        self.process_stream(&mut stream).await?;
-        
-        if self.use_reattachable_execute && self.handler_execute.result_complete {
-            self.release_all().await?;
-        }
-        
-        Ok(self)
-    }
-
-    fn new_execute_plan_request(&mut self) -> spark::ExecutePlanRequest {
+    fn execute_plan_request_with_metadata(&mut self) -> spark::ExecutePlanRequest {
         let operation_id = uuid::Uuid::new_v4().to_string();
-
-        self.operation_id = Some(operation_id.clone());
 
         spark::ExecutePlanRequest {
             session_id: self.session_id(),
@@ -344,7 +389,7 @@ impl SparkConnectClient {
                     ),
                 ),
             }],
-            tags: vec![],
+            tags: self.get_tags(),
         }
     }
     

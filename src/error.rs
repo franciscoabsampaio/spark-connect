@@ -44,6 +44,7 @@ pub(crate) enum SparkErrorKind {
     Client(ClientError),
     ClientNotFound,
     Config(SparkConfError),
+    InvalidField(String),
     Unimplemented(String)
 }
 
@@ -53,6 +54,7 @@ impl fmt::Display for SparkErrorKind {
             Self::Client(e) => write!(f, "Client error: {}", e),
             Self::ClientNotFound => write!(f, "Client not found. Please configure a remote Spark session."),
             Self::Config(e) => write!(f, "Spark configuration is invalid: {}", e),
+            Self::InvalidField(field) => write!(f, "Invalid field: {}", field),
             Self::Unimplemented(msg) => write!(f, "Unimplemented: {}", msg),
         }
     }
