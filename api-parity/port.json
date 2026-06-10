@@ -126,6 +126,22 @@
       "comment": "Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust)."
     },
     {
+      "path": "pyspark.sql.connect.dataframe.DataFrame",
+      "implementation": "DataFrame",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.collect",
+      "implementation": "DataFrame::collect",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
       "path": "pyspark.sql.connect.session.SparkSession.session_id",
       "implementation": "SparkConnectClient::session_id",
       "status": "implemented",

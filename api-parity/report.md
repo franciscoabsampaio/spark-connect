@@ -6,8 +6,8 @@
 ## Summary
 
 - Reference paths: **1551**
-- Covered: **17** (1.1%)
-  - implemented: 12
+- Covered: **19** (1.2%)
+  - implemented: 14
   - partial: 5
   - unimplemented: 0
 - Stale port paths (no match in reference): **21**
@@ -19,6 +19,7 @@
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
 | `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 4 | 13% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 2 | 7% |
+| `pyspark.sql.connect.dataframe.DataFrame` | implemented | 102 | 1 | 1% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionLike` | — | 2 | 0 | 0% |
 | `pyspark.sql.connect.catalog.Catalog` | — | 27 | 0 | 0% |
@@ -40,7 +41,6 @@
 | `pyspark.sql.connect.conf.RuntimeConf` | — | 4 | 0 | 0% |
 | `pyspark.sql.connect.conversion.ArrowTableToRowsConversion` | — | 1 | 0 | 0% |
 | `pyspark.sql.connect.conversion.LocalDataToArrowConversion` | — | 1 | 0 | 0% |
-| `pyspark.sql.connect.dataframe.DataFrame` | — | 102 | 0 | 0% |
 | `pyspark.sql.connect.dataframe.DataFrameNaFunctions` | — | 3 | 0 | 0% |
 | `pyspark.sql.connect.dataframe.DataFrameStatFunctions` | — | 6 | 0 | 0% |
 | `pyspark.sql.connect.expressions.CallFunction` | — | 3 | 0 | 0% |
@@ -258,6 +258,115 @@
 | `udf` | property | — | — |  |
 | `udtf` | property | — | — |  |
 | `version` | property | implemented | `SparkConnectClient::version` |  |
+
+### `pyspark.sql.connect.dataframe.DataFrame`
+
+- Class status: **implemented** (impl `DataFrame`)
+
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `agg` | method | — | — |  |
+| `alias` | method | — | — |  |
+| `approxQuantile` | method | — | — |  |
+| `cache` | method | — | — |  |
+| `checkSameSparkSession` | method | — | — |  |
+| `coalesce` | method | — | — |  |
+| `colRegex` | method | — | — |  |
+| `collect` | method | implemented | `DataFrame::collect` |  |
+| `columns` | property | — | — |  |
+| `corr` | method | — | — |  |
+| `count` | method | — | — |  |
+| `cov` | method | — | — |  |
+| `createGlobalTempView` | method | — | — |  |
+| `createOrReplaceGlobalTempView` | method | — | — |  |
+| `createOrReplaceTempView` | method | — | — |  |
+| `createTempView` | method | — | — |  |
+| `crossJoin` | method | — | — |  |
+| `crosstab` | method | — | — |  |
+| `cube` | method | — | — |  |
+| `describe` | method | — | — |  |
+| `distinct` | method | — | — |  |
+| `drop` | method | — | — |  |
+| `dropDuplicates` | method | — | — |  |
+| `dropDuplicatesWithinWatermark` | method | — | — |  |
+| `drop_duplicates` | method | — | — |  |
+| `drop_duplicates_within_watermark` | method | — | — |  |
+| `dropna` | method | — | — |  |
+| `dtypes` | property | — | — |  |
+| `exceptAll` | method | — | — |  |
+| `explain` | method | — | — |  |
+| `fillna` | method | — | — |  |
+| `filter` | method | — | — |  |
+| `first` | method | — | — |  |
+| `freqItems` | method | — | — |  |
+| `groupBy` | method | — | — |  |
+| `groupby` | method | — | — |  |
+| `head` | method | — | — |  |
+| `hint` | method | — | — |  |
+| `inputFiles` | method | — | — |  |
+| `intersect` | method | — | — |  |
+| `intersectAll` | method | — | — |  |
+| `isEmpty` | method | — | — |  |
+| `isLocal` | method | — | — |  |
+| `isStreaming` | property | — | — |  |
+| `is_cached` | property | — | — |  |
+| `join` | method | — | — |  |
+| `limit` | method | — | — |  |
+| `mapInArrow` | method | — | — |  |
+| `mapInPandas` | method | — | — |  |
+| `melt` | method | — | — |  |
+| `na` | property | — | — |  |
+| `observe` | method | — | — |  |
+| `offset` | method | — | — |  |
+| `orderBy` | method | — | — |  |
+| `pandas_api` | method | — | — |  |
+| `persist` | method | — | — |  |
+| `printSchema` | method | — | — |  |
+| `randomSplit` | method | — | — |  |
+| `registerTempTable` | method | — | — |  |
+| `repartition` | method | — | — |  |
+| `repartitionByRange` | method | — | — |  |
+| `replace` | method | — | — |  |
+| `rollup` | method | — | — |  |
+| `sameSemantics` | method | — | — |  |
+| `sample` | method | — | — |  |
+| `sampleBy` | method | — | — |  |
+| `schema` | property | — | — |  |
+| `select` | method | — | — |  |
+| `selectExpr` | method | — | — |  |
+| `semanticHash` | method | — | — |  |
+| `show` | method | — | — |  |
+| `sort` | method | — | — |  |
+| `sortWithinPartitions` | method | — | — |  |
+| `sparkSession` | property | — | — |  |
+| `stat` | property | — | — |  |
+| `storageLevel` | property | — | — |  |
+| `subtract` | method | — | — |  |
+| `summary` | method | — | — |  |
+| `tail` | method | — | — |  |
+| `take` | method | — | — |  |
+| `to` | method | — | — |  |
+| `toDF` | method | — | — |  |
+| `toLocalIterator` | method | — | — |  |
+| `toPandas` | method | — | — |  |
+| `to_pandas_on_spark` | method | — | — |  |
+| `transform` | method | — | — |  |
+| `union` | method | — | — |  |
+| `unionAll` | method | — | — |  |
+| `unionByName` | method | — | — |  |
+| `unpersist` | method | — | — |  |
+| `unpivot` | method | — | — |  |
+| `where` | method | — | — |  |
+| `withColumn` | method | — | — |  |
+| `withColumnRenamed` | method | — | — |  |
+| `withColumns` | method | — | — |  |
+| `withColumnsRenamed` | method | — | — |  |
+| `withMetadata` | method | — | — |  |
+| `withPlan` | method | — | — |  |
+| `withWatermark` | method | — | — |  |
+| `write` | property | — | — |  |
+| `writeStream` | property | — | — |  |
+| `writeTo` | method | — | — |  |
 
 ## Stale port references
 
