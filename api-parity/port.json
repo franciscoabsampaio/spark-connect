@@ -110,6 +110,14 @@
       "comment": null
     },
     {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_pandas",
+      "implementation": "SparkConnectClient::to_polars",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Instead of pandas, the most common DataFrame library in Rust is polars."
+    },
+    {
       "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_table",
       "implementation": "SparkConnectClient::to_batches",
       "status": "partial",

@@ -1,19 +1,24 @@
-use spark::Plan;
+use crate::{SparkError, SparkSession};
+use crate::spark::Plan;
+
+use arrow::array::RecordBatch;
 
 pub struct DataFrame {
-    client: SparkConnectClient,
+    session: SparkSession,
     plan: Plan,
 }
 
 impl DataFrame {
-    pub fn new(client: SparkConnectClient, plan: Plan) -> Self {
-        Self { client, plan }
+    pub fn new(session: SparkSession, plan: Plan) -> Self {
+        Self { session, plan }
     }
 
     /// Collect the results from a lazy [`plan`](crate::spark::Plan).
     pub async fn collect(&self) -> Result<Vec<RecordBatch>, SparkError> {
-        let mut client = self.client.clone();
+        let mut client = self.session.client()?;
 
-        client.to_batches(self.plan.clone()).await
+        client.to_batches(self.plan.clone())
+            .await
+            .map_err(|e| SparkError::from(e))
     }
 }

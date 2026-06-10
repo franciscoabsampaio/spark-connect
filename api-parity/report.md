@@ -6,9 +6,9 @@
 ## Summary
 
 - Reference paths: **1551**
-- Covered: **16** (1.0%)
+- Covered: **17** (1.1%)
   - implemented: 12
-  - partial: 4
+  - partial: 5
   - unimplemented: 0
 - Stale port paths (no match in reference): **21**
 
@@ -17,7 +17,7 @@
 | Class | Class status | Members | Covered | % |
 |---|---|---:|---:|---:|
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
-| `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 3 | 10% |
+| `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 4 | 13% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 2 | 7% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionLike` | — | 2 | 0 | 0% |
@@ -220,7 +220,7 @@
 | `same_semantics` | method | — | — |  |
 | `schema` | method | — | — |  |
 | `semantic_hash` | method | — | — |  |
-| `to_pandas` | method | — | — |  |
+| `to_pandas` | method | partial | `SparkConnectClient::to_polars` | Instead of pandas, the most common DataFrame library in Rust is polars. |
 | `to_table` | method | partial | `SparkConnectClient::to_batches` | Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust). |
 | `to_table_as_iterator` | method | — | — |  |
 | `token` | property | — | — |  |

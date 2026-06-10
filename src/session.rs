@@ -88,7 +88,6 @@ use crate::spark::expression::Literal;
 use crate::query::SqlQueryBuilder;
 use crate::{SparkError, error::SparkErrorKind};
 
-use arrow::record_batch::RecordBatch;
 use api_parity_rs::{parity, parity_impl};
 
 /// Builder for creating [`SparkSession`] instances.
@@ -324,7 +323,7 @@ impl SparkSession {
         let mut client = self.client()?;
         let result = client.execute_command(sql_cmd).await?;
 
-        Ok(DataFrame::new(client, spark::Plan {
+        Ok(DataFrame::new(self.clone(), spark::Plan {
             op_type: Some(spark::plan::OpType::Root(result.relation()?)),
         }))
     }
