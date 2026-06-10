@@ -135,6 +135,7 @@ This project is not affiliated with, endorsed by, or sponsored by the Apache Sof
 
 pub mod client;
 mod conf;
+mod dataframe;
 mod error;
 mod io;
 mod literal;
@@ -151,6 +152,7 @@ pub mod spark {
 }
 
 pub use conf::{SparkConf, SparkConfKey};
+pub use dataframe::DataFrame;
 pub use error::SparkError;
 pub use session::SparkSession;
 pub use literal::ToLiteral;

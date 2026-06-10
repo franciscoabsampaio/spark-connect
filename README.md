@@ -36,13 +36,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
       .build()
       .await?;
 
-  // 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatches>
-  let batches = session
-      .query("SELECT ? AS rule, ? AS text")
-      .bind(42)
-      .bind("world")
-      .execute()
-      .await?;
+  // 2️⃣ Execute a simple SQL query and receive a lazy DataFrame
+  let df = session.sql(
+      "SELECT ? AS id, ? AS text",
+      vec![42.to_literal(), "world".to_literal()]
+  ).await?;
+  
+  // 3️⃣ Materialize the DataFrame to get a vector of arrow RecordBatch
+  let batches: Vec<RecordBatch> = df.collect()?;
 
   Ok(())
 }

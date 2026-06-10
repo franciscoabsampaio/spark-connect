@@ -39,6 +39,7 @@ pub(crate) enum ClientErrorKind {
     InvalidSessionID { source: uuid::Error, session_id: String },
     InvalidConnectionString { source: InvalidUri, conn_string: String,  msg: String },
     Io(IoError),
+    Polars(polars::error::PolarsError),
     ReattachExecuteRequest { status: tonic::Status, request: spark::ReattachExecuteRequest },
     ReleaseExecuteRequest { status: tonic::Status, request: spark::ReleaseExecuteRequest },
     SessionIDMismatch { client_session_id: String, request_session_id: String },
@@ -68,6 +69,7 @@ impl fmt::Display for ClientErrorKind {
                 f, "Failed to parse the connection URL '{conn_string}': {msg}. Please update the URL to follow the correct format, e.g., 'sc://hostname:port'."
             ),
             Self::Io(_) => write!(f, "Failed to deserialize Arrow RecordBatch."),
+            Self::Polars(e) => write!(f, "Failed to build Polars DataFrame: {e}"),
             Self::ReattachExecuteRequest { status, request } => write!(
                 f, "ReattachExecuteRequest failed with status '{status}': {request:?}"
             ),
@@ -93,6 +95,7 @@ impl Error for ClientErrorKind {
 			Self::InvalidSessionID { source, .. } => Some(source),
 			Self::InvalidConnectionString { source, .. } => Some(source),
 			Self::Io(source) => Some(source),
+			Self::Polars(source) => Some(source),
             Self::Transport(source) => Some(source),
 			_ => None,
 		}
@@ -102,5 +105,11 @@ impl Error for ClientErrorKind {
 impl From<IoError> for ClientError {
     fn from(error: IoError) -> Self {
         ClientError::new(ClientErrorKind::Io(error))
+    }
+}
+
+impl From<polars::error::PolarsError> for ClientError {
+    fn from(error: polars::error::PolarsError) -> Self {
+        ClientError::new(ClientErrorKind::Polars(error))
     }
 }

@@ -36,10 +36,13 @@ use handlers::{AnalyzeHandler, ExecuteHandler, InterruptHandler};
 pub use channel_builder::ChannelBuilder;
 use channel_builder::SparkGrpcClient;
 use crate::conf::SparkRemoteConf;
+use crate::io::IoError;
 use crate::spark;
 use crate::spark::execute_plan_response::ResponseType;
 
 use arrow::array::RecordBatch;
+use arrow::ipc::writer::StreamWriter;
+use polars::prelude::{DataFrame, IpcStreamReader, SerReader};
 use std::sync::Arc;
 use tokio::sync::RwLock;
 use tonic::codec::Streaming;
@@ -183,6 +186,34 @@ impl SparkConnectClient {
         self.execute_request(request).await?;
 
         Ok(self.handler_execute.batches.to_owned())
+    }
+
+    #[parity(
+        path = ".to_pandas",
+        status = Partial,
+        comment = "Instead of pandas, the most common DataFrame library in Rust is polars."
+    )]
+    pub async fn to_polars(
+        &mut self, plan: spark::Plan
+    ) -> Result<DataFrame, ClientError> {
+        let batches = self.to_batches(plan).await?;
+        if batches.is_empty() {
+            return Ok(DataFrame::empty());
+        }
+
+        // Polars uses its own Arrow implementation (polars-arrow), not arrow-rs,
+        // so bridge the two through the Arrow IPC stream format.
+        let mut buf = Vec::new();
+        {
+            let schema = batches[0].schema();
+            let mut writer = StreamWriter::try_new(&mut buf, &schema).map_err(IoError::from)?;
+            for batch in &batches {
+                writer.write(batch).map_err(IoError::from)?;
+            }
+            writer.finish().map_err(IoError::from)?;
+        }
+
+        Ok(IpcStreamReader::new(std::io::Cursor::new(buf)).finish()?)
     }
 
     /// This method handles deserialization, streaming,

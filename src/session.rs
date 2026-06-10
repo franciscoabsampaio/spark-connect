@@ -82,6 +82,7 @@
 //! plans, and inspecting results - without exposing internal client plumbing.
 use crate::client::SparkConnectClient;
 use crate::conf::{SparkConf, SparkConfKey, ResolvedSparkConf};
+use crate::dataframe::DataFrame;
 use crate::spark;
 use crate::spark::expression::Literal;
 use crate::query::SqlQueryBuilder;
@@ -301,7 +302,7 @@ impl SparkSession {
         }
     }
 
-    /// Execute a SQL query and return a lazy [`plan`](crate::spark::Plan).
+    /// Execute a SQL query and return a lazy [`DataFrame`](crate::dataframe::DataFrame).
     #[parity(
         path = ".sql",
         status = Partial,
@@ -310,7 +311,7 @@ impl SparkSession {
         &self,
         query: &str,
         params: Vec<Literal>
-    ) -> Result<spark::Plan, SparkError> {
+    ) -> Result<DataFrame, SparkError> {
         let sql_cmd = spark::command::CommandType::SqlCommand(
             spark::SqlCommand {
                 sql: query.to_string(),
@@ -323,9 +324,9 @@ impl SparkSession {
         let mut client = self.client()?;
         let result = client.execute_command(sql_cmd).await?;
 
-        Ok(spark::Plan {
+        Ok(DataFrame::new(client, spark::Plan {
             op_type: Some(spark::plan::OpType::Root(result.relation()?)),
-        })
+        }))
     }
 
     /// Alternative ["sqlx-like"](https://docs.rs/sqlx/latest/sqlx/) query interface.
@@ -335,13 +336,6 @@ impl SparkSession {
         query: &str,
     ) -> SqlQueryBuilder<'_> {
         SqlQueryBuilder::new(&self, query)
-    }
-
-    /// Collect the results from a lazy [`plan`](crate::spark::Plan).
-    pub async fn collect(&self, plan: spark::Plan) -> Result<Vec<RecordBatch>, SparkError> {
-        let mut client = self.client()?;
-
-        Ok(client.to_batches(plan).await?)
     }
 
     /// Interrupt all running operations.
