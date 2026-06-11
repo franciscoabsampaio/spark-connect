@@ -68,16 +68,18 @@ use uuid::{self, Uuid};
 #[derive(Clone, Debug)]
 pub struct SparkConnectClient {
     stub: Arc<RwLock<SparkGrpcClient>>,
-    user_context: Option<spark::UserContext>,
-    user_agent: Option<String>,
-    tags: Vec<String>,
-    use_reattachable_execute: bool,
-    session_id: Uuid,
-    operation_id: Option<String>,
-    response_id: Option<String>,
+    builder: ChannelBuilder,
+    closed: bool,
     handler_analyze: AnalyzeHandler,
     handler_execute: ExecuteHandler,
     handler_interrupt: InterruptHandler,
+    operation_id: Option<String>,
+    response_id: Option<String>,
+    session_id: Uuid,
+    tags: Vec<String>,
+    use_reattachable_execute: bool,
+    user_agent: Option<String>,
+    user_context: Option<spark::UserContext>,
 }
 
 #[parity_impl(
@@ -85,7 +87,7 @@ pub struct SparkConnectClient {
     status = Implemented,
 )]
 impl SparkConnectClient {
-    /// Creates a new client from a gRPC stub and a configured [`ChannelBuilder`].
+    /// Create a new client from a gRPC stub and a configured [`ChannelBuilder`].
     ///
     /// Typically called internally by [`SparkSessionBuilder`](crate::SparkSessionBuilder).
     pub(crate) async fn new(
@@ -97,21 +99,100 @@ impl SparkConnectClient {
 
         Ok(Self {
             stub: Arc::new(RwLock::new(grpc_client)),
+            builder: builder.clone(),
+            closed: false,
+            handler_analyze: AnalyzeHandler::default(),
+            handler_execute: ExecuteHandler::default(),
+            handler_interrupt: InterruptHandler::default(),
+            operation_id: None,
+            response_id: None,
+            session_id: builder.session_id(),
+            tags: vec![],
+            use_reattachable_execute: true,
+            user_agent: Some(builder.user_agent()?),
             user_context: Some(spark::UserContext {
                 user_id: builder.user_id(),
                 user_name: builder.user_id(),
                 extensions: vec![],
             }),
-            user_agent: Some(builder.user_agent()?),
-            tags: vec![],
-            session_id: builder.session_id(),
-            operation_id: None,
-            response_id: None,
-            handler_analyze: AnalyzeHandler::default(),
-            handler_execute: ExecuteHandler::default(),
-            handler_interrupt: InterruptHandler::default(),
-            use_reattachable_execute: true,
         })
+    }
+
+    #[parity(
+        path = ".host",
+        status = Implemented,
+    )]
+    pub fn host(&self) -> String {
+        self.builder.host()
+    }
+
+    #[parity(
+        path = ".token",
+        status = Implemented,
+    )]
+    pub fn token(&self) -> String {
+        self.builder.token()
+    }
+
+    #[parity(
+        path = ".is_closed",
+        status = Implemented,
+    )]
+    pub fn is_closed(&self) -> bool {
+        self.closed
+    }
+
+    /// Close the client channel and release all execute requests.
+    ///
+    /// [`tonic`] models connection lifetime by ownership, not an explicit close.
+    /// With the channel being a cheap, clonable handle, the underlying sockets
+    /// are torn down when the last clone of the channel is dropped.
+    /// We could implement a more explicit close mechanism,
+    /// but it is much simpler to rely on the `closed` flag as a guard against further use.
+    #[parity(
+        path = ".close",
+        status = Implemented,
+    )]
+    pub async fn close(&mut self) -> Result<(), ClientError> {
+        self.release_all().await?;
+        self.closed = true;
+        Ok(())
+    }
+
+    #[parity(
+        path = ".disable_reattachable_execute",
+        status = Implemented,
+    )]
+    pub fn disable_reattachable_execute(&mut self) -> &mut Self {
+        self.use_reattachable_execute = false;
+        self
+    }
+
+    #[parity(
+        path = ".enable_reattachable_execute",
+        status = Implemented,
+    )]
+    pub fn enable_reattachable_execute(&mut self) -> &mut Self {
+        self.use_reattachable_execute = true;
+        self
+    }
+
+    #[parity(
+        path = ".add_tag",
+        status = Implemented,
+    )]
+    pub fn add_tag(&mut self, tag: String) -> Result<&mut Self, ClientError> {
+        self.validate_tag(&tag)?;
+        self.tags.push(tag);
+        Ok(self)
+    }
+
+    #[parity(
+        path = ".clear_tags",
+        status = Implemented,
+    )]
+    pub fn clear_tags(&mut self) -> () {
+        self.tags.clear();
     }
 
     #[parity(
@@ -122,7 +203,40 @@ impl SparkConnectClient {
         self.tags.clone()
     }
 
-    /// Returns the session ID associated with this client.
+    #[parity(
+        path = ".remove_tag",
+        status = Implemented,
+    )]
+    pub fn remove_tag(&mut self, tag: &str) -> Result<(), ClientError> {
+        self.validate_tag(tag)?;
+        self.tags.retain(|t| t != tag);
+        Ok(())
+    }
+
+    /// Return schema for given plan.
+    #[parity(
+        path = ".schema",
+        status = Implemented,
+    )]
+    pub async fn schema(&mut self, plan: spark::Plan) -> Result<spark::DataType, ClientError> {
+        tracing::debug!("Schema for plan: '{:?}'", plan);
+
+        self.analyze(
+            spark::analyze_plan_request::Analyze::Schema(
+                spark::analyze_plan_request::Schema { plan: Some(plan) }
+            )
+        ).await?;
+
+        if self.handler_analyze.schema.is_none() {
+            return Err(ClientError::new(ClientErrorKind::AnalyzeResponseNotFound(
+                "Schema is empty".to_string()
+            )));
+        }
+
+        Ok(self.handler_analyze.schema.clone().unwrap())
+    }
+
+    /// Return the session ID associated with this client.
     #[parity(
         path = "pyspark.sql.connect.session.SparkSession.session_id",
         status = Implemented,
@@ -131,7 +245,7 @@ impl SparkConnectClient {
         self.session_id.to_string()
     }
 
-    /// Returns the Spark version obtained from the last analyze request.
+    /// Return the Spark version obtained from the last analyze request.
     #[parity(
         path = "pyspark.sql.connect.session.SparkSession.version",
         status = Implemented,
@@ -145,7 +259,7 @@ impl SparkConnectClient {
             )))
     }
 
-    /// Executes a command and returns ???.
+    /// Execute a command and return self.
     #[parity(
         path = ".execute_command",
         status = Partial,
@@ -216,9 +330,20 @@ impl SparkConnectClient {
         Ok(IpcStreamReader::new(std::io::Cursor::new(buf)).finish()?)
     }
 
-    /// This method handles deserialization, streaming,
-    /// and optional *reattachment* for fault-tolerant execution.
-    /// 
+    /// Validate that a tag is present in the client's tag list
+    /// and that it does not contain any invalid characters.
+    fn validate_tag(&self, tag: &str) -> Result<(), ClientError> {
+        if tag.contains(",") {
+            return Err(ClientError::new(ClientErrorKind::InvalidTag(tag.to_string())));
+        }
+        if tag.is_empty() {
+            return Err(ClientError::new(ClientErrorKind::EmptyTag(tag.to_string())));
+        }
+        Ok(())
+    }
+
+    /// Handle deserialization, streaming, and optional *reattachment* for fault-tolerant execution.
+    ///
     /// The resulting record batches can be retrieved with [`batches()`](Self::batches).
     async fn execute_request(
         &mut self,
@@ -244,12 +369,12 @@ impl SparkConnectClient {
         Ok(self)
     }
 
-    /// Returns the list of operation IDs that were interrupted.
+    /// Return the list of operation IDs that were interrupted.
     pub(crate) fn interrupted_ids(&self) -> Vec<String> {
         self.handler_interrupt.interrupted_ids.to_owned()
     }
 
-    /// Returns the last relation received in an [`ExecutePlanResponse`](crate::spark::ExecutePlanResponse).
+    /// Return the last relation received in an [`ExecutePlanResponse`](crate::spark::ExecutePlanResponse).
     pub(crate) fn relation(&self) -> Result<spark::Relation, ClientError> {
         self.handler_execute
             .relation
@@ -259,7 +384,7 @@ impl SparkConnectClient {
             )))
     }
 
-    /// Compares a session_id to the current session's id.
+    /// Compare a session_id to the current session's id.
     fn validate_session(&self, session_id: &str) -> Result<(), ClientError> {
         if self.session_id() != session_id {
             return Err(ClientError::new(ClientErrorKind::SessionIDMismatch {
@@ -270,7 +395,7 @@ impl SparkConnectClient {
         Ok(())
     }
 
-    /// Sends an [`AnalyzePlanRequest`](crate::spark::AnalyzePlanRequest)
+    /// Send an [`AnalyzePlanRequest`](crate::spark::AnalyzePlanRequest)
     /// to the Spark Connect server and updates the internal analysis handler.
     pub(crate) async fn analyze(
         &mut self,
@@ -352,7 +477,7 @@ impl SparkConnectClient {
         Ok(())
     }
 
-    /// Sends an [`InterruptRequest`](crate::spark::InterruptRequest) to Spark.
+    /// Send an [`InterruptRequest`](crate::spark::InterruptRequest) to Spark.
     ///
     /// Used to stop long-running operations or cancel all running executions.
     pub(crate) async fn interrupt(
@@ -570,8 +695,8 @@ impl SparkConnectClient {
 mod tests {
     use crate::test_utils::test_utils::setup_session;
     use crate::spark;
-    
-    /// Verifies that the client correctly handles and reports errors, such as
+
+    /// Verify that the client correctly handles and reports errors, such as
     /// a session validation failure.
     #[tokio::test]
     async fn test_validate_session_error() {
@@ -598,7 +723,7 @@ mod tests {
         );
     }
     
-    /// Verifies that the client can send an interrupt request without errors.
+    /// Verify that the client can send an interrupt request without errors.
     /// This tests the `SparkConnectClient::interrupt_request` method.
     #[tokio::test]
     async fn test_interrupt_all_request() {

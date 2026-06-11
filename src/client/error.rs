@@ -34,8 +34,10 @@ impl Error for ClientError {
 pub(crate) enum ClientErrorKind {
     AnalyzeRequest { status: tonic::Status, request: spark::AnalyzePlanRequest },
     AnalyzeResponseNotFound(String),
+    EmptyTag(String),
     ExecutePlanRequest { status: tonic::Status, request: spark::ExecutePlanRequest },
     InterruptRequest { status: tonic::Status, request: spark::InterruptRequest },
+    InvalidTag(String),
     InvalidSessionID { source: uuid::Error, session_id: String },
     InvalidConnectionString { source: InvalidUri, conn_string: String,  msg: String },
     Io(IoError),
@@ -58,12 +60,14 @@ impl fmt::Display for ClientErrorKind {
                 f, "AnalyzeRequest failed with status '{status}': {request:?}"
             ),
             Self::AnalyzeResponseNotFound(msg) => write!(f, "No analyze response found: {msg}."),
+            Self::EmptyTag(tag) => write!(f, "Empty tag provided: {tag}."),
             Self::ExecutePlanRequest { status, request } => write!(
                 f, "ExecutePlanRequest failed with status '{status}': {request:?}"
             ),
             Self::InterruptRequest { status, request } => write!(
                 f, "InterruptRequest failed with status '{status}': {request:?}"
             ),
+            Self::InvalidTag(tag) => write!(f, "Invalid tag provided: {tag}."),
             Self::InvalidSessionID { session_id, .. } => write!(f, "Failed to parse session ID: '{session_id}'"),
             Self::InvalidConnectionString { conn_string, msg, .. } => write!(
                 f, "Failed to parse the connection URL '{conn_string}': {msg}. Please update the URL to follow the correct format, e.g., 'sc://hostname:port'."

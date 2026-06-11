@@ -6,8 +6,8 @@
 ## Summary
 
 - Reference paths: **1551**
-- Covered: **19** (1.2%)
-  - implemented: 14
+- Covered: **29** (1.9%)
+  - implemented: 24
   - partial: 5
   - unimplemented: 0
 - Stale port paths (no match in reference): **21**
@@ -17,7 +17,7 @@
 | Class | Class status | Members | Covered | % |
 |---|---|---:|---:|---:|
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
-| `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 4 | 13% |
+| `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 14 | 45% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 2 | 7% |
 | `pyspark.sql.connect.dataframe.DataFrame` | implemented | 102 | 1 | 1% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
@@ -194,36 +194,36 @@
 | Member | Kind | Status | Implementation | Comment |
 |---|---|---|---|---|
 | `add_artifacts` | method | — | — |  |
-| `add_tag` | method | — | — |  |
+| `add_tag` | method | implemented | `SparkConnectClient::add_tag` |  |
 | `cache_artifact` | method | — | — |  |
-| `clear_tags` | method | — | — |  |
-| `close` | method | — | — |  |
+| `clear_tags` | method | implemented | `SparkConnectClient::clear_tags` |  |
+| `close` | method | implemented | `SparkConnectClient::close` |  |
 | `config` | method | — | — |  |
 | `copy_from_local_to_fs` | method | — | — |  |
-| `disable_reattachable_execute` | method | — | — |  |
-| `enable_reattachable_execute` | method | — | — |  |
+| `disable_reattachable_execute` | method | implemented | `SparkConnectClient::disable_reattachable_execute` |  |
+| `enable_reattachable_execute` | method | implemented | `SparkConnectClient::enable_reattachable_execute` |  |
 | `execute_command` | method | partial | `SparkConnectClient::execute_command` | Unlike the original, this method is lazy, returning the client instead of a materialized result. |
 | `explain_string` | method | — | — |  |
 | `get_config_with_defaults` | method | — | — |  |
 | `get_configs` | method | — | — |  |
 | `get_tags` | method | implemented | `SparkConnectClient::get_tags` |  |
-| `host` | property | — | — |  |
+| `host` | property | implemented | `SparkConnectClient::host` |  |
 | `interrupt_all` | method | — | — |  |
 | `interrupt_operation` | method | — | — |  |
 | `interrupt_tag` | method | — | — |  |
-| `is_closed` | property | — | — |  |
+| `is_closed` | property | implemented | `SparkConnectClient::is_closed` |  |
 | `register_java` | method | — | — |  |
 | `register_udf` | method | — | — |  |
 | `register_udtf` | method | — | — |  |
-| `remove_tag` | method | — | — |  |
+| `remove_tag` | method | implemented | `SparkConnectClient::remove_tag` |  |
 | `retry_exception` | method | — | — |  |
 | `same_semantics` | method | — | — |  |
-| `schema` | method | — | — |  |
+| `schema` | method | implemented | `SparkConnectClient::schema` |  |
 | `semantic_hash` | method | — | — |  |
 | `to_pandas` | method | partial | `SparkConnectClient::to_polars` | Instead of pandas, the most common DataFrame library in Rust is polars. |
 | `to_table` | method | partial | `SparkConnectClient::to_batches` | Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust). |
 | `to_table_as_iterator` | method | — | — |  |
-| `token` | property | — | — |  |
+| `token` | property | implemented | `SparkConnectClient::token` |  |
 
 ### `pyspark.sql.connect.session.SparkSession`
 

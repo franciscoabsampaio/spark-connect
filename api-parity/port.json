@@ -94,6 +94,46 @@
       "comment": null
     },
     {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.add_tag",
+      "implementation": "SparkConnectClient::add_tag",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.clear_tags",
+      "implementation": "SparkConnectClient::clear_tags",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.close",
+      "implementation": "SparkConnectClient::close",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.disable_reattachable_execute",
+      "implementation": "SparkConnectClient::disable_reattachable_execute",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.enable_reattachable_execute",
+      "implementation": "SparkConnectClient::enable_reattachable_execute",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
       "path": "pyspark.sql.connect.client.core.SparkConnectClient.execute_command",
       "implementation": "SparkConnectClient::execute_command",
       "status": "partial",
@@ -104,6 +144,38 @@
     {
       "path": "pyspark.sql.connect.client.core.SparkConnectClient.get_tags",
       "implementation": "SparkConnectClient::get_tags",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.host",
+      "implementation": "SparkConnectClient::host",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.is_closed",
+      "implementation": "SparkConnectClient::is_closed",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.remove_tag",
+      "implementation": "SparkConnectClient::remove_tag",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.schema",
+      "implementation": "SparkConnectClient::schema",
       "status": "implemented",
       "since": null,
       "issue": null,
@@ -124,6 +196,14 @@
       "since": null,
       "issue": null,
       "comment": "Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust)."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.token",
+      "implementation": "SparkConnectClient::token",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
     },
     {
       "path": "pyspark.sql.connect.dataframe.DataFrame",

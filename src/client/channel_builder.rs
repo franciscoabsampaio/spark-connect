@@ -139,7 +139,11 @@ impl ChannelBuilder {
         format!("{}://{}:{}", scheme, self.host, self.port)
     }
 
-    fn token(&self) -> String {
+    pub(crate) fn host(&self) -> String {
+        self.host.clone()
+    }
+
+    pub(crate) fn token(&self) -> String {
         let token = self.token.clone().unwrap_or_default();
         format!("Bearer {}", token)
     }
