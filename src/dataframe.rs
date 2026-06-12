@@ -22,7 +22,20 @@ impl DataFrame {
         path = ".collect",
         status = Implemented,
     )]
-    /// Collect the results from a lazy [`plan`](crate::spark::Plan).
+    /// Returns all the records in the DataFrame as a vector of `[RecordBatch](arrow::array::RecordBatch)`.
+    /// Notes
+    /// -----
+    /// This method should only be used if the resulting list is expected to be small,
+    /// as all the data is loaded into the driver's memory.
+    ///
+    /// Examples
+    /// --------
+    /// Example: Collecting all rows of a DataFrame
+    ///
+    /// ```rs
+    /// df = spark.sql(<query>)
+    /// df.collect()
+    /// ```
     pub async fn collect(&self) -> Result<Vec<RecordBatch>, SparkError> {
         let mut client = self.session.client()?;
 
