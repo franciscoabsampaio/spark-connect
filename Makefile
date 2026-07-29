@@ -21,7 +21,7 @@ test:
 parity:
 	# Reference
 	. venv/bin/activate && api-parity-py \
-		reference pyspark.sql.connect \
+		reference 'pyspark.sql.connect,pyspark.storagelevel' \
 		--version-from pyspark \
 		-o api-parity/ref.json
 

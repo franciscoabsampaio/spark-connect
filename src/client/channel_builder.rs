@@ -275,6 +275,7 @@ impl ChannelBuilder {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::conf::SparkRemoteUri;
 
     #[test]
     fn test_channel_builder_default() {
@@ -285,65 +286,57 @@ mod tests {
         assert_eq!(expected_url, cb.endpoint())
     }
 
-    #[test]
-    fn test_invalid_scheme_error() {
-        let connection = "http://127.0.0.1:15002";
-        let err = ChannelBuilder::new(connection).unwrap_err();
-        match err.kind {
-            ClientErrorKind::InvalidConnectionString { msg, conn_string, source } => {
-                assert!(msg.contains("must start with 'sc://'"));
-                assert_eq!(conn_string, connection);
-                assert!(source.is_none());
-            }
-            other => panic!("unexpected error kind: {other:?}"),
-        }
-    }
+    /// Builds a [`ChannelBuilder`] from a connection string, mirroring the
+    /// real flow: [`SparkRemoteUri::parse`] validates the URI (covered by the
+    /// tests in `conf.rs`), and `ChannelBuilder` only applies the result.
+    fn config_from(connection: &str) -> Result<ChannelBuilder, ClientError> {
+        let conf = SparkRemoteConf {
+            uri: SparkRemoteUri::parse(connection).expect("expected a valid sc:// URI"),
+            user_id: None,
+            user_agent: None,
+        };
 
-    #[test]
-    fn test_missing_host_error() {
-        let connection = "sc://:15002";
-        let err = ChannelBuilder::new(connection).unwrap_err();
-        match err.kind {
-            ClientErrorKind::InvalidConnectionString { msg, conn_string, source } => {
-                assert!(msg.contains("failed to parse"));
-                assert_eq!(conn_string, connection);
-                assert!(source.is_some());
-            }
-            other => panic!("unexpected error kind: {other:?}"),
-        }
-    }
-
-    #[test]
-    fn test_missing_port_error() {
-        let connection = "sc://127.0.0.1";
-        let err = ChannelBuilder::new(connection).unwrap_err();
-        match err.kind {
-            ClientErrorKind::InvalidConnectionString { msg, conn_string, source } => {
-                assert!(msg.contains("port must not be empty"));
-                assert_eq!(conn_string, connection);
-                assert!(source.is_none());
-            }
-            other => panic!("unexpected error kind: {other:?}"),
-        }
+        ChannelBuilder::default().config(&conf)
     }
 
     #[test]
     fn test_valid_connection_builds() {
-        let connection = "sc://myhost.com:443/;user_agent=some_agent;user_id=user123";
-        let builder = ChannelBuilder::new(connection).unwrap();
+        let builder =
+            config_from("sc://myhost.com:443/;user_agent=some_agent;user_id=user123").unwrap();
 
         assert_eq!(builder.endpoint(), "http://myhost.com:443");
-        assert_eq!(builder.user_id.unwrap(), "user123");
-        assert!(builder.user_agent.unwrap().contains("some_agent"));
+        assert_eq!(builder.user_id(), "user123");
+        assert!(builder.user_agent().unwrap().contains("some_agent"));
+    }
+
+    #[test]
+    fn test_use_ssl_switches_endpoint_scheme() {
+        let builder = config_from("sc://myhost.com:443/;use_ssl=true").unwrap();
+
+        assert!(builder.secure());
+        assert_eq!(builder.endpoint(), "https://myhost.com:443");
+    }
+
+    #[test]
+    fn test_custom_headers_become_metadata() {
+        let builder = config_from("sc://myhost.com:443/;x_custom=value").unwrap();
+
+        assert_eq!(builder.get("x_custom").as_deref(), Some("value"));
     }
 
     #[test]
     fn test_invalid_token_usage_error() {
-        let connection = "sc://myhost.com:443/;token=1234;use_ssl=false";
-        let err = ChannelBuilder::new(connection).unwrap_err();
+        let err = config_from("sc://myhost.com:443/;token=1234;use_ssl=false").unwrap_err();
         match err.kind {
             ClientErrorKind::TokenRequiresSSL => {}
             other => panic!("unexpected error kind: {other:?}"),
         }
+    }
+
+    #[test]
+    fn test_token_with_ssl_is_bearer_prefixed() {
+        let builder = config_from("sc://myhost.com:443/;token=1234;use_ssl=true").unwrap();
+
+        assert_eq!(builder.get("authorization").as_deref(), Some("Bearer 1234"));
     }
 }

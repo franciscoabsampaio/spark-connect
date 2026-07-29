@@ -80,6 +80,7 @@
 //!
 //! The `SparkSession` provides an ergonomic API for executing SQL, analyzing
 //! plans, and inspecting results - without exposing internal client plumbing.
+use crate::catalog::Catalog;
 use crate::client::SparkConnectClient;
 use crate::conf::{SparkConf, SparkConfKey, ResolvedSparkConf};
 use crate::dataframe::DataFrame;
@@ -379,6 +380,15 @@ impl SparkSession {
         
         Ok(client.analyze(version).await?.version()?)
     }
+
+    /// Request the Catalog.
+    #[parity(
+        path = ".catalog",
+        status = Implemented,
+    )]
+    pub fn catalog(&self) -> Catalog {
+        Catalog::new(self.clone())
+    }
 }
 
 #[cfg(test)]
@@ -417,19 +427,17 @@ mod tests {
     /// and correctly retrieve the resulting Arrow RecordBatches.
     /// This tests `SparkConnectClient::execute_command_and_fetch`.
     #[tokio::test]
-    async fn test_sql() {
+    async fn test_sql() -> Result<(), SparkError> {
         // Arrange: Start server and create a session
-        let session = setup_session().await.expect("Failed to create Spark session");
+        let session = setup_session().await?;
 
-        // Act: Execute a simple SQL query.
-        let lazy_plan = session
-            .sql("SELECT 1 AS id, 'hello' AS text", vec![])
-            .await
-            .expect("SQL query failed");
+        // Act: Execute a simple SQL query. `sql` is lazy, so the plan is only
+        // executed by `collect`.
         let batches = session
-            .collect(lazy_plan)
-            .await
-            .expect("Failed to collect batches");
+            .sql("SELECT 1 AS id, 'hello' AS text", vec![])
+            .await?
+            .collect()
+            .await?;
 
         // Assert: Validate the structure and content of the returned data
         assert_eq!(batches.len(), 1, "Expected exactly one RecordBatch");
@@ -444,6 +452,7 @@ mod tests {
             .downcast_ref::<Int32Array>()
             .expect("Column 0 should be an Int32Array");
         assert_eq!(id_col.value(0), 1);
+        Ok(())
     }
     
     #[tokio::test]

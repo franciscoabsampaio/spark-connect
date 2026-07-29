@@ -8,7 +8,8 @@ pub mod test_utils {
         let connection = format!("sc://localhost:15002");
 
         SparkSession::builder()
-            .remote(&connection)
-            .build().await
+            .remote(&connection)?
+            .create()
+            .await
     }
 }

@@ -695,50 +695,56 @@ impl SparkConnectClient {
 mod tests {
     use crate::test_utils::test_utils::setup_session;
     use crate::spark;
+    use crate::SparkError;
 
-    /// Verify that the client correctly handles and reports errors, such as
-    /// a session validation failure.
+    use super::error::ClientErrorKind;
+    use uuid::Uuid;
+
+    /// Verify that the client rejects a response carrying a session id other
+    /// than its own.
+    ///
+    /// This exercises `validate_session` directly rather than corrupting a
+    /// client and calling the server: `session_id` is a [`Uuid`], so a
+    /// malformed id cannot be constructed, and a well-formed but unknown one
+    /// makes the server open a fresh session and echo it back rather than
+    /// fail.
     #[tokio::test]
-    async fn test_validate_session_error() {
+    async fn test_validate_session_error() -> Result<(), SparkError> {
         // Arrange: Start server and create a session
-        let session = setup_session().await.expect("Failed to create Spark session");
+        let session = setup_session().await?;
+        let client = session.client()?;
 
-        // Create a clone of the client and manually corrupt its session ID
-        let mut client_with_bad_session = session.client()?.clone();
-        client_with_bad_session.session_id = "invalid-session-id".to_string();
+        // Act & assert: the client's own id is accepted, any other is not.
+        assert!(client.validate_session(&client.session_id()).is_ok());
 
-        // Act: Attempt to use the corrupted client. This will cause the real server
-        // to return an error that Spark Connect may not map directly to a session
-        // ID mismatch, but it will be an error nonetheless.
-        let result = client_with_bad_session
-            .analyze(spark::analyze_plan_request::Analyze::SparkVersion(
-                spark::analyze_plan_request::SparkVersion {},
-            ))
-            .await;
-
-        // Assert: The operation should fail.
-        assert!(
-            result.is_err(),
-            "Expected an error due to invalid session ID"
-        );
+        let err = client
+            .validate_session(&Uuid::new_v4().to_string())
+            .unwrap_err();
+        match err.kind {
+            ClientErrorKind::SessionIDMismatch { client_session_id, .. } => {
+                assert_eq!(client_session_id, client.session_id());
+            }
+            other => panic!("unexpected error kind: {other:?}"),
+        }
+        Ok(())
     }
-    
+
     /// Verify that the client can send an interrupt request without errors.
     /// This tests the `SparkConnectClient::interrupt_request` method.
     #[tokio::test]
-    async fn test_interrupt_all_request() {
+    async fn test_interrupt_all_request() -> Result<(), SparkError> {
         // Arrange: Start server and create a session
-        let session = setup_session().await.expect("Failed to create Spark session");
-        
+        let session = setup_session().await?;
+
         // Act: Send an "interrupt all" request. The server should accept this
         // command gracefully even if nothing is running.
         let mut client = session.client()?;
         let result = client
             .interrupt(spark::interrupt_request::InterruptType::All, None)
-            .await
-            .unwrap();
-            
+            .await?;
+
         // Assert: The request should succeed. The response may be empty.
         assert_eq!(result.session_id(), session.session_id());
+        Ok(())
     }
 }

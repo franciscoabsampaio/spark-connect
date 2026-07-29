@@ -133,14 +133,19 @@ This project is not affiliated with, endorsed by, or sponsored by the Apache Sof
 “Apache”, “Apache Spark”, and “Spark Connect” are trademarks of the Apache Software Foundation.
 */
 
+mod batch;
+mod catalog;
 pub mod client;
 mod conf;
 mod dataframe;
 mod error;
 mod io;
 mod literal;
+mod observation;
+mod plan;
 pub mod query;
 mod session;
+mod storage_level;
 mod types;
 
 /// The Spark version this crate was compiled against.
@@ -154,7 +159,7 @@ pub mod spark {
 pub use conf::{SparkConf, SparkConfKey};
 pub use dataframe::DataFrame;
 pub use error::SparkError;
-pub use session::SparkSession;
+pub use session::{SparkSession, SparkSessionBuilder};
 pub use literal::ToLiteral;
 
 #[cfg(test)]

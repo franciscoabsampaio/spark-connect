@@ -39,8 +39,6 @@ impl DataFrame {
     pub async fn collect(&self) -> Result<Vec<RecordBatch>, SparkError> {
         let mut client = self.session.client()?;
 
-        client.to_batches(self.plan.clone())
-            .await
-            .map_err(|e| SparkError::from(e))
+        Ok(client.to_batches(self.plan.clone()).await?)
     }
 }

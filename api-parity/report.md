@@ -1,28 +1,28 @@
 # API parity report
 
-- Reference: python `pyspark.sql.connect` (version `3.5.4`)
+- Reference: python `pyspark.sql.connect,pyspark.storagelevel` (version `3.5.4`)
 - Port:      rust `spark-connect` (version `0.2.3`)
 
 ## Summary
 
-- Reference paths: **1551**
-- Covered: **29** (1.9%)
-  - implemented: 24
-  - partial: 5
-  - unimplemented: 0
-- Stale port paths (no match in reference): **21**
+- Reference paths: **1552**
+- Covered: **59** (3.8%)
+  - implemented: 49
+  - partial: 8
+  - unimplemented: 2
+- Stale port paths (no match in reference): **32**
 
 ## Per-class coverage
 
 | Class | Class status | Members | Covered | % |
 |---|---|---:|---:|---:|
+| `pyspark.sql.connect.catalog.Catalog` | implemented | 27 | 27 | 100% |
 | `pyspark.sql.connect.client.core.ChannelBuilder` | implemented | 9 | 9 | 100% |
 | `pyspark.sql.connect.client.core.SparkConnectClient` | implemented | 31 | 14 | 45% |
 | `pyspark.sql.connect.session.SparkSession` | — | 29 | 2 | 7% |
 | `pyspark.sql.connect.dataframe.DataFrame` | implemented | 102 | 1 | 1% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionCallable` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect._typing.UserDefinedFunctionLike` | — | 2 | 0 | 0% |
-| `pyspark.sql.connect.catalog.Catalog` | — | 27 | 0 | 0% |
 | `pyspark.sql.connect.client.artifact.Artifact` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect.client.artifact.ArtifactManager` | — | 3 | 0 | 0% |
 | `pyspark.sql.connect.client.artifact.InMemory` | — | 0 | 0 | 0% |
@@ -105,7 +105,7 @@
 | `pyspark.sql.connect.plan.ListFunctions` | — | 6 | 0 | 0% |
 | `pyspark.sql.connect.plan.ListTables` | — | 6 | 0 | 0% |
 | `pyspark.sql.connect.plan.LocalRelation` | — | 7 | 0 | 0% |
-| `pyspark.sql.connect.plan.LogicalPlan` | — | 6 | 0 | 0% |
+| `pyspark.sql.connect.plan.LogicalPlan` | implemented | 7 | 0 | 0% |
 | `pyspark.sql.connect.plan.MapPartitions` | — | 6 | 0 | 0% |
 | `pyspark.sql.connect.plan.NADrop` | — | 6 | 0 | 0% |
 | `pyspark.sql.connect.plan.NAFill` | — | 6 | 0 | 0% |
@@ -168,8 +168,43 @@
 | `pyspark.sql.connect.window.Window` | — | 4 | 0 | 0% |
 | `pyspark.sql.connect.window.WindowFrame` | — | 0 | 0 | 0% |
 | `pyspark.sql.connect.window.WindowSpec` | — | 4 | 0 | 0% |
+| `pyspark.storagelevel.StorageLevel` | implemented | 0 | 0 | 0% |
 
 ## Detail
+
+### `pyspark.sql.connect.catalog.Catalog`
+
+- Class status: **implemented** (impl `Catalog`)
+
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `cacheTable` | method | implemented | `Catalog::cache_table` |  |
+| `clearCache` | method | implemented | `Catalog::clear_cache` |  |
+| `createExternalTable` | method | unimplemented | `Catalog::create_external_table` | Deprecated since Spark 4.0; use [`create_table`](Self::create_table). |
+| `createTable` | method | implemented | `Catalog::create_table` |  |
+| `currentCatalog` | method | implemented | `Catalog::current_catalog` |  |
+| `currentDatabase` | method | implemented | `Catalog::current_database` |  |
+| `databaseExists` | method | implemented | `Catalog::database_exists` |  |
+| `dropGlobalTempView` | method | implemented | `Catalog::drop_global_temp_view` |  |
+| `dropTempView` | method | implemented | `Catalog::drop_temp_view` |  |
+| `functionExists` | method | partial | `Catalog::function_exists` | The deprecated `dbName` parameter is not offered; qualify `function_name` instead. |
+| `getDatabase` | method | implemented | `Catalog::get_database` |  |
+| `getFunction` | method | implemented | `Catalog::get_function` |  |
+| `getTable` | method | implemented | `Catalog::get_table` |  |
+| `isCached` | method | implemented | `Catalog::is_cached` |  |
+| `listCatalogs` | method | implemented | `Catalog::list_catalogs` |  |
+| `listColumns` | method | partial | `Catalog::list_columns` | The deprecated `dbName` parameter is not offered; qualify `table_name` instead. |
+| `listDatabases` | method | implemented | `Catalog::list_databases` |  |
+| `listFunctions` | method | implemented | `Catalog::list_functions` |  |
+| `listTables` | method | implemented | `Catalog::list_tables` |  |
+| `recoverPartitions` | method | implemented | `Catalog::recover_partitions` |  |
+| `refreshByPath` | method | implemented | `Catalog::refresh_by_path` |  |
+| `refreshTable` | method | implemented | `Catalog::refresh_table` |  |
+| `registerFunction` | method | unimplemented | `Catalog::register_function` | Requires spark.udf.register. |
+| `setCurrentCatalog` | method | implemented | `Catalog::set_current_catalog` |  |
+| `setCurrentDatabase` | method | implemented | `Catalog::set_current_database` |  |
+| `tableExists` | method | partial | `Catalog::table_exists` | The deprecated `dbName` parameter is not offered; qualify `table_name` instead. |
+| `uncacheTable` | method | implemented | `Catalog::uncache_table` |  |
 
 ### `pyspark.sql.connect.client.core.ChannelBuilder`
 
@@ -368,6 +403,27 @@
 | `writeStream` | property | — | — |  |
 | `writeTo` | method | — | — |  |
 
+### `pyspark.sql.connect.plan.LogicalPlan`
+
+- Class status: **implemented** (impl `LogicalPlan`)
+
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+| `command` | method | — | — |  |
+| `observations` | — | implemented | `LogicalPlan::observations` |  |
+| `plan` | method | — | — |  |
+| `print` | method | — | — |  |
+| `to_attr_or_expression` | method | — | — |  |
+| `to_proto` | method | — | — |  |
+| `unresolved_attr` | method | — | — |  |
+
+### `pyspark.storagelevel.StorageLevel`
+
+- Class status: **implemented** (impl `spark_connect::storage_level::StorageLevel`)
+
+| Member | Kind | Status | Implementation | Comment |
+|---|---|---|---|---|
+
 ## Stale port references
 
 Port entries whose `path` did not resolve in the reference.
@@ -375,6 +431,15 @@ Likely a typo, a removed reference API, or a path-convention drift.
 
 | Path | Implementation | Comment |
 |---|---|---|
+| `pyspark.sql.catalog.CatalogMetadata` | `spark_connect::catalog::CatalogMetadata` |  |
+| `pyspark.sql.catalog.Column` | `Column` |  |
+| `pyspark.sql.catalog.Database` | `Database` |  |
+| `pyspark.sql.catalog.Function` | `Function` |  |
+| `pyspark.sql.catalog.Table` | `Table` |  |
+| `pyspark.sql.catalog.Table.database` | `Table::database` |  |
+| `pyspark.sql.connect.observation.Observation` | `Observation` | Attachment to DataFrame is not yet implemented. |
+| `pyspark.sql.connect.observation.Observation.get` | `Observation::get` |  |
+| `pyspark.sql.connect.plan.LogicalPlan.observations` | `LogicalPlan::observations` |  |
 | `pyspark.sql.session.SparkSession` | `SparkSession` |  |
 | `pyspark.sql.session.SparkSession.Builder` | `SparkSessionBuilder` |  |
 | `pyspark.sql.session.SparkSession.Builder.appName` | `SparkSessionBuilder::app_name` |  |
@@ -385,6 +450,7 @@ Likely a typo, a removed reference API, or a path-convention drift.
 | `pyspark.sql.session.SparkSession.Builder.master` | `SparkSessionBuilder::master` | value is stored but classic-mode (non-sc://) resolution is not wired up |
 | `pyspark.sql.session.SparkSession.Builder.remote` | `SparkSessionBuilder::remote` |  |
 | `pyspark.sql.session.SparkSession.builder` | `SparkSession::builder` |  |
+| `pyspark.sql.session.SparkSession.catalog` | `SparkSession::catalog` |  |
 | `pyspark.sql.session.SparkSession.client` | `SparkSession::client` |  |
 | `pyspark.sql.session.SparkSession.interruptAll` | `SparkSession::interrupt_all` |  |
 | `pyspark.sql.session.SparkSession.interruptOperation` | `SparkSession::interrupt_operation` |  |
@@ -396,4 +462,5 @@ Likely a typo, a removed reference API, or a path-convention drift.
 | `pyspark.sql.types.StructField.jsonValue` | `StructField::json_value` |  |
 | `pyspark.sql.types.StructField.simpleString` | `StructField::simple_string` |  |
 | `pyspark.sql.types.StructType` | `StructType` |  |
+| `pyspark.sql.types.StructType.simpleString` | `StructType::ddl` | Renders DDL for the server to parse; PySpark's form is lowercase `struct<...>`. |
 

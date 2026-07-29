@@ -6,6 +6,278 @@
   "source": "spark-connect",
   "entries": [
     {
+      "path": "pyspark.sql.catalog.CatalogMetadata",
+      "implementation": "spark_connect::catalog::CatalogMetadata",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Column",
+      "implementation": "Column",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Database",
+      "implementation": "Database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Function",
+      "implementation": "Function",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Table",
+      "implementation": "Table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Table.database",
+      "implementation": "Table::database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog",
+      "implementation": "Catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.cacheTable",
+      "implementation": "Catalog::cache_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.clearCache",
+      "implementation": "Catalog::clear_cache",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.createExternalTable",
+      "implementation": "Catalog::create_external_table",
+      "status": "unimplemented",
+      "since": null,
+      "issue": null,
+      "comment": "Deprecated since Spark 4.0; use [`create_table`](Self::create_table)."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.createTable",
+      "implementation": "Catalog::create_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.currentCatalog",
+      "implementation": "Catalog::current_catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.currentDatabase",
+      "implementation": "Catalog::current_database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.databaseExists",
+      "implementation": "Catalog::database_exists",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.dropGlobalTempView",
+      "implementation": "Catalog::drop_global_temp_view",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.dropTempView",
+      "implementation": "Catalog::drop_temp_view",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.functionExists",
+      "implementation": "Catalog::function_exists",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "The deprecated `dbName` parameter is not offered; qualify `function_name` instead."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getDatabase",
+      "implementation": "Catalog::get_database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getFunction",
+      "implementation": "Catalog::get_function",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getTable",
+      "implementation": "Catalog::get_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.isCached",
+      "implementation": "Catalog::is_cached",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listCatalogs",
+      "implementation": "Catalog::list_catalogs",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listColumns",
+      "implementation": "Catalog::list_columns",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "The deprecated `dbName` parameter is not offered; qualify `table_name` instead."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listDatabases",
+      "implementation": "Catalog::list_databases",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listFunctions",
+      "implementation": "Catalog::list_functions",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listTables",
+      "implementation": "Catalog::list_tables",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.recoverPartitions",
+      "implementation": "Catalog::recover_partitions",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.refreshByPath",
+      "implementation": "Catalog::refresh_by_path",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.refreshTable",
+      "implementation": "Catalog::refresh_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.registerFunction",
+      "implementation": "Catalog::register_function",
+      "status": "unimplemented",
+      "since": null,
+      "issue": null,
+      "comment": "Requires spark.udf.register."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.setCurrentCatalog",
+      "implementation": "Catalog::set_current_catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.setCurrentDatabase",
+      "implementation": "Catalog::set_current_database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.tableExists",
+      "implementation": "Catalog::table_exists",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "The deprecated `dbName` parameter is not offered; qualify `table_name` instead."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.uncacheTable",
+      "implementation": "Catalog::uncache_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
       "path": "pyspark.sql.connect.client.core.ChannelBuilder",
       "implementation": "ChannelBuilder",
       "status": "implemented",
@@ -222,6 +494,38 @@
       "comment": null
     },
     {
+      "path": "pyspark.sql.connect.observation.Observation",
+      "implementation": "Observation",
+      "status": "partial",
+      "since": "4.0.0",
+      "issue": null,
+      "comment": "Attachment to DataFrame is not yet implemented."
+    },
+    {
+      "path": "pyspark.sql.connect.observation.Observation.get",
+      "implementation": "Observation::get",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan",
+      "implementation": "LogicalPlan",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.observations",
+      "implementation": "LogicalPlan::observations",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
       "path": "pyspark.sql.connect.session.SparkSession.session_id",
       "implementation": "SparkConnectClient::session_id",
       "status": "implemented",
@@ -318,6 +622,14 @@
       "comment": null
     },
     {
+      "path": "pyspark.sql.session.SparkSession.catalog",
+      "implementation": "SparkSession::catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
       "path": "pyspark.sql.session.SparkSession.client",
       "implementation": "SparkSession::client",
       "status": "implemented",
@@ -400,6 +712,22 @@
     {
       "path": "pyspark.sql.types.StructType",
       "implementation": "StructType",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructType.simpleString",
+      "implementation": "StructType::ddl",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Renders DDL for the server to parse; PySpark's form is lowercase `struct<...>`."
+    },
+    {
+      "path": "pyspark.storagelevel.StorageLevel",
+      "implementation": "spark_connect::storage_level::StorageLevel",
       "status": "implemented",
       "since": null,
       "issue": null,

@@ -3,7 +3,7 @@
   "kind": "reference",
   "language": "python",
   "version": "3.5.4",
-  "source": "pyspark.sql.connect",
+  "source": "pyspark.sql.connect,pyspark.storagelevel",
   "entries": [
     {
       "path": "pyspark.sql.connect._typing.UserDefinedFunctionCallable",
@@ -6208,6 +6208,10 @@
     {
       "path": "pyspark.sql.connect.window.WindowSpec.rowsBetween",
       "kind": "method"
+    },
+    {
+      "path": "pyspark.storagelevel.StorageLevel",
+      "kind": "class"
     }
   ]
 }
