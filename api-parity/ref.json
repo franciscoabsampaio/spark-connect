@@ -1,0 +1,6217 @@
+{
+  "schema_version": 1,
+  "kind": "reference",
+  "language": "python",
+  "version": "3.5.4",
+  "source": "pyspark.sql.connect,pyspark.storagelevel",
+  "entries": [
+    {
+      "path": "pyspark.sql.connect._typing.UserDefinedFunctionCallable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect._typing.UserDefinedFunctionLike",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect._typing.UserDefinedFunctionLike.asNondeterministic",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect._typing.UserDefinedFunctionLike.returnType",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.avro.functions.from_avro",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.avro.functions.to_avro",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.cacheTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.clearCache",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.createExternalTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.createTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.currentCatalog",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.currentDatabase",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.databaseExists",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.dropGlobalTempView",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.dropTempView",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.functionExists",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getDatabase",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getFunction",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.isCached",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listCatalogs",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listColumns",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listDatabases",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listFunctions",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listTables",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.recoverPartitions",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.refreshByPath",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.refreshTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.registerFunction",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.setCurrentCatalog",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.setCurrentDatabase",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.tableExists",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.uncacheTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.Artifact",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.ArtifactManager",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.ArtifactManager.add_artifacts",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.ArtifactManager.cache_artifact",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.ArtifactManager.is_cached_artifact",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.InMemory",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.LocalData",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.LocalFile",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.new_archive_artifact",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.new_cache_artifact",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.new_file_artifact",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.new_jar_artifact",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.client.artifact.new_pyfile_artifact",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.AnalyzeResult",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.AnalyzeResult.fromProto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.AttemptManager",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.AttemptManager.is_first_try",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.default_port",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.endpoint",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.get",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.metadata",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.secure",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.session_id",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.toChannel",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.userAgent",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.userId",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ConfigResult",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ConfigResult.fromProto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.MetricValue",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.MetricValue.metric_type",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.MetricValue.name",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.MetricValue.value",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanMetrics",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanMetrics.metrics",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanMetrics.name",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanMetrics.parent_plan_id",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanMetrics.plan_id",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanObservedMetrics",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanObservedMetrics.metrics",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.PlanObservedMetrics.name",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.RetryState",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.RetryState.count",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.RetryState.done",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.RetryState.set_done",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.RetryState.set_exception",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.RetryState.throw",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.Retrying",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.add_artifacts",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.add_tag",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.cache_artifact",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.clear_tags",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.close",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.config",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.copy_from_local_to_fs",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.disable_reattachable_execute",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.enable_reattachable_execute",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.execute_command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.explain_string",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.get_config_with_defaults",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.get_configs",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.get_tags",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.host",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.interrupt_all",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.interrupt_operation",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.interrupt_tag",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.is_closed",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.register_java",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.register_udf",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.register_udtf",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.remove_tag",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.retry_exception",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.same_semantics",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.schema",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.semantic_hash",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_pandas",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_table",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_table_as_iterator",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.token",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.getLogLevel",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.client.reattach.ExecutePlanResponseReattachableIterator",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.client.reattach.ExecutePlanResponseReattachableIterator.close",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.reattach.ExecutePlanResponseReattachableIterator.send",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.reattach.ExecutePlanResponseReattachableIterator.shutdown",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.client.reattach.ExecutePlanResponseReattachableIterator.throw",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.asc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.asc_nulls_first",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.asc_nulls_last",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.astype",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.between",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.bitwiseAND",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.bitwiseOR",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.bitwiseXOR",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.cast",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.contains",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.desc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.desc_nulls_first",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.desc_nulls_last",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.dropFields",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.endswith",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.eqNullSafe",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.getField",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.getItem",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.ilike",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.isNotNull",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.isNull",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.isin",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.like",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.otherwise",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.over",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.rlike",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.startswith",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.substr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.when",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.column.Column.withField",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conf.RuntimeConf",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.conf.RuntimeConf.get",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conf.RuntimeConf.isModifiable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conf.RuntimeConf.set",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conf.RuntimeConf.unset",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conversion.ArrowTableToRowsConversion",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.conversion.ArrowTableToRowsConversion.convert",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conversion.LocalDataToArrowConversion",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.conversion.LocalDataToArrowConversion.convert",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.conversion.proto_to_storage_level",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.conversion.storage_level_to_proto",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.agg",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.approxQuantile",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.cache",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.checkSameSparkSession",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.coalesce",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.colRegex",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.collect",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.columns",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.corr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.count",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.cov",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.createGlobalTempView",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.createOrReplaceGlobalTempView",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.createOrReplaceTempView",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.createTempView",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.crossJoin",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.crosstab",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.cube",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.describe",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.distinct",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.drop",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.dropDuplicates",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.dropDuplicatesWithinWatermark",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.drop_duplicates",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.drop_duplicates_within_watermark",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.dropna",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.dtypes",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.exceptAll",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.explain",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.fillna",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.filter",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.first",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.freqItems",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.groupBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.groupby",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.head",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.hint",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.inputFiles",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.intersect",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.intersectAll",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.isEmpty",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.isLocal",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.isStreaming",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.is_cached",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.join",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.limit",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.mapInArrow",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.mapInPandas",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.melt",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.na",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.observe",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.offset",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.orderBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.pandas_api",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.persist",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.printSchema",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.randomSplit",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.registerTempTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.repartition",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.repartitionByRange",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.replace",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.rollup",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.sameSemantics",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.sample",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.sampleBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.schema",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.select",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.selectExpr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.semanticHash",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.show",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.sort",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.sortWithinPartitions",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.sparkSession",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.stat",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.storageLevel",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.subtract",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.summary",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.tail",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.take",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.to",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.toDF",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.toLocalIterator",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.toPandas",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.to_pandas_on_spark",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.transform",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.union",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.unionAll",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.unionByName",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.unpersist",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.unpivot",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.where",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withColumn",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withColumnRenamed",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withColumns",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withColumnsRenamed",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withMetadata",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withPlan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.withWatermark",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.write",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.writeStream",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.writeTo",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameNaFunctions",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameNaFunctions.drop",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameNaFunctions.fill",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameNaFunctions.replace",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions.approxQuantile",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions.corr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions.cov",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions.crosstab",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions.freqItems",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrameStatFunctions.sampleBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CallFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CallFunction.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CallFunction.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CallFunction.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CaseWhen",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CaseWhen.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CaseWhen.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CaseWhen.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CastExpression",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CastExpression.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CastExpression.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CastExpression.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnAlias",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnAlias.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnAlias.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnAlias.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnReference",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnReference.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnReference.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.ColumnReference.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CommonInlineUserDefinedFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CommonInlineUserDefinedFunction.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CommonInlineUserDefinedFunction.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CommonInlineUserDefinedFunction.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CommonInlineUserDefinedFunction.to_plan_judf",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.CommonInlineUserDefinedFunction.to_plan_udf",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DistributedSequenceID",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DistributedSequenceID.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DistributedSequenceID.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DistributedSequenceID.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DropField",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DropField.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DropField.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.DropField.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.Expression",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.Expression.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.Expression.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.Expression.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.JavaUDF",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.JavaUDF.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LambdaFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LambdaFunction.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LambdaFunction.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LambdaFunction.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LiteralExpression",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LiteralExpression.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LiteralExpression.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.LiteralExpression.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.PythonUDF",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.PythonUDF.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SQLExpression",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SQLExpression.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SQLExpression.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SQLExpression.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SortOrder",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SortOrder.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SortOrder.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.SortOrder.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedExtractValue",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedExtractValue.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedExtractValue.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedExtractValue.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedFunction.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedFunction.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedFunction.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedNamedLambdaVariable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedNamedLambdaVariable.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedNamedLambdaVariable.fresh_var_name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedNamedLambdaVariable.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedNamedLambdaVariable.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedRegex",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedRegex.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedRegex.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedRegex.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedStar",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedStar.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedStar.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.UnresolvedStar.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WindowExpression",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WindowExpression.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WindowExpression.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WindowExpression.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WithField",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WithField.alias",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WithField.name",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.expressions.WithField.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.abs",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.acos",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.acosh",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.add_months",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.aes_decrypt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.aes_encrypt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.aggregate",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.any_value",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.approxCountDistinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.approx_count_distinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.approx_percentile",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_agg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_append",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_compact",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_contains",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_distinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_except",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_insert",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_intersect",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_join",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_max",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_min",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_position",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_prepend",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_remove",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_repeat",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_size",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_sort",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.array_union",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.arrays_overlap",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.arrays_zip",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.asc",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.asc_nulls_first",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.asc_nulls_last",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ascii",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.asin",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.asinh",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.assert_true",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.atan",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.atan2",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.atanh",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.avg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.base64",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bin",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bit_and",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bit_count",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bit_get",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bit_length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bit_or",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bit_xor",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitmap_bit_position",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitmap_bucket_number",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitmap_construct_agg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitmap_count",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitmap_or_agg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitwiseNOT",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bitwise_not",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bool_and",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bool_or",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.broadcast",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bround",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.btrim",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.bucket",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.call_function",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.call_udf",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.cardinality",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.cbrt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ceil",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ceiling",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.char",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.char_length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.character_length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.coalesce",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.col",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.collect_list",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.collect_set",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.concat",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.concat_ws",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.contains",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.conv",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.convert_timezone",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.corr",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.cos",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.cosh",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.cot",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.count",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.countDistinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.count_distinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.count_if",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.count_min_sketch",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.covar_pop",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.covar_samp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.crc32",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.create_map",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.csc",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.cume_dist",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.curdate",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_catalog",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_database",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_date",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_schema",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_timezone",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.current_user",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_add",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_diff",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_format",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_from_unix_date",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_part",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_sub",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.date_trunc",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.dateadd",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.datediff",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.datepart",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.day",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.dayofmonth",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.dayofweek",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.dayofyear",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.days",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.decode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.degrees",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.dense_rank",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.desc",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.desc_nulls_first",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.desc_nulls_last",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.e",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.element_at",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.elt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.encode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.endswith",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.equal_null",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.every",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.exists",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.exp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.explode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.explode_outer",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.expm1",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.expr",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.extract",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.factorial",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.filter",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.find_in_set",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.first",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.first_value",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.flatten",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.floor",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.forall",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.format_number",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.format_string",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.from_csv",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.from_json",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.from_unixtime",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.from_utc_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.get",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.get_json_object",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.getbit",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.greatest",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.grouping",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.grouping_id",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hash",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hex",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.histogram_numeric",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hll_sketch_agg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hll_sketch_estimate",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hll_union",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hll_union_agg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hour",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hours",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.hypot",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ifnull",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ilike",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.initcap",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.inline",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.inline_outer",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.input_file_block_length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.input_file_block_start",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.input_file_name",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.instr",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.isnan",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.isnotnull",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.isnull",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.java_method",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.json_array_length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.json_object_keys",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.json_tuple",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.kurtosis",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.lag",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.last",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.last_day",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.last_value",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.lcase",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.lead",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.least",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.left",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.levenshtein",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.like",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.lit",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ln",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.localtimestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.locate",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.log",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.log10",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.log1p",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.log2",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.lower",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.lpad",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ltrim",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_date",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_dt_interval",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_interval",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_timestamp_ltz",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_timestamp_ntz",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.make_ym_interval",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_concat",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_contains_key",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_entries",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_filter",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_from_arrays",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_from_entries",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_keys",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_values",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.map_zip_with",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.mask",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.max",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.max_by",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.md5",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.mean",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.median",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.min",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.min_by",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.minute",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.mode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.monotonically_increasing_id",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.month",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.months",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.months_between",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.named_struct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.nanvl",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.negative",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.next_day",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.now",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.nth_value",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ntile",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.nullif",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.nvl",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.nvl2",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.octet_length",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.overlay",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.parse_url",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.percent_rank",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.percentile",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.percentile_approx",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.pi",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.pmod",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.posexplode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.posexplode_outer",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.position",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.positive",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.pow",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.printf",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.product",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.quarter",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.radians",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.raise_error",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.rand",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.randn",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.rank",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.reduce",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.reflect",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_count",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_extract",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_extract_all",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_instr",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_like",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_replace",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regexp_substr",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_avgx",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_avgy",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_count",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_intercept",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_r2",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_slope",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_sxx",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_sxy",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.regr_syy",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.repeat",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.replace",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.reverse",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.right",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.rint",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.rlike",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.round",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.row_number",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.rpad",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.rtrim",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.schema_of_csv",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.schema_of_json",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sec",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.second",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sentences",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sequence",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.session_window",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sha",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sha1",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sha2",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shiftLeft",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shiftRight",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shiftRightUnsigned",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shiftleft",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shiftright",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shiftrightunsigned",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.shuffle",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sign",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.signum",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sin",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sinh",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.size",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.skewness",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.slice",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.some",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sort_array",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.soundex",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.spark_partition_id",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.split",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.split_part",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sqrt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.stack",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.startswith",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.std",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.stddev",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.stddev_pop",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.stddev_samp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.str_to_map",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.struct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.substr",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.substring",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.substring_index",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sum",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sumDistinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.sum_distinct",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.tan",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.tanh",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.timestamp_micros",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.timestamp_millis",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.timestamp_seconds",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.toDegrees",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.toRadians",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_binary",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_char",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_csv",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_date",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_json",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_number",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_timestamp_ltz",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_timestamp_ntz",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_unix_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_utc_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.to_varchar",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.transform",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.transform_keys",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.transform_values",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.translate",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.trim",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.trunc",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_add",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_aes_decrypt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_avg",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_divide",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_element_at",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_multiply",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_subtract",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_sum",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_to_binary",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_to_number",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.try_to_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.typeof",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.ucase",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.udf",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.udtf",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unbase64",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unhex",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unix_date",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unix_micros",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unix_millis",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unix_seconds",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unix_timestamp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.unwrap_udt",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.upper",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.url_decode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.url_encode",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.user",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.var_pop",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.var_samp",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.variance",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.version",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.weekday",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.weekofyear",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.when",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.width_bucket",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.window",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.window_time",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_boolean",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_double",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_float",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_int",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_long",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_number",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_short",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xpath_string",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.xxhash64",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.year",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.years",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.functions.zip_with",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.agg",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.apply",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.applyInPandas",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.applyInPandasWithState",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.avg",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.cogroup",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.count",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.max",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.mean",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.min",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.pivot",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.GroupedData.sum",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.group.PandasCogroupedOps",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.group.PandasCogroupedOps.applyInPandas",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Aggregate.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ApplyInPandasWithState.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CacheTable.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedLocalRelation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRelation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CachedRemoteRelation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ClearCache.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CoGroupMap.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.col_to_expr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CollectMetrics.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.udtf_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CommonInlineUserDefinedTableFunction.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateExternalTable.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateTable.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CreateView.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentCatalog.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.CurrentDatabase.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DataSource.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DatabaseExists.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Deduplicate.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Drop.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropGlobalTempView.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.DropTempView.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Filter.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.FunctionExists.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetDatabase.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetFunction.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GetTable.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.GroupMap.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Hint.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.HtmlString.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.IsCached.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Join.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Limit.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListCatalogs.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListColumns.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListDatabases.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListFunctions.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ListTables.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.serialize",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LocalRelation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.MapPartitions.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NADrop.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAFill.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.NAReplace.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Offset.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Project.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.PythonUDTF",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.PythonUDTF.to_plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Range.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Read.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RecoverPartitions.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshByPath.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RefreshTable.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Repartition.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.RepartitionByExpression.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SQL.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sample.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentCatalog.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetCurrentDatabase.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SetOperation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ShowString.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Sort.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatApproxQuantile.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCorr.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCov.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatCrosstab.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatDescribe.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatFreqItems.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSampleBy.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.StatSummary.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.SubqueryAlias.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.TableExists.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Tail.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToDF.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.ToSchema.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.UncacheTable.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.col_to_expr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.Unpivot.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumns.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithColumnsRenamed.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WithWatermark.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.col_to_expr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteOperationV2.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation.command",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation.plan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation.print",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation.to_attr_or_expression",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation.to_proto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.plan.WriteStreamOperation.unresolved_attr",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.AddArtifacts",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.AnalyzePlan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.ArtifactStatus",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.Config",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.ExecutePlan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.Interrupt",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.ReattachExecute",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectService.ReleaseExecute",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.AddArtifacts",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.AnalyzePlan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.ArtifactStatus",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.Config",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.ExecutePlan",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.Interrupt",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.ReattachExecute",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceServicer.ReleaseExecute",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.SparkConnectServiceStub",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.proto.base_pb2_grpc.add_SparkConnectServiceServicer_to_server",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.protobuf.functions.from_protobuf",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.protobuf.functions.to_protobuf",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.csv",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.format",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.jdbc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.json",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.load",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.option",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.options",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.orc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.parquet",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.schema",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.table",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameReader.text",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.bucketBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.csv",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.format",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.insertInto",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.jdbc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.json",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.mode",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.option",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.options",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.orc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.parquet",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.partitionBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.save",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.saveAsTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.sortBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriter.text",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.append",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.create",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.createOrReplace",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.option",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.options",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.overwrite",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.overwritePartitions",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.partitionedBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.replace",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.tableProperty",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.DataFrameWriterV2.using",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.readwriter.OptionUtils",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.appName",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.channelBuilder",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.config",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.create",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.enableHiveSupport",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.getOrCreate",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.master",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.Builder.remote",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.active",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.addArtifact",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.addArtifacts",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.addTag",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.builder",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.catalog",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.clearTags",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.client",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.conf",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.copyFromLocalToFs",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.createDataFrame",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.getActiveSession",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.getTags",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.interruptAll",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.interruptOperation",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.interruptTag",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.is_stopped",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.range",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.read",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.readStream",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.removeTag",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.session_id",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.sql",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.stop",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.streams",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.table",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.udf",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.udtf",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.version",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.awaitTermination",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.exception",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.explain",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.id",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.isActive",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.lastProgress",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.name",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.processAllAvailable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.recentProgress",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.runId",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.status",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQuery.stop",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager.active",
+      "kind": "property"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager.addListener",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager.awaitAnyTermination",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager.get",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager.removeListener",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.query.StreamingQueryManager.resetTerminated",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.csv",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.format",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.json",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.load",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.option",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.options",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.orc",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.parquet",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.schema",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.table",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamReader.text",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.foreach",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.foreachBatch",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.format",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.option",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.options",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.outputMode",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.partitionBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.queryName",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.start",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.toTable",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.readwriter.DataStreamWriter.trigger",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.worker.foreach_batch_worker.main",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.streaming.worker.listener_worker.main",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.fromInternal",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.json",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.jsonValue",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.needConversion",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.simpleString",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.toInternal",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.UnparsedDataType.typeName",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.types.proto_schema_to_pyspark_data_type",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.types.pyspark_types_to_proto_types",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.udf.UDFRegistration",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.udf.UDFRegistration.register",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.udf.UDFRegistration.registerJavaFunction",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.udf.UDFRegistration.registerJavaUDAF",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.udf.UserDefinedFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.udf.UserDefinedFunction.asNondeterministic",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.udtf.UDTFRegistration",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.udtf.UDTFRegistration.register",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.udtf.UserDefinedTableFunction",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.udtf.UserDefinedTableFunction.asDeterministic",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.utils.check_dependencies",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.utils.get_python_ver",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.utils.require_minimum_grpc_version",
+      "kind": "function"
+    },
+    {
+      "path": "pyspark.sql.connect.window.Window",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.window.Window.orderBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.Window.partitionBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.Window.rangeBetween",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.Window.rowsBetween",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.WindowFrame",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.window.WindowSpec",
+      "kind": "class"
+    },
+    {
+      "path": "pyspark.sql.connect.window.WindowSpec.orderBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.WindowSpec.partitionBy",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.WindowSpec.rangeBetween",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.sql.connect.window.WindowSpec.rowsBetween",
+      "kind": "method"
+    },
+    {
+      "path": "pyspark.storagelevel.StorageLevel",
+      "kind": "class"
+    }
+  ]
+}

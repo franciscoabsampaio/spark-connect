@@ -41,8 +41,8 @@
 //!   [`RecordBatch`]es into memory.
 //!
 //! # See also
-//! - [`ToLiteral`] — converts native Rust types into Spark literals.
-//! - [`SparkSession::sql`] — executes parameterized SQL queries directly.
+//! - [`ToLiteral`] - converts native Rust types into Spark literals.
+//! - [`SparkSession::sql`] - executes parameterized SQL queries directly.
 //!
 //! # Errors
 //!
@@ -76,7 +76,7 @@ impl<'a> SqlQueryBuilder<'a> {
     }
 
     pub async fn execute(self) -> Result<Vec<RecordBatch>, SparkError> {
-        let plan = self.session.sql(&self.query, self.params).await?;
-        self.session.collect(plan).await
+        let df = self.session.sql(&self.query, self.params).await?;
+        df.collect().await
     }
 }

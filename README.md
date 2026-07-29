@@ -26,22 +26,24 @@ all in native Rust.
 ## Getting Started
 
 ```rs
-use spark_connect::SparkSessionBuilder;
+use spark_connect::SparkSession;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
   // 1️⃣ Connect to a Spark Connect endpoint
-  let session = SparkSessionBuilder::new("sc://localhost:15002")
+  let session = SparkSession::builder()
+      .remote("sc://localhost:15002")
       .build()
       .await?;
 
-  // 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatches>
-  let batches = session
-      .query("SELECT ? AS rule, ? AS text")
-      .bind(42)
-      .bind("world")
-      .execute()
-      .await?;
+  // 2️⃣ Execute a simple SQL query and receive a lazy DataFrame
+  let df = session.sql(
+      "SELECT ? AS id, ? AS text",
+      vec![42.to_literal(), "world".to_literal()]
+  ).await?;
+  
+  // 3️⃣ Materialize the DataFrame to get a vector of arrow RecordBatch
+  let batches: Vec<RecordBatch> = df.collect()?;
 
   Ok(())
 }
@@ -84,10 +86,10 @@ If you're coming from PySpark or Scala, this should be the familiar interface.
 
 ## 🧠 Concepts
 
-- <b>[`SparkSession`](crate::SparkSession)</b> — the main entry point for executing
+- <b>[`SparkSession`](crate::SparkSession)</b> - the main entry point for executing
   SQL queries and managing a session.
-- <b>[`SparkClient`](crate::SparkClient)</b> — low-level gRPC client (used internally).
-- <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> — helper for binding parameters
+- <b>[`SparkConnectClient`](crate::SparkConnectClient)</b> - low-level gRPC client (used internally).
+- <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> - helper for binding parameters
   and executing queries.
 
 ## ⚙️ Requirements

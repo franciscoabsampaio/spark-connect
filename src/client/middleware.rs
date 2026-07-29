@@ -5,10 +5,10 @@ use tonic::service::Interceptor;
 
 /// A lightweight gRPC [`Interceptor`] for injecting static headers into outgoing requests.
 ///
-/// Unlike a [`tower::Layer`], this type operates at the client level — it wraps
+/// Unlike a [`tower::Layer`], this type operates at the client level - it wraps
 /// gRPC calls to attach metadata before transmission, without altering the service stack.
 ///
-/// Used internally by [`SparkClient`](crate::SparkClient) to attach
+/// Used internally by [`SparkConnectClient`](crate::SparkConnectClient) to attach
 /// authentication tokens or user context to every request.
 ///
 /// # Notes

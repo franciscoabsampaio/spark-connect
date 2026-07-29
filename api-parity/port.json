@@ -1,0 +1,737 @@
+{
+  "schema_version": 1,
+  "kind": "port",
+  "language": "rust",
+  "version": "0.2.3",
+  "source": "spark-connect",
+  "entries": [
+    {
+      "path": "pyspark.sql.catalog.CatalogMetadata",
+      "implementation": "spark_connect::catalog::CatalogMetadata",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Column",
+      "implementation": "Column",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Database",
+      "implementation": "Database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Function",
+      "implementation": "Function",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Table",
+      "implementation": "Table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.catalog.Table.database",
+      "implementation": "Table::database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog",
+      "implementation": "Catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.cacheTable",
+      "implementation": "Catalog::cache_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.clearCache",
+      "implementation": "Catalog::clear_cache",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.createExternalTable",
+      "implementation": "Catalog::create_external_table",
+      "status": "unimplemented",
+      "since": null,
+      "issue": null,
+      "comment": "Deprecated since Spark 4.0; use [`create_table`](Self::create_table)."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.createTable",
+      "implementation": "Catalog::create_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.currentCatalog",
+      "implementation": "Catalog::current_catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.currentDatabase",
+      "implementation": "Catalog::current_database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.databaseExists",
+      "implementation": "Catalog::database_exists",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.dropGlobalTempView",
+      "implementation": "Catalog::drop_global_temp_view",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.dropTempView",
+      "implementation": "Catalog::drop_temp_view",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.functionExists",
+      "implementation": "Catalog::function_exists",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "The deprecated `dbName` parameter is not offered; qualify `function_name` instead."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getDatabase",
+      "implementation": "Catalog::get_database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getFunction",
+      "implementation": "Catalog::get_function",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.getTable",
+      "implementation": "Catalog::get_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.isCached",
+      "implementation": "Catalog::is_cached",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listCatalogs",
+      "implementation": "Catalog::list_catalogs",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listColumns",
+      "implementation": "Catalog::list_columns",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "The deprecated `dbName` parameter is not offered; qualify `table_name` instead."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listDatabases",
+      "implementation": "Catalog::list_databases",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listFunctions",
+      "implementation": "Catalog::list_functions",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.listTables",
+      "implementation": "Catalog::list_tables",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.recoverPartitions",
+      "implementation": "Catalog::recover_partitions",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.refreshByPath",
+      "implementation": "Catalog::refresh_by_path",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.refreshTable",
+      "implementation": "Catalog::refresh_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.registerFunction",
+      "implementation": "Catalog::register_function",
+      "status": "unimplemented",
+      "since": null,
+      "issue": null,
+      "comment": "Requires spark.udf.register."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.setCurrentCatalog",
+      "implementation": "Catalog::set_current_catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.setCurrentDatabase",
+      "implementation": "Catalog::set_current_database",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.tableExists",
+      "implementation": "Catalog::table_exists",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "The deprecated `dbName` parameter is not offered; qualify `table_name` instead."
+    },
+    {
+      "path": "pyspark.sql.connect.catalog.Catalog.uncacheTable",
+      "implementation": "Catalog::uncache_table",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder",
+      "implementation": "ChannelBuilder",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.default_port",
+      "implementation": "ChannelBuilder::default_port",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.endpoint",
+      "implementation": "ChannelBuilder::endpoint",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.get",
+      "implementation": "ChannelBuilder::get",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.metadata",
+      "implementation": "ChannelBuilder::metadata",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "This implementation returns all metadata, whereas the original implementation does not return parameters that are explicitly used by the channel."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.secure",
+      "implementation": "ChannelBuilder::secure",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.session_id",
+      "implementation": "ChannelBuilder::session_id",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.toChannel",
+      "implementation": "ChannelBuilder::to_client",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Creates a gRPC client from the channel builder, instead of a channel."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.userAgent",
+      "implementation": "ChannelBuilder::user_agent",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.ChannelBuilder.userId",
+      "implementation": "ChannelBuilder::user_id",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient",
+      "implementation": "SparkConnectClient",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.add_tag",
+      "implementation": "SparkConnectClient::add_tag",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.clear_tags",
+      "implementation": "SparkConnectClient::clear_tags",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.close",
+      "implementation": "SparkConnectClient::close",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.disable_reattachable_execute",
+      "implementation": "SparkConnectClient::disable_reattachable_execute",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.enable_reattachable_execute",
+      "implementation": "SparkConnectClient::enable_reattachable_execute",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.execute_command",
+      "implementation": "SparkConnectClient::execute_command",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Unlike the original, this method is lazy, returning the client instead of a materialized result."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.get_tags",
+      "implementation": "SparkConnectClient::get_tags",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.host",
+      "implementation": "SparkConnectClient::host",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.is_closed",
+      "implementation": "SparkConnectClient::is_closed",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.remove_tag",
+      "implementation": "SparkConnectClient::remove_tag",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.schema",
+      "implementation": "SparkConnectClient::schema",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_pandas",
+      "implementation": "SparkConnectClient::to_polars",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Instead of pandas, the most common DataFrame library in Rust is polars."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.to_table",
+      "implementation": "SparkConnectClient::to_batches",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Unlike the original, this method does not return observations, and returns a vector of record batches instead of a table (since it does not exist in Rust)."
+    },
+    {
+      "path": "pyspark.sql.connect.client.core.SparkConnectClient.token",
+      "implementation": "SparkConnectClient::token",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame",
+      "implementation": "DataFrame",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.dataframe.DataFrame.collect",
+      "implementation": "DataFrame::collect",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.observation.Observation",
+      "implementation": "Observation",
+      "status": "partial",
+      "since": "4.0.0",
+      "issue": null,
+      "comment": "Attachment to DataFrame is not yet implemented."
+    },
+    {
+      "path": "pyspark.sql.connect.observation.Observation.get",
+      "implementation": "Observation::get",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan",
+      "implementation": "LogicalPlan",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.plan.LogicalPlan.observations",
+      "implementation": "LogicalPlan::observations",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.session_id",
+      "implementation": "SparkConnectClient::session_id",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.connect.session.SparkSession.version",
+      "implementation": "SparkConnectClient::version",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession",
+      "implementation": "SparkSession",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder",
+      "implementation": "SparkSessionBuilder",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.appName",
+      "implementation": "SparkSessionBuilder::app_name",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.config",
+      "implementation": "SparkSessionBuilder::config",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.create",
+      "implementation": "SparkSessionBuilder::create",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Only remote (sc://) mode works; classic master URLs return Unimplemented"
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.enableHiveSupport",
+      "implementation": "SparkSessionBuilder::enable_hive_support",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.getOrCreate",
+      "implementation": "SparkSessionBuilder::get_or_create",
+      "status": "unimplemented",
+      "since": null,
+      "issue": null,
+      "comment": "Session reuse is not yet implemented due to underlying complexity."
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.master",
+      "implementation": "SparkSessionBuilder::master",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "value is stored but classic-mode (non-sc://) resolution is not wired up"
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.Builder.remote",
+      "implementation": "SparkSessionBuilder::remote",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.builder",
+      "implementation": "SparkSession::builder",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.catalog",
+      "implementation": "SparkSession::catalog",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.client",
+      "implementation": "SparkSession::client",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.interruptAll",
+      "implementation": "SparkSession::interrupt_all",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.interruptOperation",
+      "implementation": "SparkSession::interrupt_operation",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.sql",
+      "implementation": "SparkSession::sql",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.session.SparkSession.version",
+      "implementation": "SparkSession::version",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.DataType",
+      "implementation": "spark_connect::types::DataType",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField",
+      "implementation": "StructField",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField.fromJson",
+      "implementation": "StructField::from_json",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField.jsonValue",
+      "implementation": "StructField::json_value",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructField.simpleString",
+      "implementation": "StructField::simple_string",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructType",
+      "implementation": "StructType",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    },
+    {
+      "path": "pyspark.sql.types.StructType.simpleString",
+      "implementation": "StructType::ddl",
+      "status": "partial",
+      "since": null,
+      "issue": null,
+      "comment": "Renders DDL for the server to parse; PySpark's form is lowercase `struct<...>`."
+    },
+    {
+      "path": "pyspark.storagelevel.StorageLevel",
+      "implementation": "spark_connect::storage_level::StorageLevel",
+      "status": "implemented",
+      "since": null,
+      "issue": null,
+      "comment": null
+    }
+  ]
+}
