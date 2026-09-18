@@ -16,7 +16,7 @@ use arrow::record_batch::RecordBatch;
 ///
 /// Fails with [`SparkErrorKind::ColumnIndexOutOfBounds`] if `index` is past the last column,
 /// or [`SparkErrorKind::ColumnTypeMismatch`] if the column is not of type `T`.
-pub fn get_column<T: Array + 'static>(
+pub(crate) fn get_column<T: Array + 'static>(
     batch: &RecordBatch,
     index: usize,
 ) -> Result<&T, SparkError> {
@@ -39,7 +39,7 @@ pub fn get_column<T: Array + 'static>(
 /// Downcasts a column of a single batch to a concrete Arrow array type by name.
 ///
 /// Fails with [`SparkErrorKind::ColumnNotFound`] if no column has that name.
-pub fn get_column_by_name<'a, T: Array + 'static>(
+pub(crate) fn get_column_by_name<'a, T: Array + 'static>(
     batch: &'a RecordBatch,
     name: &str,
 ) -> Result<&'a T, SparkError> {
@@ -84,6 +84,15 @@ fn require<V>(values: Vec<Option<V>>, col: usize) -> Result<Vec<V>, SparkError> 
         .into_iter()
         .map(|value| value.ok_or_else(|| SparkError::new(SparkErrorKind::NullValue { index: col })))
         .collect()
+}
+
+/// Takes the first of the decoded rows.
+///
+/// Fails with [`SparkErrorKind::EmptyResult`] if there are none.
+pub(crate) fn first_row<T>(rows: Vec<T>) -> Result<T, SparkError> {
+    rows.into_iter()
+        .next()
+        .ok_or_else(|| SparkError::new(SparkErrorKind::EmptyResult))
 }
 
 /// Convenience accessors over a slice of [`RecordBatch`]es.

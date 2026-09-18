@@ -1,4 +1,4 @@
-use crate::batch::RecordBatchesExt;
+use crate::batch::{first_row, RecordBatchesExt};
 use crate::DataFrame;
 use crate::error::SparkErrorKind;
 use crate::storage_level::StorageLevel;
@@ -185,13 +185,6 @@ impl Column {
     }
 }
 
-/// Takes the single row a `get*` call is expected to return.
-fn single_row<T>(rows: Vec<T>) -> Result<T, SparkError> {
-    rows.into_iter()
-        .next()
-        .ok_or_else(|| SparkError::new(SparkErrorKind::EmptyResult))
-}
-
 #[parity_impl(
     path = "pyspark.sql.connect.catalog.Catalog",
     status = Implemented,
@@ -323,7 +316,7 @@ impl Catalog {
             spark::GetDatabase { db_name: db_name.into() },
         );
 
-        single_row(Database::from(&self.execute_and_fetch(catalog_type).await?)?)
+        first_row(Database::from(&self.execute_and_fetch(catalog_type).await?)?)
     }
 
     /// Returns whether the database (namespace) with the given name exists.
@@ -371,7 +364,7 @@ impl Catalog {
             spark::GetTable { table_name: table_name.into(), db_name: None },
         );
 
-        single_row(Table::from(&self.execute_and_fetch(catalog_type).await?)?)
+        first_row(Table::from(&self.execute_and_fetch(catalog_type).await?)?)
     }
 
     /// Returns whether the table or view with the given name exists.
@@ -438,7 +431,7 @@ impl Catalog {
             spark::GetFunction { function_name: function_name.into(), db_name: None },
         );
 
-        single_row(Function::from(&self.execute_and_fetch(catalog_type).await?)?)
+        first_row(Function::from(&self.execute_and_fetch(catalog_type).await?)?)
     }
 
     /// Returns whether the function with the given name exists.

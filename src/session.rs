@@ -85,6 +85,7 @@ use crate::client::SparkConnectClient;
 use crate::conf::{SparkConf, SparkConfKey, ResolvedSparkConf};
 use crate::dataframe::DataFrame;
 use crate::spark;
+use crate::version::Version;
 use crate::spark::expression::Literal;
 use crate::query::SqlQueryBuilder;
 use crate::{SparkError, error::SparkErrorKind};
@@ -212,10 +213,13 @@ impl SparkSessionBuilder {
             // Spark Connect mode
             ResolvedSparkConf::Remote(remote) => {
                 // os.environ["SPARK_CONNECT_MODE_ENABLED"] = "1"
-                let connect_client = SparkConnectClient::new(&remote).await?;
+                let mut connect_client = SparkConnectClient::new(&remote).await?;
+                // Resolved once here so every version gate is a local comparison.
+                let server_version = Version::parse(&connect_client.version().await?)?;
                 Ok(SparkSession::new(
                     Some(connect_client.clone()),
-                    connect_client.session_id().to_string()
+                    connect_client.session_id().to_string(),
+                    server_version,
                 ))
             },
             // Classic mode
@@ -254,6 +258,7 @@ impl SparkSessionBuilder {
 pub struct SparkSession {
     connect_client: Option<SparkConnectClient>,
     session_id: String,
+    server_version: Version,
 }
 
 #[parity_impl(
@@ -276,8 +281,9 @@ impl SparkSession {
     pub(crate) fn new(
         connect_client: Option<SparkConnectClient>,
         session_id: String,
+        server_version: Version,
     ) -> Self {
-        Self { connect_client, session_id }
+        Self { connect_client, session_id, server_version }
     }
 
      /// Returns the unique session identifier for this connection.
@@ -366,19 +372,29 @@ impl SparkSession {
         )
     }
 
-    /// Request the version of the Spark Connect server.
+    /// The version of the Spark Connect server, resolved when this session was created.
     #[parity(
         path = ".version",
         status = Implemented,
     )]
-    pub async fn version(&self) -> Result<String, SparkError> {
-        let version = spark::analyze_plan_request::Analyze::SparkVersion(
-            spark::analyze_plan_request::SparkVersion {},
-        );
+    pub fn version(&self) -> Version {
+        self.server_version
+    }
 
-        let mut client = self.client()?.clone();
-        
-        Ok(client.analyze(version).await?.version()?)
+    /// Fails unless the server reports `since` or newer.
+    ///
+    /// Governs APIs that compile against every supported proto set and are
+    /// honoured from a given release onward. APIs referencing messages absent
+    /// from a proto set are gated with `#[cfg(feature = "spark-x-y")]`.
+    pub(crate) fn require_since(&self, since: Version) -> Result<(), SparkError> {
+        if self.server_version >= since {
+            Ok(())
+        } else {
+            Err(SparkError::new(SparkErrorKind::UnsupportedServerVersion {
+                since,
+                server: self.server_version,
+            }))
+        }
     }
 
     /// Request the Catalog.
@@ -393,9 +409,10 @@ impl SparkSession {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     use crate::test_utils::test_utils::setup_session;
     use crate::SparkError;
-    
+
     use arrow::array::{Int32Array, StringArray};
     use regex::Regex;
 
@@ -412,14 +429,29 @@ mod tests {
     async fn test_session_version() -> Result<(), SparkError> {
         // Arrange: Start server and create a session
         let spark = setup_session().await?;
-        
-        // Act: The version() method on SparkSession will trigger the
-        // underlying SparkConnectClient::analyze call.
-        let version = spark.version().await?;
+
+        // Act: The version resolved by SparkConnectClient::analyze during create().
+        let version = spark.version();
 
         // Assert: Check for a valid version string
         let re = Regex::new(r"^\d+\.\d+\.\d+$").unwrap();
-        assert!(re.is_match(&version), "Version {} invalid", version);
+        assert!(re.is_match(&version.to_string()), "Version {} invalid", version);
+        Ok(())
+    }
+
+    /// Verifies that a version gate admits or rejects on the server's version.
+    #[tokio::test]
+    async fn test_require_since_gates_on_server_version() -> Result<(), SparkError> {
+        // Arrange: Start server and create a session
+        let session = setup_session().await?;
+        let server = session.version();
+
+        // Act & Assert: the floor the server meets is admitted, the next one is not
+        assert!(session.require_since(server).is_ok());
+        assert!(matches!(
+            session.require_since(Version::new(server.major + 1, 0, 0)),
+            Err(SparkError { kind: SparkErrorKind::UnsupportedServerVersion { .. } })
+        ));
         Ok(())
     }
 

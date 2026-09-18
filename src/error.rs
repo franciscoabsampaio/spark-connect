@@ -1,4 +1,4 @@
-use crate::{client::ClientError, conf::SparkConfError};
+use crate::{client::ClientError, conf::SparkConfError, version::Version};
 
 use core::fmt;
 use std::error::Error;
@@ -50,10 +50,12 @@ pub(crate) enum SparkErrorKind {
     EmptyResult,
     InvalidField(String),
     InvalidObservationName,
+    InvalidVersion(String),
     NullValue { index: usize },
     ObservationNotReady,
     RowIndexOutOfBounds { index: usize, num_rows: usize },
-    Unimplemented(String)
+    Unimplemented(String),
+    UnsupportedServerVersion { since: Version, server: Version },
 }
 
 impl fmt::Display for SparkErrorKind {
@@ -68,10 +70,12 @@ impl fmt::Display for SparkErrorKind {
             Self::EmptyResult => write!(f, "Result is empty: no record batches returned"),
             Self::InvalidField(field) => write!(f, "Invalid field: {}", field),
             Self::InvalidObservationName => write!(f, "Invalid observation name: must not be empty"),
+            Self::InvalidVersion(version) => write!(f, "Cannot parse Spark version: {}", version),
             Self::NullValue { index } => write!(f, "Column {} is null at the requested row", index),
             Self::ObservationNotReady => write!(f, "Cannot retrieve observation result before it is complete"),
             Self::RowIndexOutOfBounds { index, num_rows } => write!(f, "Row index {} out of bounds: column has {} rows", index, num_rows),
             Self::Unimplemented(msg) => write!(f, "Unimplemented: {}", msg),
+            Self::UnsupportedServerVersion { since, server } => write!(f, "Requires Spark {} or newer, but the server reports {}", since, server),
         }
     }
 }

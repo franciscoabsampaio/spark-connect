@@ -245,12 +245,20 @@ impl SparkConnectClient {
         self.session_id.to_string()
     }
 
-    /// Return the Spark version obtained from the last analyze request.
+    /// Return the Spark version reported by the server.
+    ///
+    /// Requests it once, then serves the value cached from that analyze response.
     #[parity(
         path = "pyspark.sql.connect.session.SparkSession.version",
         status = Implemented,
     )]
-    pub fn version(&self) -> Result<String, ClientError> {
+    pub async fn version(&mut self) -> Result<String, ClientError> {
+        if self.handler_analyze.spark_version.is_none() {
+            self.analyze(spark::analyze_plan_request::Analyze::SparkVersion(
+                spark::analyze_plan_request::SparkVersion {},
+            )).await?;
+        }
+
         self.handler_analyze
             .spark_version
             .to_owned()

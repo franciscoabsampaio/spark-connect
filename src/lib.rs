@@ -147,8 +147,9 @@ pub mod query;
 mod session;
 mod storage_level;
 mod types;
+mod version;
 
-/// The Spark version this crate was compiled against.
+/// The Spark release line this crate was compiled against, as `major.minor`.
 pub const SPARK_VERSION: &str = env!("SPARK_VERSION");
 
 /// Spark Connect gRPC protobuf translated using [tonic].
@@ -161,6 +162,7 @@ pub use dataframe::DataFrame;
 pub use error::SparkError;
 pub use session::{SparkSession, SparkSessionBuilder};
 pub use literal::ToLiteral;
+pub use version::Version;
 
 #[cfg(test)]
 mod test_utils;

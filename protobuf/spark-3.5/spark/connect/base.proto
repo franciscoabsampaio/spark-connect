@@ -814,3 +814,4 @@ service SparkConnectService {
   // RPC and ReleaseExecute may not be used.
   rpc ReleaseExecute(ReleaseExecuteRequest) returns (ReleaseExecuteResponse) {}
 }
+

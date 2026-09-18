@@ -1,5 +1,6 @@
 use crate::{SparkError, error::SparkErrorKind};
 use crate::spark::execute_plan_response::ObservedMetrics;
+use crate::version::Version;
 
 use api_parity_rs::parity_impl;
 use uuid;
@@ -37,8 +38,11 @@ pub struct Observation {
     since = "4.0.0"
 )]
 impl Observation {
+    /// The Spark release this API is available from; mirrors `since` above.
+    pub const SINCE: Version = Version::new(4, 0, 0);
+
     /// Constructs a named or unnamed Observation instance.
-    pub fn new(name: Option<uuid::Uuid>) -> Self {
+    pub(crate) fn new(name: Option<uuid::Uuid>) -> Self {
         Observation {
             name,
             result: None,

@@ -1,6 +1,6 @@
 # API parity report
 
-- Reference: python `pyspark.sql.connect,pyspark.storagelevel` (version `3.5.4`)
+- Reference: python `pyspark.sql.connect,pyspark.storagelevel` (version `3.5.7`)
 - Port:      rust `spark-connect` (version `0.2.3`)
 
 ## Summary
