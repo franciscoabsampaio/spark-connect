@@ -7,8 +7,8 @@
 
 <b>An idiomatic, SQL-first Rust client for Apache Spark Connect.</b>
 
-This crate provides a fully asynchronous, strongly typed API for interacting
-with a remote Spark Connect server over gRPC.
+This crate is an async layer over the official
+`apache-spark-connect` client.
 
 It allows you to build and execute SQL queries, bind parameters safely,
 and collect Arrow `RecordBatch` results - just like any other SQL toolkit -
@@ -19,7 +19,7 @@ all in native Rust.
 ## ✨ Features
 
 - ⚙️ **Spark-compatible connection builder** (`sc://host:port` format);
-- 🪶 **Async execution** using `tokio` and `tonic`;
+- 🪶 **Async execution** on `tokio`;
 - 🧩 **Parameterized queries**;
 - 🧾 **Arrow-native results** returned as `Vec<RecordBatch>`;
 
@@ -30,22 +30,21 @@ use spark_connect::SparkSession;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-  // 1️⃣ Connect to a Spark Connect endpoint
-  let session = SparkSession::builder()
-      .remote("sc://localhost:15002")
-      .build()
-      .await?;
+    // 1️⃣ Connect to a Spark Connect endpoint
+    let session = SparkSession::builder()
+        .remote("sc://localhost:15002")
+        .get_or_create()
+        .await?;
 
-  // 2️⃣ Execute a simple SQL query and receive a lazy DataFrame
-  let df = session.sql(
-      "SELECT ? AS id, ? AS text",
-      vec![42.to_literal(), "world".to_literal()]
-  ).await?;
-  
-  // 3️⃣ Materialize the DataFrame to get a vector of arrow RecordBatch
-  let batches: Vec<RecordBatch> = df.collect()?;
+    // 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatches>
+    let batches = session
+        .query("SELECT ? AS rule, ? AS text")
+        .bind(42)
+        .bind("world")
+        .execute()
+        .await?;
 
-  Ok(())
+    Ok(())
 }
 ```
 
@@ -53,75 +52,67 @@ It's that simple!
 
 ## 🧩 Parameterized Queries
 
-Behind the scenes, the [`SparkSession::query`] method
-uses the [`ToLiteral`] trait to safely bind parameters
-before execution:
+Behind the scenes, the `SparkSession::query` method
+uses the `ToLiteral` trait to safely bind parameters
+before execution.
+
+## 🧰 DataFrames
+
+The official client's DataFrame API is used as it is: transformations only
+build a plan, and each action has an `_async` counterpart in the
+`prelude`, run off the async executor:
 
 ```rs
-use spark_connect::ToLiteral;
- 
-// This is
- 
-let batches = session
-    .query("SELECT ? AS id, ? AS text")
-    .bind(42)
-    .bind("world")
-    .await?;
+use spark_connect::prelude::*;
 
-// the same as this
+let df = spark.sql("SELECT * FROM people")?.filter(col("age").gt(lit(17)));
 
-let lazy_plan = session.sql(
-    "SELECT ? AS id, ? AS text",
-    vec![42.to_literal(), "world".to_literal()]
-).await?;
-let batches = session.collect(lazy_plan);
+let adults = df.count_async().await?;
+let rows = df.collect_async().await?;
 ```
 
-## 😴 Lazy Execution
+This crate re-exports the official crate's items - `DataFrame`, `Column`,
+`functions`, `col`, `lit`, ... - alongside its own. Anything else in the
+official API is reachable through `SparkSession::run`.
 
-The biggest advantage to using the [`sql()`](SparkSession::sql) method
-instead of [`query()`](SparkSession::query) is lazy execution -
-queries can be lazily evaluated and collected afterwards.
-If you're coming from PySpark or Scala, this should be the familiar interface.
+## ⚖️ Trade-offs
+
+The official client blocks on a runtime of its own, so every call that
+reaches the server runs on tokio's blocking thread pool. In practice:
+
+- **Dropping a future does not cancel the query.** A timed-out or
+  abandoned action runs to completion on the server and its result is
+  discarded. Use `SparkSession::interrupt_all` or
+  `SparkSession::interrupt_tag` to stop work on the server.
+- **Each in-flight action holds a blocking thread.** Tokio's pool allows 512
+  by default, far above typical Spark concurrency.
+- **The official synchronous actions remain callable** - `df.collect()` next to
+  `df.collect_async()` - and panic when called from an async task.
+- **Large results can be streamed** row by row with
+  `to_local_iterator_async`.
 
 ## 🧠 Concepts
 
-- <b>[`SparkSession`](crate::SparkSession)</b> - the main entry point for executing
+- <b>`SparkSession`</b> - the main entry point for executing
   SQL queries and managing a session.
-- <b>[`SparkConnectClient`](crate::SparkConnectClient)</b> - low-level gRPC client (used internally).
-- <b>[`SqlQueryBuilder`](crate::query::SqlQueryBuilder)</b> - helper for binding parameters
+- <b>`SqlQueryBuilder`</b> - helper for binding parameters
   and executing queries.
+- <b>`ext`</b> - async counterparts of the official types' actions.
 
 ## ⚙️ Requirements
 
-- A running **Spark Connect server** (Spark 3.4+);
+- A running **Spark Connect server** (Spark 4.0+);
 - Network access to the configured `sc://` endpoint;
-- `tokio` runtime.
+- `tokio` runtime;
+- `protoc` on the `PATH` (or `PROTOC` set) at build time, required by `apache-spark-connect-proto`.
 
 ## 🔒 Example Connection Strings
 
 ```text
 sc://localhost:15002
-sc://spark-cluster:15002/?user_id=francisco
-sc://10.0.0.5:15002;session_id=abc123;user_agent=my-app
+sc://spark-cluster:15002/;user_id=francisco
+sc://10.0.0.5:15002/;session_id=abc123;user_agent=my-app
 ```
-
-## 🏗️ Building With Different Versions of Spark Connect
-
-Currently, this crate is built against Spark 3.5.x. If you need to build against a different version of Spark Connect, you can:
-
-1. Clone this repository.
-2. Go to the [official Apache Spark repository](https://github.com/apache/spark/) and find the protobuf definitions for the desired version. Refer to the table below for the exact path.
-3. Download the `protobuf` directory and replace the `protobuf/` directory of this repository with the desired version.
-4. After replacing the files, run `cargo build` to regenerate the gRPC client code.
-5. Use the crate as usual.
-
-| Version | Path to the protobuf directory |
-|--------:|------------------|
-| 4.x     | [`branch-4.x / sql/connect/common/src/main/protobuf`](https://github.com/apache/spark/tree/branch-4.1/sql/connect/common/src/main/protobuf) |
-| 3.4-3.5 | [`branch-3.x / connector/connect/common/src/main/protobuf`](https://github.com/apache/spark/tree/branch-3.5/connector/connect/common/src/main/protobuf) |
-
-⚠️ Note that compatibility is not guaranteed, and you may encounter issues if there are significant changes between versions.
 
 ## 📘 Learn More
 

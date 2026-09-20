@@ -1,62 +1,41 @@
 # spark-connect
 
-Rust client for Apache Spark Connect (gRPC). Async-first, Arrow-native results, SQL-first API modeled after PySpark.
+Async, SQL-first Rust layer over the official `apache-spark-connect` crate. Adds sqlx-style parameter binding and Arrow results; a psql-like CLI is planned.
 
 ## Commands
 
 ```bash
-cargo build                   # build (default: spark-3-5 + tls features)
-cargo test                    # unit tests only (no Docker required)
+cargo build                   # build (needs protoc - see Gotchas)
+cargo test                    # unit tests + doctests (integration tests fail without a server)
 make docker                   # start Spark Connect server in Docker (port 15002)
 make test                     # start Docker + run full test suite + stop Docker
 make stop                     # stop and remove the spark-delta container
-make parity                   # regenerate the API report and the test checklist
-make deps                     # install Python tooling + the pinned pyspark
-make protos                   # fetch Connect .proto files
-make vendor                   # fetch upstream PySpark test files
 ```
-
-`SPARK_VERSION` (default 3.5.7) is the single knob: it picks the release fetched
-by `protos` and `vendor`, and the pyspark `deps` installs. Move the whole repo
-with `make protos vendor deps parity SPARK_VERSION=4.0.0`.
-
-`make parity` splits into `parity-api` (report.md) and `parity-tests`
-(tests.md); both abort unless the venv's pyspark matches `SPARK_VERSION`.
 
 ## Architecture
 
-```
+```text
 src/
-  lib.rs            # crate root; re-exports public API
-  session.rs        # SparkSession + SparkSessionBuilder (main entry point)
-  query.rs          # SqlQueryBuilder - parameter binding and execution
-  client/           # low-level gRPC client (SparkConnectClient)
-    mod.rs
-    channel_builder.rs  # parses sc:// URLs, builds tonic Channel (TLS logic here)
-    handlers.rs
-    middleware.rs
-  conf.rs           # SparkConf / SparkConfKey
-  literal.rs        # ToLiteral trait - Rust types → Spark literals
-  error.rs          # SparkError
-  io.rs             # Arrow IPC deserialization
-  version.rs        # Version - parses/orders Spark releases, backs require_since
+  lib.rs            # crate root; glob re-exports the official crate, then our items shadow it; prelude
+  spark_session.rs  # SparkSession (Deref to official) + builder; async versions of its blocking methods; `run`
+  ext.rs            # `async_ext!` table: `_async` extension traits per official type; RowStream
+  blocking.rs       # spawn_blocking helper + Arg/Lend traits that carry borrowed args onto the blocking thread
+  query.rs          # SqlQueryBuilder - positional parameter binding and execution
+  literal.rs        # ToLiteral trait - Rust types → official LiteralExpression
+  error.rs          # re-exports the official SparkError / Result
   test_utils.rs     # shared test helpers (cfg(test) only)
-protobuf/
-  spark-3.5/        # vendored .proto files, keyed by release line
-vendor/
-  spark-3.5/        # upstream PySpark test suites, mirroring their paths in the Spark repo
-scripts/
-  parity_tests_md.py  # renders api-parity/ref-tests.json as a checklist
-build.rs            # compiles protos, sets SPARK_VERSION env var at compile time
 ```
 
 ## Gotchas
 
-- **Tests need Docker**: `cargo test` alone skips integration tests. Use `make test` to run the full suite - it starts/stops the `spark-delta` container automatically.
+- **Official crate shares our lib name**: `apache-spark-connect`'s lib is also `spark_connect`, so it is renamed to `apache_spark_connect` in `Cargo.toml`. Keep that rename.
+- **Official API blocks, and panics in async code**: its actions call `block_on` on a private runtime, which panics inside a tokio task. Transformations are pure plan-building and safe. Every action goes through `blocking::blocking` (tokio `spawn_blocking`): session methods are redefined on our `SparkSession` under their official names; other types get `_async` methods via `async_ext!` in `ext.rs` (inherent methods can't be shadowed). A new blocking official method = one line in the matching table; types that aren't `Clone` (e.g. `StreamingQueryManager`) go through `run`.
+- **Our session module is `spark_session`, not `session`**: `lib.rs` glob re-exports the official crate, and a private `mod session` would hide the official `session` module.
+- **Panics in blocking calls are resumed, not converted to errors** - deliberate; see `blocking.rs`.
+- **Spark 4.0+ server required**: the official client binds SQL parameters only via the 4.0 proto fields (`pos_arguments`); a 3.5 server ignores them and fails with `UNBOUND_SQL_PARAMETER`.
+- **protoc required at build time**: `apache-spark-connect-proto` compiles protos with the system `protoc`. Install it or point `PROTOC` at a binary.
+- **arrow version is pinned by the official crate**: `RecordBatch` crosses the boundary, so our `arrow` major must match theirs.
+- **TLS is native roots only**: the official channel supports `use_ssl` + `token`, but no custom CA or client identity (mTLS).
+- **The test server is pinned to a Spark 4.0.4 image**: 4.1.x drops SQL parameters whenever `spark.sql.extensions` is set (positional and named, Connect and classic, Delta and Iceberg alike), so the bind tests fail there. Fix submitted upstream as SPARK-59672; unpin once it ships in a 4.1.x release.
+- **Tests need Docker**: integration tests expect a server on `localhost:15002`. Use `make test`.
 - **`make docker` is not idempotent**: the container is named `spark-delta`; running it twice will fail. Run `make stop` first.
-- **Spark version is a compile-time feature flag**: default is `spark-3-5`, which selects `protobuf/spark-3.5/`. `build.rs` reads the enabled feature from `CARGO_FEATURE_SPARK_*`, so adding a release means dropping in the protos and adding one `[features]` line - never editing `build.rs`. It panics if zero or more than one is enabled; since Cargo unions features, a second one usually arrives via a dependency.
-- **TLS is on by default**: to disable, pass `--no-default-features --features spark-3-5` (omit `tls`).
-- **Vendored dirs are keyed by release line, not patch**: `spark-3.5/`, not `spark-3.5.7/`. A patch upgrade overwrites in place, so `git diff` after `make protos` / `make vendor` is the upstream drift report. Never hand-edit files under `protobuf/` or `vendor/` - they are byte-identical to upstream.
-- **Two ways to gate version-exclusive APIs**: `#[cfg(feature = "spark-x-y")]` when the code references a proto message the selected set lacks; `session.require_since(V)` when it compiles everywhere but the *server* must be new enough (see `Observation::SINCE`). The server version is resolved once during `create()`, so the check is a local comparison.
-- **Doctests are stale**: the `SparkSessionBuilder::new(url).build()` examples in `lib.rs`, `query.rs`, and `session.rs` predate the `SparkSession::builder()` / `.create()` API and do not compile. `cargo test --lib` passes; `cargo test --doc` does not.
-- **Test parity is a checklist, not a diff**: Rust `#[cfg(test)]` functions reach neither api-parity producer, so `api-parity/tests.md` is hand-ticked and `make parity-tests` preserves the ticks.
