@@ -3,7 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/spark-connect.svg)](https://crates.io/crates/spark-connect)
 [![Docs.rs](https://docs.rs/spark-connect/badge.svg)](https://docs.rs/spark-connect)
 
-![spark-connect](https://raw.githubusercontent.com/franciscoabsampaio/spark-connect/main/src/docs/banner.jpg)
+![spark-connect](https://raw.githubusercontent.com/franciscoabsampaio/spark-connect/main/src/docs/banner_0_3_0.png)
 
 <b>An idiomatic, SQL-first Rust client for Apache Spark Connect.</b>
 
