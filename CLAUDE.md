@@ -1,13 +1,19 @@
 # spark-connect
 
-Async, SQL-first Rust layer over the official `apache-spark-connect` crate. Adds sqlx-style parameter binding and Arrow results; a psql-like CLI is planned.
+Notes for contributors and coding agents working on this repository. Usage
+documentation lives in `README.md` and on [docs.rs](https://docs.rs/spark-connect).
+
+Async, SQL-first Rust layer over the official `apache-spark-connect` crate: it brings
+that crate's synchronous API into async code, and adds sqlx-style parameter binding.
+A psql-like CLI is planned.
 
 ## Commands
 
 ```bash
 cargo build                   # build (needs protoc - see Gotchas)
-cargo test                    # unit tests + doctests (integration tests fail without a server)
-make docker                   # start Spark Connect server in Docker (port 15002)
+cargo test                    # doctests + integration tests (the latter need a server)
+cargo test --all-features     # adds the chrono literal impls
+make docker                   # start Spark Connect server in Docker (port 15002), wait for readiness
 make test                     # start Docker + run full test suite + stop Docker
 make stop                     # stop and remove the spark-delta container
 ```
@@ -28,14 +34,10 @@ src/
 
 ## Gotchas
 
-- **Official crate shares our lib name**: `apache-spark-connect`'s lib is also `spark_connect`, so it is renamed to `apache_spark_connect` in `Cargo.toml`. Keep that rename.
-- **Official API blocks, and panics in async code**: its actions call `block_on` on a private runtime, which panics inside a tokio task. Transformations are pure plan-building and safe. Every action goes through `blocking::blocking` (tokio `spawn_blocking`): session methods are redefined on our `SparkSession` under their official names; other types get `_async` methods via `async_ext!` in `ext.rs` (inherent methods can't be shadowed). A new blocking official method = one line in the matching table; types that aren't `Clone` (e.g. `StreamingQueryManager`) go through `run`.
-- **Our session module is `spark_session`, not `session`**: `lib.rs` glob re-exports the official crate, and a private `mod session` would hide the official `session` module.
+- **Official API blocks, and panics in async code**: its actions call `block_on` on a private runtime, which panics inside a tokio task; its transformations are pure plan-building and safe. Every action goes through `blocking::blocking` (tokio `spawn_blocking`). Session methods are redefined on our `SparkSession` under their official names; other types get `_async` methods from the `async_ext!` tables in `ext.rs`, because inherent methods cannot be shadowed. Wrapping a newly blocking official method is one line in the matching table; types that aren't `Clone` (e.g. `StreamingQueryManager`) go through `run` instead.
 - **Panics in blocking calls are resumed, not converted to errors** - deliberate; see `blocking.rs`.
-- **Spark 4.0+ server required**: the official client binds SQL parameters only via the 4.0 proto fields (`pos_arguments`); a 3.5 server ignores them and fails with `UNBOUND_SQL_PARAMETER`.
-- **protoc required at build time**: `apache-spark-connect-proto` compiles protos with the system `protoc`. Install it or point `PROTOC` at a binary.
-- **arrow version is pinned by the official crate**: `RecordBatch` crosses the boundary, so our `arrow` major must match theirs.
+- **The official crate shares our lib name**, so it is renamed to `apache_spark_connect` in `Cargo.toml`, and `lib.rs` glob re-exports it. Our own modules must not collide with its module names - hence `spark_session`, not `session`.
+- **Version constraints come from the official crate**: `arrow` must stay on its major, since `RecordBatch` crosses the boundary, and `protoc` is needed at build time because `apache-spark-connect-proto` compiles the protos.
+- **Spark 4.0+ server required**: parameters are bound through 4.0 proto fields. The test server is pinned to a 4.0.4 image because 4.1.x drops SQL parameters whenever `spark.sql.extensions` is set - fixed upstream as SPARK-59672, so unpin once that ships.
 - **TLS is native roots only**: the official channel supports `use_ssl` + `token`, but no custom CA or client identity (mTLS).
-- **The test server is pinned to a Spark 4.0.4 image**: 4.1.x drops SQL parameters whenever `spark.sql.extensions` is set (positional and named, Connect and classic, Delta and Iceberg alike), so the bind tests fail there. Fix submitted upstream as SPARK-59672; unpin once it ships in a 4.1.x release.
-- **Tests need Docker**: integration tests expect a server on `localhost:15002`. Use `make test`.
-- **`make docker` is not idempotent**: the container is named `spark-delta`; running it twice will fail. Run `make stop` first.
+- **Tests need Docker**: integration tests expect a server on `localhost:15002`. Use `make test`, which starts one, waits for it to accept connections, and removes it afterwards.

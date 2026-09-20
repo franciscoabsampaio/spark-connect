@@ -39,6 +39,8 @@ plus the sqlx-style query interface.
 - Errors are the official `SparkError`, which carries the error class, SQL
   state and query context.
 - Switched from SLSA attestation to GitHub's default attestation action.
+- The licence is Apache 2.0, which is what the crate metadata has always
+  declared; `LICENSE` held the MIT text until now.
 - A Spark 4.0+ server is required, and `protoc` must be available at build
   time (`apache-spark-connect-proto` compiles the protos).
 

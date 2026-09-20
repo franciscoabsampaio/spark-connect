@@ -3,25 +3,24 @@
 [![Crates.io](https://img.shields.io/crates/v/spark-connect.svg)](https://crates.io/crates/spark-connect)
 [![Docs.rs](https://docs.rs/spark-connect/badge.svg)](https://docs.rs/spark-connect)
 
-![spark-connect](./src/docs/banner.jpg)
+![spark-connect](https://raw.githubusercontent.com/franciscoabsampaio/spark-connect/main/src/docs/banner.jpg)
 
 <b>An idiomatic, SQL-first Rust client for Apache Spark Connect.</b>
 
 This crate is an async layer over the official
-`apache-spark-connect` client.
+[`apache-spark-connect`](https://crates.io/crates/apache-spark-connect) client,
+whose API is synchronous. It brings the whole official API into `async` code and
+adds a [sqlx](https://docs.rs/sqlx/latest/sqlx/)-style interface for binding
+parameters safely.
 
-It allows you to build and execute SQL queries, bind parameters safely,
-and collect Arrow `RecordBatch` results - just like any other SQL toolkit -
-all in native Rust.
-
-## [Changelog](https://github.com/franciscoabsampaio/spark-connect/blob/main/Changelog.md)
+## [Changelog](https://github.com/franciscoabsampaio/spark-connect/blob/main/CHANGELOG.md)
 
 ## ✨ Features
 
 - ⚙️ **Spark-compatible connection builder** (`sc://host:port` format);
-- 🪶 **Async execution** on `tokio`;
-- 🧩 **Parameterized queries**;
-- 🧾 **Arrow-native results** returned as `Vec<RecordBatch>`;
+- 🪶 **Async execution** on `tokio`, for the whole official API;
+- 🧩 **Parameterized queries**, bound through the `ToLiteral` trait;
+- 🧾 **Results as Arrow `RecordBatch`es, typed `Row`s, or a row stream**;
 
 ## Getting Started
 
@@ -36,7 +35,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .get_or_create()
         .await?;
 
-    // 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatches>
+    // 2️⃣ Execute a simple SQL query and receive a Vec<RecordBatch>
     let batches = session
         .query("SELECT ? AS rule, ? AS text")
         .bind(42)
@@ -52,9 +51,45 @@ It's that simple!
 
 ## 🧩 Parameterized Queries
 
-Behind the scenes, the `SparkSession::query` method
-uses the `ToLiteral` trait to safely bind parameters
-before execution.
+The `SparkSession::query` method uses the `ToLiteral` trait to bind each
+parameter as a Spark literal, so values never reach the server as SQL text:
+
+```rs
+// This
+let batches = session
+    .query("SELECT ? AS id, ? AS text")
+    .bind(42)
+    .bind("world")
+    .execute()
+    .await?;
+
+// is the same as this
+use spark_connect::{prelude::*, Expression};
+
+let batches = session
+    .run(|spark| {
+        spark
+            .sql_with_args(
+                "SELECT ? AS id, ? AS text",
+                vec![
+                    Expression::Literal(42.to_literal()),
+                    Expression::Literal("world".to_literal()),
+                ],
+                Default::default(),
+            )?
+            .collect_record_batches()
+    })
+    .await?;
+```
+
+`bind` accepts Rust primitives, `String`/`&str`, `Vec<u8>` and, with the
+`chrono` feature, `NaiveDate` and `NaiveDateTime`. Pass a
+[`LiteralExpression`](https://docs.rs/apache-spark-connect/latest/spark_connect/expression/enum.LiteralExpression.html)
+directly for decimals, arrays, maps, structs and typed nulls.
+
+Named parameters and the rest of the official SQL API are reached through
+[`sql_with_args`](https://docs.rs/apache-spark-connect/latest/spark_connect/session/struct.SparkSession.html#method.sql_with_args),
+as above.
 
 ## 🧰 DataFrames
 
@@ -93,18 +128,44 @@ reaches the server runs on tokio's blocking thread pool. In practice:
 
 ## 🧠 Concepts
 
-- <b>`SparkSession`</b> - the main entry point for executing
-  SQL queries and managing a session.
-- <b>`SqlQueryBuilder`</b> - helper for binding parameters
-  and executing queries.
-- <b>`ext`</b> - async counterparts of the official types' actions.
+- <b>[`SparkSession`](https://docs.rs/spark-connect/latest/spark_connect/struct.SparkSession.html)</b> -
+  the main entry point for executing SQL queries and managing a session.
+- <b>[`SqlQueryBuilder`](https://docs.rs/spark-connect/latest/spark_connect/query/struct.SqlQueryBuilder.html)</b> -
+  helper for binding parameters and executing queries.
+- <b>[`ext`](https://docs.rs/spark-connect/latest/spark_connect/ext/index.html)</b> -
+  async counterparts of the official types' actions.
 
 ## ⚙️ Requirements
 
 - A running **Spark Connect server** (Spark 4.0+);
 - Network access to the configured `sc://` endpoint;
 - `tokio` runtime;
-- `protoc` on the `PATH` (or `PROTOC` set) at build time, required by `apache-spark-connect-proto`.
+- `protoc` at build time.
+
+### Installing protoc
+
+`apache-spark-connect-proto` compiles the Connect `.proto` files while it
+builds, using the Protocol Buffers compiler:
+
+```bash
+apt-get install -y protobuf-compiler  # Debian, Ubuntu
+brew install protobuf                 # macOS
+winget install protobuf               # Windows
+```
+
+If it is not on the `PATH`, point `PROTOC` at it:
+
+```bash
+PROTOC=/path/to/protoc cargo build
+```
+
+In GitHub Actions:
+
+```yaml
+- uses: arduino/setup-protoc@v3
+  with:
+    repo-token: ${{ secrets.GITHUB_TOKEN }}
+```
 
 ## 🔒 Example Connection Strings
 
@@ -116,15 +177,13 @@ sc://10.0.0.5:15002/;session_id=abc123;user_agent=my-app
 
 ## 📘 Learn More
 
+- [`apache-spark-connect` API reference](https://docs.rs/apache-spark-connect) -
+  the DataFrame, column and function APIs this crate builds on;
 - [Apache Spark Connect documentation](https://spark.apache.org/docs/latest/spark-connect.html);
-- [Apache Arrow RecordBatch specification](https://arrow.apache.org/docs/format/Columnar.html).
-
-## 🙏 Acknowledgements
-
-This project takes heavy inspiration from the [spark-connect-rs](https://github.com/sjrusso8/spark-connect-rs) project, and would've been much harder without it!
+- [Spark Connect client connection string](https://github.com/apache/spark/blob/master/sql/connect/docs/client-connection-string.md).
 
 ---
-© 2025 Francisco A. B. Sampaio. Licensed under the MIT License.
+© 2025 Francisco A. B. Sampaio. Licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0).
 
 This project is not affiliated with, endorsed by, or sponsored by the Apache Software Foundation.
 “Apache”, “Apache Spark”, and “Spark Connect” are trademarks of the Apache Software Foundation.
