@@ -47,6 +47,8 @@ jobs:
       actions: read
       id-token: write
       contents: write
+      # Required by actions/attest-build-provenance to record the attestation.
+      attestations: write
     outputs:
       hash_b64: ${{ steps.hash.outputs.hash_b64 }}
     steps:
