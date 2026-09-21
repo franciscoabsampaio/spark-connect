@@ -24,3 +24,5 @@ target
 #.idea/
 
 tmp
+# Tooling fetched by the Makefile
+.tools

@@ -10,12 +10,13 @@ A psql-like CLI is planned.
 ## Commands
 
 ```bash
-cargo build                   # build (needs protoc - see Gotchas)
-cargo test                    # doctests + integration tests (the latter need a server)
-cargo test --all-features     # adds the chrono literal impls
+make test                     # the full suite, self-contained: provisions protoc, starts the
+                              # server, runs `cargo test --all-features`, stops the server
 make docker                   # start Spark Connect server in Docker (port 15002), wait for readiness
-make test                     # start Docker + run full test suite + stop Docker
 make stop                     # stop and remove the spark-delta container
+make protoc                   # fetch protoc into .tools/ unless one is on PATH
+cargo build                   # needs protoc: on PATH, or PROTOC=$(make -s protoc-path)
+cargo test --all-features     # same tests, against a server you started yourself
 ```
 
 ## Architecture
