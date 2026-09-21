@@ -1,4 +1,4 @@
-use spark_connect::SparkSessionBuilder;
+use spark_connect::SparkSession;
 
 #[tokio::main]
 async fn main() {
@@ -11,13 +11,14 @@ async fn main() {
         .expect("DATABRICKS_TOKEN env var not set");
 
     // Build the Spark session.
-    let session = SparkSessionBuilder::new(&format!(
-        "sc://{host}:443/;\
-        use_ssl=true;\
-        x-databricks-cluster-id={cluster_id};\
-        token={token};"
-    ))
-        .build()
+    let session = SparkSession::builder()
+        .remote(&format!(
+            "sc://{host}:443/;\
+            use_ssl=true;\
+            x-databricks-cluster-id={cluster_id};\
+            token={token};"
+        ))
+        .get_or_create()
         .await
         .expect("Failed to create Spark session");
 
