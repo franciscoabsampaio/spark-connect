@@ -69,6 +69,13 @@ jobs:
         with:
           ref: "v${{ needs.get-version.outputs.version }}"
 
+      # apache-spark-connect-proto compiles the Connect protos during the
+      # verification build that `cargo publish` runs.
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Publish Rust crate if the version does not exist
         uses: franciscoabsampaio/cargo-publish@main
         with:

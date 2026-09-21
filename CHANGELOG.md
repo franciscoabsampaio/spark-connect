@@ -5,11 +5,61 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [0.3.0](https://github.com/franciscoabsampaio/spark-connect/releases/tag/v0.3.0) - 2026-09-20
+
+This release rebuilds the crate on Apache's official
+[`apache-spark-connect`](https://crates.io/crates/apache-spark-connect) client.
+The whole DataFrame API comes from there; this crate is the async layer over it,
+plus the sqlx-style query interface.
 
 ### Added
 
 - `CHANGELOG.md`!
+- `_async` counterparts of every blocking action on the official types, through
+  the extension traits in `ext` (`DataFrameExt`, `CatalogExt`, `RuntimeConfExt`,
+  the writers, streaming). Their futures are `Send + 'static`, so they can be
+  spawned.
+- `prelude`, re-exporting the session, `ToLiteral`, the extension traits, `col`
+  and `lit`.
+- `SparkSession::run`, to reach anything in the official API that has no
+  wrapper here.
+- `DataFrameStreamExt::to_local_iterator_async`, streaming a DataFrame's rows
+  with backpressure as the server produces them.
+- Re-export of the official crate, so `DataFrame`, `Column`, `functions`, `col`
+  and `lit` are reachable without adding a second dependency.
+
+### Changed
+
+- `SparkSession` wraps the official session and dereferences to it: its
+  planning API (`sql`, `table`, `read`, `catalog`, `conf`, `range`) is used as
+  it is, while the methods that reach the server - `version`, `interrupt_all`,
+  `interrupt_operation`, `stop`, the `register_*` functions, artifacts - are
+  async under the same names.
+- `ToLiteral` now produces the official `LiteralExpression`, and covers `i8`.
+- Errors are the official `SparkError`, which carries the error class, SQL
+  state and query context.
+- Switched from SLSA attestation to GitHub's default attestation action.
+- The licence is Apache 2.0, which is what the crate metadata has always
+  declared; `LICENSE` held the MIT text until now.
+- A Spark 4.0+ server is required, and `protoc` must be available at build
+  time (`apache-spark-connect-proto` compiles the protos).
+
+### Removed
+
+- `SparkSessionBuilder::new(connection)` and `build()`. Connect with
+  `SparkSession::builder().remote(url).get_or_create()`, which matches the
+  official builder.
+- The hand-rolled gRPC client, the vendored protobuf definitions and the build
+  script that compiled them, along with the `spark-3-4` and `spark-3-5`
+  features: the official crate owns the protocol.
+- `SparkSession::sql(query, params)` and `SparkSession::collect(plan)`. Use the
+  official `sql`/`sql_with_args`, which return a `DataFrame`, then
+  `collect_async()` - or `query().bind().execute()`, which is unchanged.
+- The in-tree DataFrame, Catalog, plan, types and storage-level implementations,
+  and the PySpark api-parity tooling.
+- The `tls`, `tokio-macros` and `parity` features. TLS is always compiled in by
+  the official client, which trusts the system roots and supports `token`;
+  custom CA certificates and mTLS are not available.
 
 ## [0.2.2](https://github.com/franciscoabsampaio/spark-connect/releases/tag/v0.2.2) - 2025-02-12
 
