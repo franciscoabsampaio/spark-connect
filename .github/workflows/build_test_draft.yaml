@@ -53,7 +53,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Spark Connect Server container instance
-        run: scripts/run_spark_connect_server.sh
+        run: chmod +x scripts/run_spark_connect_server.sh && scripts/run_spark_connect_server.sh
       - name: Set up Rust
         uses: dtolnay/rust-toolchain@stable
       # apache-spark-connect-proto compiles the Connect protos at build time.
