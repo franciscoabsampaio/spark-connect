@@ -21,13 +21,18 @@ ready() {
     esac
 }
 
-running() {
-    [ "$(docker inspect -f '{{.State.Running}}' spark-delta 2>/dev/null)" = true ]
+# Only an exited container is fatal: `docker run -d` returns while the
+# container is still `created`, which is not yet `running`.
+stopped() {
+    case "$(docker inspect -f '{{.State.Status}}' spark-delta 2>/dev/null)" in
+        exited | dead) return 0 ;;
+        *) return 1 ;;
+    esac
 }
 
 for _ in $(seq 1 120); do
     ready && exit 0
-    if ! running; then
+    if stopped; then
         echo "spark-delta stopped before becoming ready:" >&2
         docker logs --tail 20 spark-delta >&2 2>&1
         exit 1
