@@ -144,6 +144,14 @@ async_ext! {
 
 async_ext! {
     /// Async actions on a [`Catalog`].
+    ///
+    /// The official crate carries Connect protos from Spark's development
+    /// branch, so some catalog calls are newer than any released server. On
+    /// Spark 4.0 and 4.1 these fail with `CATTYPE_NOT_SET not supported`:
+    /// `analyze_table`, `create_database`, `drop_database`, `drop_table`,
+    /// `drop_view`, `get_create_table_string`, `get_table_properties`,
+    /// `list_partitions`, `list_views` and `truncate_table`, along with their
+    /// `_typed` variants. Issue the equivalent SQL until a server ships them.
     pub trait CatalogExt for Catalog by ref {
         analyze_table_async => analyze_table(table_name: &str, no_scan: bool) -> ();
         cache_table_async => cache_table(table_name: &str) -> ();
@@ -314,103 +322,5 @@ impl Stream for RowStream {
             }
         }
         Poll::Ready(None)
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::test_utils::test_utils::setup_session;
-    use crate::{col, lit};
-
-    use arrow::array::Int64Array;
-
-    #[tokio::test]
-    async fn test_dataframe_actions() -> Result<()> {
-        let spark = setup_session().await?;
-        let df = spark.range(10)?.filter(col("id").lt(lit(4)));
-
-        assert_eq!(df.count_async().await?, 4);
-        assert_eq!(df.collect_async().await?.len(), 4);
-        assert_eq!(df.columns_async().await?, vec!["id"]);
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_collect_record_batches() -> Result<()> {
-        let spark = setup_session().await?;
-
-        let batches = spark.range(3)?.collect_record_batches_async().await?;
-
-        let ids: Vec<i64> = batches
-            .iter()
-            .flat_map(|batch| batch.column(0).as_any().downcast_ref::<Int64Array>().unwrap().values().to_vec())
-            .collect();
-        assert_eq!(ids, vec![0, 1, 2]);
-        Ok(())
-    }
-
-    /// Verifies that the futures are `'static`: they outlive the value they
-    /// were created from and can be spawned.
-    #[tokio::test]
-    async fn test_action_future_is_spawnable() -> Result<()> {
-        let spark = setup_session().await?;
-
-        let count = tokio::spawn(spark.range(5)?.count_async()).await.unwrap()?;
-
-        assert_eq!(count, 5);
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_temp_view_and_catalog() -> Result<()> {
-        let spark = setup_session().await?;
-
-        spark.range(3)?.create_or_replace_temp_view_async("ext_numbers").await?;
-
-        assert!(spark.catalog().table_exists_async("ext_numbers").await?);
-        assert!(spark.catalog().drop_temp_view_async("ext_numbers").await?);
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_runtime_conf() -> Result<()> {
-        let spark = setup_session().await?;
-        let conf = spark.conf();
-
-        conf.set_async("spark.sql.shuffle.partitions", "7").await?;
-
-        assert_eq!(conf.get_async("spark.sql.shuffle.partitions").await?.as_deref(), Some("7"));
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_row_stream() -> Result<()> {
-        use std::future::poll_fn;
-
-        let spark = setup_session().await?;
-        let mut rows = spark.range(2500)?.to_local_iterator_async(false);
-
-        let mut count = 0;
-        while let Some(row) = poll_fn(|cx| Pin::new(&mut rows).poll_next(cx)).await {
-            row?;
-            count += 1;
-        }
-
-        assert_eq!(count, 2500);
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_row_stream_surfaces_errors() -> Result<()> {
-        use std::future::poll_fn;
-
-        let spark = setup_session().await?;
-        let mut rows = spark.sql("SELECT * FROM table_that_does_not_exist")?.to_local_iterator_async(false);
-
-        let first = poll_fn(|cx| Pin::new(&mut rows).poll_next(cx)).await;
-
-        assert!(matches!(first, Some(Err(_))));
-        Ok(())
     }
 }

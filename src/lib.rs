@@ -213,6 +213,3 @@ pub mod prelude {
     };
     pub use crate::{col, lit, SparkSession, ToLiteral};
 }
-
-#[cfg(test)]
-mod test_utils;

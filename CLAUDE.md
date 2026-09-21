@@ -29,7 +29,8 @@ src/
   query.rs          # SqlQueryBuilder - positional parameter binding and execution
   literal.rs        # ToLiteral trait - Rust types → official LiteralExpression
   error.rs          # re-exports the official SparkError / Result
-  test_utils.rs     # shared test helpers (cfg(test) only)
+tests/              # acceptance tests, run against the Docker server as an external consumer
+  common/mod.rs     # session fixture; unique names so tests can share one server
 ```
 
 ## Gotchas
@@ -40,4 +41,5 @@ src/
 - **Version constraints come from the official crate**: `arrow` must stay on its major, since `RecordBatch` crosses the boundary, and `protoc` is needed at build time because `apache-spark-connect-proto` compiles the protos.
 - **Spark 4.0+ server required**: parameters are bound through 4.0 proto fields. The test server is pinned to a 4.0.4 image because 4.1.x drops SQL parameters whenever `spark.sql.extensions` is set - fixed upstream as SPARK-59672, so unpin once that ships.
 - **TLS is native roots only**: the official channel supports `use_ssl` + `token`, but no custom CA or client identity (mTLS).
+- **Some official APIs are ahead of every released server**: its protos come from Spark's development branch, so ten `CatalogExt` methods (drop/create database, drop table/view, truncate, analyze, list views/partitions, table properties, create-table string) fail on 4.0 and 4.1 with `CATTYPE_NOT_SET not supported`. Listed on `CatalogExt`; the tests use SQL DDL instead.
 - **Tests need Docker**: integration tests expect a server on `localhost:15002`. Use `make test`, which starts one, waits for it to accept connections, and removes it afterwards.

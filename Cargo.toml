@@ -20,8 +20,9 @@ futures-core = "0.3"
 tokio = { version = "1.47", features = ["rt", "sync"] }
 
 [dev-dependencies]
-regex = "1.11.3"
+futures-util = { version = "0.3.34", default-features = false, features = ["std"] }
 tokio = { version = "1.47", features = ["rt-multi-thread", "macros"] }
+uuid = { version = "1.26.1", features = ["v4"] }
 
 [[example]]
 name = "databricks"
