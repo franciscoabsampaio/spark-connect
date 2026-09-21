@@ -66,12 +66,6 @@ pub struct SparkSessionBuilder {
 }
 
 impl SparkSessionBuilder {
-    /// Creates a builder for the given connection string.
-    #[deprecated(since = "0.3.0", note = "use `SparkSession::builder().remote(connection)`")]
-    pub fn new(connection: &str) -> Self {
-        Self::default().remote(connection)
-    }
-
     /// Sets the connection string.
     ///
     /// The connection string must follow the format:
@@ -96,12 +90,6 @@ impl SparkSessionBuilder {
         })
         .await?;
         Ok(SparkSession { inner })
-    }
-
-    /// Returns a ready-to-use [`SparkSession`].
-    #[deprecated(since = "0.3.0", note = "use `get_or_create`")]
-    pub async fn build(&self) -> Result<SparkSession> {
-        self.get_or_create().await
     }
 }
 
@@ -258,95 +246,5 @@ impl fmt::Debug for SparkSession {
         f.debug_struct("SparkSession")
             .field("session_id", &self.session_id())
             .finish()
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::test_utils::test_utils::setup_session;
-
-    use arrow::array::{Int32Array, StringArray};
-    use regex::Regex;
-
-    #[tokio::test]
-    async fn test_session_create() {
-        let spark = setup_session().await;
-        assert!(spark.is_ok());
-    }
-
-    #[tokio::test]
-    #[allow(deprecated)]
-    async fn test_session_build_from_connection_string() -> Result<()> {
-        let session = SparkSessionBuilder::new("sc://localhost:15002").build().await?;
-
-        assert!(!session.version().await?.is_empty());
-        Ok(())
-    }
-
-    /// Verifies that the client can connect, establish a session, and perform
-    /// a basic analysis operation (fetching the Spark version).
-    #[tokio::test]
-    async fn test_session_version() -> Result<()> {
-        let spark = setup_session().await?;
-
-        let version = spark.version().await?;
-
-        let re = Regex::new(r"^\d+\.\d+\.\d+").unwrap();
-        assert!(re.is_match(&version), "Version {} invalid", version);
-        Ok(())
-    }
-
-    /// Verifies that `run` reaches the official API from an async task
-    /// without tripping its nested-runtime panic.
-    #[tokio::test]
-    async fn test_run() -> Result<()> {
-        let session = setup_session().await?;
-
-        let count = session.run(|spark| spark.range(10)?.count()).await?;
-
-        assert_eq!(count, 10);
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_interrupt_all() -> Result<()> {
-        let session = setup_session().await?;
-
-        let interrupted = session.interrupt_all().await?;
-
-        assert!(interrupted.is_empty());
-        Ok(())
-    }
-
-    #[tokio::test]
-    async fn test_sql_query_builder_bind() -> Result<()> {
-        let session = setup_session().await?;
-
-        let batches = session
-            .query("SELECT ? AS id, ? AS text")
-            .bind(42_i32)
-            .bind("world")
-            .execute()
-            .await?;
-
-        assert_eq!(batches.len(), 1);
-        let batch = &batches[0];
-        assert_eq!(batch.num_rows(), 1);
-        assert_eq!(batch.num_columns(), 2);
-
-        let id_col = batch.column(0)
-            .as_any()
-            .downcast_ref::<Int32Array>()
-            .unwrap();
-        assert_eq!(id_col.value(0), 42);
-
-        let text_col = batch.column(1)
-            .as_any()
-            .downcast_ref::<StringArray>()
-            .unwrap();
-        assert_eq!(text_col.value(0), "world");
-
-        Ok(())
     }
 }

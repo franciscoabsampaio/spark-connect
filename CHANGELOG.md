@@ -44,13 +44,11 @@ plus the sqlx-style query interface.
 - A Spark 4.0+ server is required, and `protoc` must be available at build
   time (`apache-spark-connect-proto` compiles the protos).
 
-### Deprecated
-
-- `SparkSessionBuilder::new(connection)` and `build()`, in favour of
-  `SparkSession::builder().remote(url).get_or_create()`.
-
 ### Removed
 
+- `SparkSessionBuilder::new(connection)` and `build()`. Connect with
+  `SparkSession::builder().remote(url).get_or_create()`, which matches the
+  official builder.
 - The hand-rolled gRPC client, the vendored protobuf definitions and the build
   script that compiled them, along with the `spark-3-4` and `spark-3-5`
   features: the official crate owns the protocol.
